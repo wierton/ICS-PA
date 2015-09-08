@@ -81,8 +81,8 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args)
 {
-	char *arg = strtok(args," ");
-	int steps = sscanf("%u",arg);
+	int steps;
+	sscanf(args,"%u",&steps);
 	printf("%u\n",steps);
 	return 0;
 }

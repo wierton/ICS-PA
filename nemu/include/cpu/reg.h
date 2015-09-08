@@ -15,6 +15,7 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  */
 
 typedef struct {
+
 	struct {
 		uint32_t _32;
 		uint16_t _16;
@@ -26,6 +27,7 @@ typedef struct {
 	uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 	uint16_t ax,cx,dx,bx,sp,bp,si,di;
 	uint8_t al,cl,dl,bl,ah,ch,dh,bh;
+
 	swaddr_t eip;
 
 } CPU_state;

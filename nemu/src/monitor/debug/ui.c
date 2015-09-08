@@ -97,7 +97,7 @@ static int cmd_info(char *args)
 
 	if(strcmp(args,"r")==0)
 	{
-		printf("eax\t%04x\t%d\necx\t%04x\t%d\nedx\t%04x\t%d\nebx\t%04x\t%d\nesp\t%04x\t%04x\nebp\t%04x\t%d\04x\nesi\t%04x\t%d\nedi\t%04x\t%d\neip\t%04x\t%04x\n",cpu.eax,cpu.eax,cpu.ecx,cpu.ecx,cpu.edx,cpu.edx,cpu.ebx,cpu.ebx,cpu.esp,cpu.esp,cpu.ebp,cpu.ebp,cpu.esi,cpu.esi,cpu.edi,cpu.edi,cpu.eip,cpu.eip);
+		printf("eax\t%04x\t%d\necx\t%04x\t%d\nedx\t%04x\t%d\nebx\t%04x\t%d\nesp\t%04x\t%04x\nebp\t%04x\t%04x\nesi\t%04x\t%d\nedi\t%04x\t%d\neip\t%04x\t%04x\n",cpu.eax,cpu.eax,cpu.ecx,cpu.ecx,cpu.edx,cpu.edx,cpu.ebx,cpu.ebx,cpu.esp,cpu.esp,cpu.ebp,cpu.ebp,cpu.esi,cpu.esi,cpu.edi,cpu.edi,cpu.eip,cpu.eip);
 	}
 	return 0;
 }

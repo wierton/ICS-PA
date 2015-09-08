@@ -40,6 +40,8 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args);
 
+static int cmd_info(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -50,8 +52,8 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 
 	/* TODO: Add more commands */
-	{ "si", "Execute the program x steps",cmd_si}
-
+	{ "si", "Execute the program x steps",cmd_si},
+	{ "info", "Print the reg or watch_point",cmd_info}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -82,8 +84,16 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args)
 {
 	int steps;
-	sscanf(args,"%u",&steps);
-	printf("%u\n",steps);
+	if(args == NULL)
+		steps=1;
+	else
+		sscanf(args,"%u",&steps);
+	cpu_exec(steps);
+	return 0;
+}
+
+static int cmd_info(char *args)
+{
 	return 0;
 }
 

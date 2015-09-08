@@ -94,7 +94,11 @@ static int cmd_si(char *args)
 
 static int cmd_info(char *args)
 {
-	printf("%u",cpu.eax);
+
+	if(strcmp(args,"r")==0)
+	{
+		printf("eax\t%02x\t%d\necx\t%02x\t%d\nedx\t%02x\t%d\nebx\t%02x\t%d\nesp\t%02x\t%02x\nebp\t%02x\t%d\02x\nesi\t%02x\t%d\nedi\t%02x\t%d\neip\t%02x\t%d",cpu.eax,cpu.eax,cpu.ecx,cpu.ecx,cpu.edx,cpu.edx,cpu.ebx,cpu.ebx,cpu.esp,cpu.esp,cpu.ebp,cpu.ebp,cpu.esi,cpu.esi,cpu.edi,cpu.edi,cpu.eip,cpu.eip);
+	}
 	return 0;
 }
 

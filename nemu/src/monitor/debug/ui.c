@@ -99,6 +99,15 @@ static int cmd_info(char *args)
 	{
 		printf("eax\t%04x\t%d\necx\t%04x\t%d\nedx\t%04x\t%d\nebx\t%04x\t%d\nesp\t%04x\t%04x\nebp\t%04x\t%04x\nesi\t%04x\t%d\nedi\t%04x\t%d\neip\t%04x\t%04x\n",cpu.eax,cpu.eax,cpu.ecx,cpu.ecx,cpu.edx,cpu.edx,cpu.ebx,cpu.ebx,cpu.esp,cpu.esp,cpu.ebp,cpu.ebp,cpu.esi,cpu.esi,cpu.edi,cpu.edi,cpu.eip,cpu.eip);
 	}
+	if(strcmp(args,"w")==0)
+	{
+/*		WP *p = head;
+		while(p != NULL)
+		{
+			printf("%d\n",p->NO);
+			p = p->next;
+		}
+*/	}
 	return 0;
 }
 

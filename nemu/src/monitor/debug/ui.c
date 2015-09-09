@@ -124,7 +124,7 @@ static int cmd_x(char *args)
 	if(*para == 'x' || *para == 'X')
 	{
 		sscanf(args,"%u",&read_addr);
-		printf("0x%0x\t0x%0x",read_addr,swaddr_read(read_addr,1));
+		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,1));
 	}
 	else if(*para == 's' || *para == 'S')
 	{
@@ -135,7 +135,7 @@ static int cmd_x(char *args)
 	else if(*para >= '0' && *para <= '9')
 	{
 		sscanf(para,"%u%c%x",&len,&xar,&read_addr);
-		printf("%u :%c: %x",len,xar,read_addr);
+//		printf("%u :%c: %x",len,xar,read_addr);
 		if(xar == 'x' || xar == 'X')
 		{}
 		else if(xar == 's' || xar == 'S')
@@ -148,7 +148,7 @@ static int cmd_x(char *args)
 		{
 			int i;
 			for(i=0;i<len;i++)
-				printf("0x%0x\t0x%0x",read_addr+i,swaddr_read(read_addr+i,1));
+				printf("0x%0x\t0x%0x\n",read_addr+i,swaddr_read(read_addr+i,1));
 		}
 	}
 	else

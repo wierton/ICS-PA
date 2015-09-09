@@ -116,29 +116,36 @@ static int cmd_info(char *args)
 
 static int cmd_x(char *args)
 {
-	if(*args != '/')
-		return 0;
 	char xar;
 	size_t len;
-	uint32_t addr;
-	char *para = args + 1;
+	uint32_t read_addr;
+	char *para = args;
 
-	if(*para == 's' || *para == 'S')
+	if(*para == 'x' || *para == 'X')
+	{
+		sscanf(args+1,"%u",&read_addr);
+		swaddr_read(read_addr,1);
+	}
+	else if(*para == 's' || *para == 'S')
 	{
 	}
-	else if(*para == 'x' || *para == 'X')
+	else if(*para == 'c' || *para == 'C')
 	{
 	}
 	else if(*para >= '0' && *para <= '9')
 	{
-		sscanf(para,"%u%c%x",&len,&xar,&addr);
-		printf("%u :%c: %x",len,xar,addr);
+		sscanf(para,"%u%c%x",&len,&xar,&read_addr);
+		printf("%u :%c: %x",len,xar,read_addr);
 		if(xar == 'x' || xar == 'X')
 		{}
-		else
+		else if(xar == 's' || xar == 'S')
 		{
 			
 		}
+		else if(xar == 'c' || xar == 'C')
+		{}
+		else if(xar == ' ' || xar == '\t')
+		{}
 	}
 	else
 		printf("%s\n","Unkown parameter!");

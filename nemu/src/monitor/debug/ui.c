@@ -132,7 +132,7 @@ static int cmd_x(char *args)
 	else if(*para >= '0' && *para <= '9')
 	{
 		sscanf(para,"%u%c%02x",&len,&xar,&addr);
-		printf("%u :%c: %02x",len,xar,addr);
+		printf("%u :%c: %x",len,xar,addr);
 		if(xar == 'x' || xar == 'X')
 		{}
 		else

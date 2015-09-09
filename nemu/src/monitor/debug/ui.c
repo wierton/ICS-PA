@@ -116,8 +116,9 @@ static int cmd_info(char *args)
 
 static int cmd_x(char *args)
 {
+	size_t len;
 	uint32_t address;
-	sscanf(args,"%u",&address);
+	sscanf(args,"/%u%u",&len,&address);
 	return 0;
 }
 

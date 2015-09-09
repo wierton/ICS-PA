@@ -123,11 +123,14 @@ static int cmd_x(char *args)
 
 	if(*para == 'x' || *para == 'X')
 	{
-		sscanf(args,"0x%x",&read_addr);
-		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,1));
+		sscanf(para+1,"0x%x",&read_addr);
+		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,4));
 	}
 	else if(*para == 's' || *para == 'S')
 	{
+//		char ch;
+		sscanf(para+1,"0x%x",&read_addr);
+		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,1));
 	}
 	else if(*para == 'c' || *para == 'C')
 	{
@@ -148,11 +151,11 @@ static int cmd_x(char *args)
 		{
 			int i;
 			for(i=0;i<len;i++)
-				printf("%u0x%0x\t0x%0x\n",read_addr+i,read_addr+i,swaddr_read(read_addr+i,4));
+				printf("0x%0x\t0x%0x\n",read_addr+i,swaddr_read(read_addr+i,4));
 		}
 	}
 	else
-		printf("%s\n","Unkown parameter!");
+		printf("%s\n","Unknown parameter!");
 	return 0;
 }
 

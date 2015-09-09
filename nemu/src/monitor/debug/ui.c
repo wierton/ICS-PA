@@ -116,9 +116,31 @@ static int cmd_info(char *args)
 
 static int cmd_x(char *args)
 {
-//	size_t len;
-//	uint32_t address;
+	if(*args != '/')
+		return -1;
+	char xar;
+	size_t len;
+	uint32_t addr;
+	char *para = args + 1;
 	printf("%s\n",args);
+	if(*para == 's' || *para == 'S')
+	{
+	}
+	else if(*para == 'x' || *para == 'X')
+	{
+	}
+	else if(*para >= '0' && *para <= '9')
+	{
+		sscanf(para,"%u%c%02x",&len,&xar,&addr);
+		if(xar == 'x' || xar == 'X')
+		{}
+		else
+		{
+			
+		}
+	}
+	else
+		return -1;
 	return 0;
 }
 

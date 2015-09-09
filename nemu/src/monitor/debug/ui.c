@@ -42,6 +42,8 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
+static int cmd_x(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -53,7 +55,8 @@ static struct {
 
 	/* TODO: Add more commands */
 	{ "si", "Execute the program x steps",cmd_si},
-	{ "info", "Print the reg or watch_point",cmd_info}
+	{ "info", "Print the reg or watch_point",cmd_info},
+	{ "x", "Read memory from given address",cmd_x}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -108,6 +111,13 @@ static int cmd_info(char *args)
 			p = p->next;
 		}
 */	}
+	return 0;
+}
+
+static int cmd_x(char *args)
+{
+	uint32_t address;
+	sscanf(args,"%u",&address);
 	return 0;
 }
 

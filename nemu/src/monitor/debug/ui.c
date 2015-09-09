@@ -117,7 +117,7 @@ static int cmd_info(char *args)
 static int cmd_x(char *args)
 {
 	if(*args != '/')
-		return -1;
+		return 0;
 	char xar;
 	size_t len;
 	uint32_t addr;
@@ -141,7 +141,7 @@ static int cmd_x(char *args)
 		}
 	}
 	else
-		printf("%s\n","Unkown parameter!\n");
+		printf("%s\n","Unkown parameter!");
 	return 0;
 }
 

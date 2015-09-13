@@ -96,6 +96,8 @@ static int cmd_x(char *args);
 
 static int cmd_p(char *args);
 
+static int calc(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -213,6 +215,16 @@ static int cmd_x(char *args)
 }
 
 static int cmd_p(char *args)
+{
+	int result = calc(args);
+	if(result == -1)
+		printf("Invalid Expression!\n");
+	else
+		printf("%d\n",result);
+	return 0;
+}
+
+static int calc(char *args)
 {
 	bool is_innum = false,is_valid = true;
 	char *sz_p = args,reg[4];
@@ -369,15 +381,9 @@ static int cmd_p(char *args)
 	}
 
 	if(is_valid)
-	{
 		result = operand_1->operand;
-		printf("%d\n",result);
-	}
 	else
-	{
 		result = -1;
-		printf("invalid expression!\n");
-	}
 	free(LinearTable);
 	free(Stack);
 	free(unit);

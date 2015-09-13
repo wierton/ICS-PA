@@ -349,6 +349,11 @@ static int calc(char *args)
 	{
 		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
 		//show(LinearTable,0);
+		if(LinearTable[0].next == NULL || LinearTable[0].next->next == NULL)
+		{
+			is_valid = false;
+			break;
+		}
 		operand_2 = LinearTable[0].next;
 		pOperator = LinearTable[0].next->next;
 

@@ -369,9 +369,15 @@ static int cmd_p(char *args)
 	}
 
 	if(is_valid)
+	{
 		result = operand_1->operand;
+		printf("%d\n",result);
+	}
 	else
+	{
 		result = -1;
+		printf("Invalid expression!\n");
+	}
 	free(LinearTable);
 	free(Stack);
 	free(unit);

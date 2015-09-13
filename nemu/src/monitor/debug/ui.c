@@ -242,21 +242,21 @@ static int cmd_p(char *args)
 			reg[3] = 0;
 			strupr(reg);
 			if(strcmp(reg,"EAX") == 0)
-				unit[pUnit++].operand = 1;
+				unit[pUnit++].operand = cpu.eax;
 			else if(strcmp(reg,"EBX") == 0)
-				unit[pUnit++].operand = 2;
+				unit[pUnit++].operand = cpu.ebx;
 			else if(strcmp(reg,"ECX") == 0)
-				unit[pUnit++].operand = 3;
+				unit[pUnit++].operand = cpu.ecx;
 			else if(strcmp(reg,"EDX") == 0)
-				unit[pUnit++].operand = 4;
+				unit[pUnit++].operand = cpu.edx;
 			else if(strcmp(reg,"ESI") == 0)
-				unit[pUnit++].operand = 5;
+				unit[pUnit++].operand = cpu.esi;
 			else if(strcmp(reg,"EDI") == 0)
-				unit[pUnit++].operand = 6;
+				unit[pUnit++].operand = cpu.edi;
 			else if(strcmp(reg,"ESP") == 0)
-				unit[pUnit++].operand = 7;
+				unit[pUnit++].operand = cpu.esp;
 			else if(strcmp(reg,"EBP") == 0)
-				unit[pUnit++].operand = 8;
+				unit[pUnit++].operand = cpu.ebp;
 			else
 				is_valid = false;
 			i+=3;
@@ -376,7 +376,7 @@ static int cmd_p(char *args)
 	else
 	{
 		result = -1;
-		printf("Invalid expression!\n");
+		printf("invalid expression!\n");
 	}
 	free(LinearTable);
 	free(Stack);

@@ -9,6 +9,56 @@
 
 void cpu_exec(uint32_t);
 
+char cmp_table[][7] =
+{
+	{'>','>','<','<','<','>','>'},
+	{'>','>','<','<','<','>','>'},
+	{'>','>','>','>','<','>','>'},
+	{'>','>','>','>','<','>','>'},
+	{'<','<','<','<','<','=','$'},
+	{'>','>','>','>','$','>','>'},
+	{'<','<','<','<','<','$','='}
+};
+
+int swap_table(char c)
+{
+	switch(c)
+	{
+		case '+':return 0;
+		case '-':return 1;
+		case '*':return 2;
+		case '/':return 3;
+		case '(':return 4;
+		case ')':return 5;
+		case '#':return 6;
+	}
+	return -1;
+}
+
+void strupr(char *args)
+{
+	int i,len = strlen(args);
+	for(i=0;i<len;i++)
+	{
+		if(args[i]>='a' && args[i]<='z')
+		{
+			args[i] = args[i]-'a'+'A';
+		}
+	}
+}
+
+struct EXPR 
+{
+	struct EXPR *next;
+	int operand;
+	char _operator;
+};
+char cmp_operator(char a,char b)
+{
+	return cmp_table[swap_table(a)][swap_table(b)];
+}
+
+
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -44,6 +94,8 @@ static int cmd_info(char *args);
 
 static int cmd_x(char *args);
 
+static int cmd_p(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -56,7 +108,8 @@ static struct {
 	/* TODO: Add more commands */
 	{ "si", "Execute the program x steps",cmd_si},
 	{ "info", "Print the reg or watch_point",cmd_info},
-	{ "x", "Read memory from given address",cmd_x}
+	{ "x", "Read memory from given address",cmd_x},
+	{ "p", "Calculate the expression",cmd_p}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -143,7 +196,7 @@ static int cmd_x(char *args)
 		{}
 		else if(xar == 's' || xar == 'S')
 		{
-			
+
 		}
 		else if(xar == 'c' || xar == 'C')
 		{}
@@ -157,6 +210,172 @@ static int cmd_x(char *args)
 	else
 		printf("%s\n","Unknown parameter!");
 	return 0;
+}
+
+static int cmd_p(char *args)
+{
+	bool is_innum = false,is_valid = true;
+	char *sz_p = args,reg[4];
+	int i,pUnit = 0,result = 0,len = strlen(args);
+	args[len] = '#';
+	args[len+1] = '\0';
+	len++;
+	struct EXPR *unit = (struct EXPR*)malloc(len*sizeof(struct EXPR));
+	memset(unit,0,len*sizeof(struct EXPR));
+
+	for(i=0;i<len && is_valid;i++)
+	{
+		switch(*sz_p)
+		{
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '(':
+		case ')':
+		case '#':
+			is_innum = false;
+			sscanf(sz_p,"%c",&unit[pUnit++]._operator);
+			break;
+		case '%':
+			strncpy(reg,sz_p+1,3);
+			reg[3] = 0;
+			strupr(reg);
+			if(strcmp(reg,"EAX") == 0)
+				unit[pUnit++].operand = 1;
+			else if(strcmp(reg,"EBX") == 0)
+				unit[pUnit++].operand = 2;
+			else if(strcmp(reg,"ECX") == 0)
+				unit[pUnit++].operand = 3;
+			else if(strcmp(reg,"EDX") == 0)
+				unit[pUnit++].operand = 4;
+			else if(strcmp(reg,"ESI") == 0)
+				unit[pUnit++].operand = 5;
+			else if(strcmp(reg,"EDI") == 0)
+				unit[pUnit++].operand = 6;
+			else if(strcmp(reg,"ESP") == 0)
+				unit[pUnit++].operand = 7;
+			else if(strcmp(reg,"EBP") == 0)
+				unit[pUnit++].operand = 8;
+			else
+				is_valid = false;
+			i+=3;
+			sz_p+=3;
+			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			if(!is_innum)
+			{
+				is_innum = true;
+				sscanf(sz_p,"%d",&unit[pUnit++].operand);
+			}
+			break;
+		default:is_valid = false;break;
+		}
+		sz_p++;
+	}
+
+	struct EXPR *LinearTable = (struct EXPR*)malloc(pUnit*sizeof(struct EXPR));
+	memset(LinearTable,0,pUnit*sizeof(struct EXPR));
+	int pLinearTable = 0;
+	struct EXPR *Stack = (struct EXPR*)malloc(pUnit*sizeof(struct EXPR));
+	memset(Stack,0,pUnit*sizeof(struct EXPR));
+	int pStack = 0;
+	Stack[pStack++]._operator = '#';
+
+	i = 0;
+	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
+	{
+		//show(LinearTable,pLinearTable);
+		//show(Stack,pStack);
+		if(unit[i]._operator != 0)
+		{
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '$')
+			{
+				is_valid = false;
+				break;
+			}
+			while(pStack != 0 && cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '>')
+			{
+				LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
+			}
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '=')
+			{
+				if(Stack[pStack-1]._operator == '(' && unit[i]._operator == ')')
+					pStack--;
+			}
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '<')
+			{
+				Stack[pStack++]._operator = unit[i]._operator;
+			}
+		}
+		else
+		{
+			LinearTable[pLinearTable++].operand = unit[i].operand;
+		}
+		if(unit[i]._operator != '#')
+			i++;
+	}
+
+	for(i=0;i<pLinearTable-1 && is_valid;i++)
+	{
+		LinearTable[i].next = &LinearTable[i+1];
+	}
+	LinearTable[i].next = NULL;
+
+	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = LinearTable[0].next,*pOperator = LinearTable[0].next->next;
+	while(is_valid && operand_1->next != NULL)
+	{
+		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
+		//show(LinearTable,0);
+		operand_2 = LinearTable[0].next;
+		pOperator = LinearTable[0].next->next;
+
+		while(pOperator != NULL && pOperator->_operator == 0)
+		{
+			operand_1 = operand_1->next;
+			operand_2 = operand_2->next;
+			pOperator = pOperator->next;
+		}
+
+		switch(pOperator->_operator)
+		{
+		case '+':
+			operand_1->operand = operand_1->operand + operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '-':
+			operand_1->operand = operand_1->operand - operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '*':
+			operand_1->operand = operand_1->operand * operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '/':
+			operand_1->operand = operand_1->operand / operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		}
+		operand_1 = &LinearTable[0];
+	}
+
+	if(is_valid)
+		result = operand_1->operand;
+	else
+		result = -1;
+	free(LinearTable);
+	free(Stack);
+	free(unit);
+	return result;
 }
 
 void ui_mainloop() {

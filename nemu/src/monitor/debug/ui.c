@@ -366,7 +366,7 @@ static int calc(char *args)
 		//show(LinearTable,0);
 		if(LinearTable[0].next->_operator == '@')
 		{
-			printf("is in @\n");
+			//printf("is in @\n");
 			operand_2 = &LinearTable[0];
 			pOperator = LinearTable[0].next;
 		}

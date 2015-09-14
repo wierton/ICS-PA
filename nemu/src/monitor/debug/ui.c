@@ -277,6 +277,8 @@ static int calc(char *args)
 				unit[pUnit++].operand = cpu.esp;
 			else if(strcmp(reg,"EBP") == 0)
 				unit[pUnit++].operand = cpu.ebp;
+			else if(strcmp(reg,"EIP") == 0)
+				unit[pUnit++].operand = cpu.eip;
 			else
 				is_valid = false;
 			i+=3;

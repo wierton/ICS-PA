@@ -52,7 +52,7 @@ void strupr(char *args)
 struct EXPR 
 {
 	struct EXPR *next;
-	int operand;
+	uint32_t operand;
 	char _operator;
 };
 
@@ -386,7 +386,7 @@ static int calc(char *args)
 		switch(pOperator->_operator)
 		{
 		case '@':
-			operand_2->operand = *((unsigned int *)(operand_2->operand));
+			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
 			operand_2->next = pOperator->next;
 			break;
 		case '+':

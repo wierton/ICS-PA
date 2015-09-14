@@ -357,7 +357,7 @@ static int calc(char *args)
 	}
 	LinearTable[i].next = NULL;
 
-	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = LinearTable[0].next,*pOperator = LinearTable[0].next->next;
+	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = NULL,*pOperator = NULL;
 	while(is_valid && operand_1->next != NULL)
 	{
 		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);

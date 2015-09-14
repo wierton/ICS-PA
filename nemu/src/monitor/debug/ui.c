@@ -9,15 +9,16 @@
 
 void cpu_exec(uint32_t);
 
-char cmp_table[][7] =
+char cmp_table[][8] =
 {
-	{'>','>','<','<','<','>','>'},
-	{'>','>','<','<','<','>','>'},
-	{'>','>','>','>','<','>','>'},
-	{'>','>','>','>','<','>','>'},
-	{'<','<','<','<','<','=','$'},
-	{'>','>','>','>','$','>','>'},
-	{'<','<','<','<','<','$','='}
+	{'>','>','<','<','<','>','<','>'},
+	{'>','>','<','<','<','>','<','>'},
+	{'>','>','>','>','<','>','<','>'},
+	{'>','>','>','>','<','>','<','>'},
+	{'<','<','<','<','<','=','<','$'},
+	{'>','>','>','>','$','>','<','>'},
+	{'>','>','>','>','<','$','=','>'},
+	{'<','<','<','<','<','$','<','='}
 };
 
 int swap_table(char c)
@@ -30,7 +31,8 @@ int swap_table(char c)
 		case '/':return 3;
 		case '(':return 4;
 		case ')':return 5;
-		case '#':return 6;
+		case '@':return 6;
+		case '#':return 7;
 	}
 	return -1;
 }
@@ -243,6 +245,11 @@ static int calc(char *args)
 		case '+':
 		case '-':
 		case '*':
+			if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))
+			{
+				unit[pUnit++]._operator = '@';
+				break;
+			}
 		case '/':
 		case '(':
 		case ')':
@@ -323,7 +330,13 @@ static int calc(char *args)
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '=')
 			{
 				if(Stack[pStack-1]._operator == '(' && unit[i]._operator == ')')
+				{
 					pStack--;
+					if(pStack >0 && Stack[pStack-1]._operator == '@')
+					{
+						LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
+					}
+				}
 			}
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '<')
 			{
@@ -349,13 +362,19 @@ static int calc(char *args)
 	{
 		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
 		//show(LinearTable,0);
-		if(LinearTable[0].next == NULL || LinearTable[0].next->next == NULL)
+		if(LinearTable[0].next->_operator == '@')
 		{
-			is_valid = false;
-			break;
+			printf("is in @\n");
+			operand_2 = &LinearTable[0];
+			pOperator = LinearTable[0].next;
 		}
-		operand_2 = LinearTable[0].next;
-		pOperator = LinearTable[0].next->next;
+		else if(LinearTable[0].next->next != NULL)
+		{
+			operand_2 = LinearTable[0].next;
+			pOperator = LinearTable[0].next->next;
+		}
+		else
+			is_valid = false;
 
 		while(pOperator != NULL && pOperator->_operator == 0)
 		{
@@ -366,6 +385,10 @@ static int calc(char *args)
 
 		switch(pOperator->_operator)
 		{
+		case '@':
+			operand_2->operand = *((unsigned int *)(operand_2->operand));
+			operand_2->next = pOperator->next;
+			break;
 		case '+':
 			operand_1->operand = operand_1->operand + operand_2->operand;
 			operand_1->next = pOperator->next;

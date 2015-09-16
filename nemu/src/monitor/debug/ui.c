@@ -154,7 +154,7 @@ static int cmd_x(char *args)
 		{
 			int i;
 			for(i=0;i<len;i++)
-				printf("0x%0x\t0x%0x\n",read_addr+i,swaddr_read(read_addr+i,4));
+				printf("0x%0x\t0x%0x\n",read_addr+4*i,swaddr_read(read_addr+4*i,4));
 		}
 	}
 	else

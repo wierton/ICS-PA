@@ -71,7 +71,7 @@ typedef struct token {
 	char _operator;
 } Token;
 
-Token tokens[32];
+Token tokens[64];
 
 int nr_token;
 
@@ -98,12 +98,17 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
-					case '+':break;
-					case '-':break;
-					case '*':break;
-					case '/':break;
-					case '(':break;
-					case ')':break;
+					case '+':tokens[nr_token++]._operator = '+';break;
+					case '-':tokens[nr_token++]._operator = '-';break;
+					case '*':tokens[nr_token++]._operator = '*';break;
+					case '/':tokens[nr_token++]._operator = '/';break;
+					case '(':tokens[nr_token++]._operator = '(';break;
+					case ')':tokens[nr_token++]._operator = ')';break;
+					case NUM:
+							 tokens[nr_token++]._operator = '\0';
+							 sscanf(substr_start,"%u", &(tokens[nr_token++].operand));
+							 break;
+					case HEX:break;
 					default: panic("please implement me");
 				}
 

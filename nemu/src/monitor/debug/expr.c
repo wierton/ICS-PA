@@ -55,12 +55,24 @@ void init_regex() {
 	}
 }
 
+/*
 typedef struct token {
 	int type;
 	char str[32];
 } Token;
 
 Token tokens[32];
+int nr_token;
+*/
+
+typedef struct token {
+	struct token *next;
+	uint32_t operand;
+	char _operator;
+} Token;
+
+Token tokens[32];
+
 int nr_token;
 
 static bool make_token(char *e) {

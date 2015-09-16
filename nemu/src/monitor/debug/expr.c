@@ -26,7 +26,7 @@ static struct rule {
 	{"\\+", '+'},					// plus
 	{"\\-", '-'},					//minus
 	{"\\*", '*'},					//multiply
-	{"\\/", '\\'},					//divide
+	{"\\/", '/'},					//divide
 	{"(", '('},						//left parenthese
 	{")", ')'},						//right parethese
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
@@ -55,25 +55,21 @@ void init_regex() {
 	}
 }
 
-/*
+
 typedef struct token {
 	int type;
 	char str[32];
 } Token;
 
 Token tokens[32];
-int nr_token;
-*/
 
-typedef struct token {
+int nr_token;
+
+struct EXPR {
 	struct token *next;
 	uint32_t operand;
 	char _operator;
-} Token;
-
-Token tokens[64];
-
-int nr_token;
+};
 
 static bool make_token(char *e) {
 	int position = 0;
@@ -86,7 +82,6 @@ static bool make_token(char *e) {
 		/* Try all rules one by one. */
 		for(i = 0; i < NR_REGEX; i ++) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-				printf("%s\n",e);
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
@@ -101,7 +96,7 @@ static bool make_token(char *e) {
 				//printf("%s\n",substr_start);
 
 				switch(rules[i].token_type) {
-					case '+':tokens[nr_token++]._operator = '+';break;
+					/*case '+':tokens[nr_token++]._operator = '+';break;
 					case '-':tokens[nr_token++]._operator = '-';break;
 					case '*':tokens[nr_token++]._operator = '*';break;
 					case '/':tokens[nr_token++]._operator = '/';break;
@@ -111,7 +106,7 @@ static bool make_token(char *e) {
 							 tokens[nr_token++]._operator = '\0';
 							 //sscanf(substr_start,"%u", &(tokens[nr_token++].operand));
 							 break;
-					case HEX:break;
+					case HEX:break;*/
 					default: panic("please implement me");
 				}
 

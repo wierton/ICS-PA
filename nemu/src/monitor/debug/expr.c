@@ -29,7 +29,7 @@ static struct rule {
 	{"\\/", '\\'},					//divide
 	{"(", '('},						//left parenthese
 	{")", ')'},						//right parethese
-	{"0x[0-9a-fA-F]+"},				//hex
+	{"0[xX][0-9a-fA-F]+"},				//hex
 	{"[0-9]+"},						//number
 	{"==", EQ}						// equal
 };

@@ -108,7 +108,7 @@ static bool make_token(char *e) {
 					case ')':tokens[nr_token++]._operator = ')';break;
 					case NUM:
 							 tokens[nr_token++]._operator = '\0';
-							 sscanf(substr_start,"%u", &(tokens[nr_token++].operand));
+							 //sscanf(substr_start,"%u", &(tokens[nr_token++].operand));
 							 break;
 					case HEX:break;
 					default: panic("please implement me");

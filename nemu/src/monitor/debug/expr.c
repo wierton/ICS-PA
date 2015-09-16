@@ -97,7 +97,7 @@ static bool make_token(char *e) {
 				 * types of tokens, some extra actions should be performed.
 				 */
 
-				printf("%s\n",substr_start);
+				//printf("%s\n",substr_start);
 
 				switch(rules[i].token_type) {
 					case '+':tokens[nr_token++]._operator = '+';break;

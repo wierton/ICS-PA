@@ -24,11 +24,11 @@ static struct rule {
 
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
-	{"\\-", '-'},					//minus
+	{"-", '-'},					//minus
 	{"\\*", '*'},					//multiply
-	{"\\/", '/'},					//divide
-	{"(", '('},						//left parenthese
-	{")", ')'},						//right parethese
+	{"/", '/'},					//divide
+	{"\\(", '('},						//left parenthese
+	{"\\)", ')'},						//right parethese
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
 	{"[0-9]+", NUM},						//number
 	{"==", EQ}						// equal

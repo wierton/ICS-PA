@@ -191,7 +191,7 @@ static bool make_token(char *e) {
 						else if(strcmp(reg,"EIP") == 0)
 							unit[pUnit++].operand = cpu.eip;
 						else
-							printf("warning:%s,no such reg!\n",reg);
+							printf("Warning:%s,no such reg!\n",reg);
 						break;
 					default: panic("please implement me");
 				}
@@ -306,6 +306,7 @@ uint32_t eval(char *e, bool *success) {
 		switch(pOperator->_operator)
 		{
 		case '@':
+			printf("%u\n",(uint32_t)(operand_2->operand));
 			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
 			operand_2->next = pOperator->next;
 			break;

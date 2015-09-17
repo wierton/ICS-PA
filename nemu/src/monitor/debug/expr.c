@@ -116,7 +116,10 @@ static bool make_token(char *e) {
 							 unit[pUnit]._operator = '\0';
 							 sscanf(substr_start,"%d", &(unit[pUnit++].operand));
 							 break;
-					case HEX:break;
+					case HEX:
+							 unit[pUnit]._operator = '\0';
+							 sscanf(substr_start + 2,"%d",&(unit[pUnit++].operand));
+							 break;
 					default: panic("please implement me");
 				}
 
@@ -129,6 +132,8 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
+
+	unit[pUnit++]._operator = '#';
 
 	return true; 
 }

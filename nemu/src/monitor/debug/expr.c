@@ -166,7 +166,7 @@ static bool make_token(char *e) {
 							 break;
 					case HEX:
 							 unit[pUnit]._operator = '\0';
-							 sscanf(substr_start + 2,"%d",&(unit[pUnit++].operand));
+							 sscanf(substr_start + 2,"%x",&(unit[pUnit++].operand));
 							 break;
 					case REG:
 						strncpy(reg,substr_start+1,3);
@@ -192,7 +192,7 @@ static bool make_token(char *e) {
 							unit[pUnit++].operand = cpu.eip;
 						else
 							printf("warning:%s,no such reg!\n",reg);
-						 break;
+						break;
 					default: panic("please implement me");
 				}
 

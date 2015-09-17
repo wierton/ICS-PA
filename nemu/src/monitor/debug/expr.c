@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, NUM, HEX, EQ, PLUS, MINUS, MUL, DIV, LPA, RPA
+	NOTYPE = 256,REG, NUM, HEX, EQ, PLUS, MINUS, MUL, DIV, LPA, RPA
 
 	/* TODO: Add more token types */
 
@@ -76,6 +76,7 @@ static struct rule {
 	{"\\)", ')'},						//right parethese
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
 	{"[0-9]+", NUM},						//number
+	{"%[a-zA-Z]{3}", REG},
 	{"==", EQ}						// equal
 };
 
@@ -141,7 +142,9 @@ static bool make_token(char *e) {
 				 * types of tokens, some extra actions should be performed.
 				 */
 
-				printf("%s\n",substr_start);
+				//printf("%s\n",substr_start);
+				char reg[4];
+				reg[3] = 0;
 
 				switch(rules[i].token_type) {
 					case '+':unit[pUnit++]._operator = '+';break;
@@ -165,6 +168,31 @@ static bool make_token(char *e) {
 							 unit[pUnit]._operator = '\0';
 							 sscanf(substr_start + 2,"%d",&(unit[pUnit++].operand));
 							 break;
+					case REG:
+						strncpy(reg,substr_start+1,3);
+						reg[3] = 0;
+						strupr(reg);
+						if(strcmp(reg,"EAX") == 0)
+							unit[pUnit++].operand = cpu.eax;
+						else if(strcmp(reg,"EBX") == 0)
+							unit[pUnit++].operand = cpu.ebx;
+						else if(strcmp(reg,"ECX") == 0)
+							unit[pUnit++].operand = cpu.ecx;
+						else if(strcmp(reg,"EDX") == 0)
+							unit[pUnit++].operand = cpu.edx;
+						else if(strcmp(reg,"ESI") == 0)
+							unit[pUnit++].operand = cpu.esi;
+						else if(strcmp(reg,"EDI") == 0)
+							unit[pUnit++].operand = cpu.edi;
+						else if(strcmp(reg,"ESP") == 0)
+							unit[pUnit++].operand = cpu.esp;
+						else if(strcmp(reg,"EBP") == 0)
+							unit[pUnit++].operand = cpu.ebp;
+						else if(strcmp(reg,"EIP") == 0)
+							unit[pUnit++].operand = cpu.eip;
+						else
+							printf("warning:%s,no such reg!\n",reg);
+						 break;
 					default: panic("please implement me");
 				}
 

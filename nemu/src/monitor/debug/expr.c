@@ -13,6 +13,8 @@ enum {
 
 };
 
+
+
 static struct rule {
 	char *regex;
 	int token_type;

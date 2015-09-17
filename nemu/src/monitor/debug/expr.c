@@ -263,7 +263,7 @@ uint32_t eval(char *e, bool *success) {
 	int i = 0;
 	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
 	{
-		//show(LinearTable,pLinearTable);
+		showlink(LinearTable,pLinearTable);
 		//show(Stack,pStack);
 		if(unit[i]._operator != 0)
 		{

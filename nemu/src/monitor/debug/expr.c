@@ -13,7 +13,6 @@ enum {
 
 };
 
-
 char cmp_table[][8] =
 {
 	{'>','>','<','<','<','>','<','>'},
@@ -306,6 +305,7 @@ uint32_t eval(char *e, bool *success) {
 		result = operand_1->operand;
 	else
 		result = -1;
+	printf("%d\n",result);
 	free(LinearTable);
 	free(Stack);
 	return result;

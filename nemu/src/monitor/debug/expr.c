@@ -67,21 +67,23 @@ int nr_token;
 
 struct EXPR {
 	struct token *next;
-	uint32_t operand;
+	int operand;
 	char _operator;
-};
+} unit[64];
+
+int pUnit;
 
 static bool make_token(char *e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;
 	
+	pUnit = 0;
 	nr_token = 0;
 
 	while(e[position] != '\0') {
 		/* Try all rules one by one. */
 		for(i = 0; i < NR_REGEX; i ++) {
-			printf("position:%d,NR_REGEX:%d\n",position,NR_REGEX);
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
@@ -97,17 +99,17 @@ static bool make_token(char *e) {
 				printf("%s\n",substr_start);
 
 				switch(rules[i].token_type) {
-					/*case '+':tokens[nr_token++]._operator = '+';break;
-					case '-':tokens[nr_token++]._operator = '-';break;
-					case '*':tokens[nr_token++]._operator = '*';break;
-					case '/':tokens[nr_token++]._operator = '/';break;
-					case '(':tokens[nr_token++]._operator = '(';break;
-					case ')':tokens[nr_token++]._operator = ')';break;
+					case '+':unit[pUnit++]._operator = '+';break;
+					case '-':unit[pUnit++]._operator = '-';break;
+					case '*':unit[pUnit++]._operator = '*';break;
+					case '/':unit[pUnit++]._operator = '/';break;
+					case '(':unit[pUnit++]._operator = '(';break;
+					case ')':unit[pUnit++]._operator = ')';break;
 					case NUM:
-							 tokens[nr_token++]._operator = '\0';
-							 //sscanf(substr_start,"%u", &(tokens[nr_token++].operand));
+							 unit[pUnit]._operator = '\0';
+							 sscanf(substr_start,"%d", &(unit[pUnit++].operand));
 							 break;
-					case HEX:break;*/
+					case HEX:break;
 					default: panic("please implement me");
 				}
 

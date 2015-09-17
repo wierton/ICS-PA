@@ -1,5 +1,5 @@
 #include "nemu.h"
-
+#include <malloc.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -14,6 +14,50 @@ enum {
 };
 
 
+char cmp_table[][8] =
+{
+	{'>','>','<','<','<','>','<','>'},
+	{'>','>','<','<','<','>','<','>'},
+	{'>','>','>','>','<','>','<','>'},
+	{'>','>','>','>','<','>','<','>'},
+	{'<','<','<','<','<','=','<','$'},
+	{'>','>','>','>','$','>','<','>'},
+	{'>','>','>','>','<','$','=','>'},
+	{'<','<','<','<','<','$','<','='}
+};
+
+int swap_table(char c)
+{
+	switch(c)
+	{
+		case '+':return 0;
+		case '-':return 1;
+		case '*':return 2;
+		case '/':return 3;
+		case '(':return 4;
+		case ')':return 5;
+		case '@':return 6;
+		case '#':return 7;
+	}
+	return -1;
+}
+
+void strupr(char *args)
+{
+	int i,len = strlen(args);
+	for(i=0;i<len;i++)
+	{
+		if(args[i]>='a' && args[i]<='z')
+		{
+			args[i] = args[i]-'a'+'A';
+		}
+	}
+}
+
+char cmp_operator(char a,char b)
+{
+	return cmp_table[swap_table(a)][swap_table(b)];
+}
 
 static struct rule {
 	char *regex;
@@ -68,7 +112,7 @@ Token tokens[32];
 int nr_token;
 
 struct EXPR {
-	struct token *next;
+	struct EXPR *next;
 	int operand;
 	char _operator;
 } unit[64];
@@ -149,6 +193,121 @@ uint32_t eval(char *e, bool *success) {
 
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
-	return 0;
+
+	bool is_valid = true;
+	int result = 0;	
+	struct EXPR *LinearTable = (struct EXPR*)malloc(pUnit*sizeof(struct EXPR));
+	memset(LinearTable,0,pUnit*sizeof(struct EXPR));
+	int pLinearTable = 0;
+	struct EXPR *Stack = (struct EXPR*)malloc(pUnit*sizeof(struct EXPR));
+	memset(Stack,0,pUnit*sizeof(struct EXPR));
+	int pStack = 0;
+	Stack[pStack++]._operator = '#';
+
+	int i = 0;
+	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
+	{
+		//show(LinearTable,pLinearTable);
+		//show(Stack,pStack);
+		if(unit[i]._operator != 0)
+		{
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '$')
+			{
+				is_valid = false;
+				break;
+			}
+			while(pStack != 0 && cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '>')
+			{
+				LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
+			}
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '=')
+			{
+				if(Stack[pStack-1]._operator == '(' && unit[i]._operator == ')')
+				{
+					pStack--;
+					if(pStack >0 && Stack[pStack-1]._operator == '@')
+					{
+						LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
+					}
+				}
+			}
+			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '<')
+			{
+				Stack[pStack++]._operator = unit[i]._operator;
+			}
+		}
+		else
+		{
+			LinearTable[pLinearTable++].operand = unit[i].operand;
+		}
+		if(unit[i]._operator != '#')
+			i++;
+	}
+
+	for(i=0;i<pLinearTable-1 && is_valid;i++)
+	{
+		LinearTable[i].next = &LinearTable[i+1];
+	}
+	LinearTable[i].next = NULL;
+
+	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = NULL,*pOperator = NULL;
+	while(is_valid && operand_1->next != NULL)
+	{
+		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
+		//show(LinearTable,0);
+		if(LinearTable[0].next->_operator == '@')
+		{
+			//printf("is in @\n");
+			operand_2 = &LinearTable[0];
+			pOperator = LinearTable[0].next;
+		}
+		else if(LinearTable[0].next->next != NULL)
+		{
+			operand_2 = LinearTable[0].next;
+			pOperator = LinearTable[0].next->next;
+		}
+		else
+			is_valid = false;
+
+		while(pOperator != NULL && pOperator->_operator == 0)
+		{
+			operand_1 = operand_1->next;
+			operand_2 = operand_2->next;
+			pOperator = pOperator->next;
+		}
+
+		switch(pOperator->_operator)
+		{
+		case '@':
+			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
+			operand_2->next = pOperator->next;
+			break;
+		case '+':
+			operand_1->operand = operand_1->operand + operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '-':
+			operand_1->operand = operand_1->operand - operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '*':
+			operand_1->operand = operand_1->operand * operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case '/':
+			operand_1->operand = operand_1->operand / operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		}
+		operand_1 = &LinearTable[0];
+	}
+
+	if(is_valid)
+		result = operand_1->operand;
+	else
+		result = -1;
+	free(LinearTable);
+	free(Stack);
+	return result;
 }
 

@@ -221,6 +221,7 @@ static bool make_token(char *e) {
 							unit[pUnit++].operand = cpu.eip;
 						else
 							printf("Warning:%s,no such reg!\n",reg);
+						printf("%s:%d\n",reg,unit[pUnit].operand);
 						break;
 					default: panic("please implement me");
 				}

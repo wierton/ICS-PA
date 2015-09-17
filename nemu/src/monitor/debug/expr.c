@@ -311,6 +311,7 @@ uint32_t eval(char *e, bool *success) {
 	while(is_valid && operand_1->next != NULL)
 	{
 		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
+		printf("2:");
 		showlink(LinearTable,0);
 		if(LinearTable[0].next->_operator == '@')
 		{
@@ -324,7 +325,10 @@ uint32_t eval(char *e, bool *success) {
 			pOperator = LinearTable[0].next->next;
 		}
 		else
+		{
 			is_valid = false;
+			break;
+		}
 
 		while(pOperator != NULL && pOperator->_operator == 0)
 		{

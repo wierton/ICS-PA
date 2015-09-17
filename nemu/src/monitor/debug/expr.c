@@ -101,7 +101,6 @@ void init_regex() {
 	}
 }
 
-
 typedef struct token {
 	int type;
 	char str[32];
@@ -118,6 +117,36 @@ struct EXPR {
 } unit[64];
 
 int pUnit;
+
+void showlink(struct EXPR *start,int pStart)
+{
+    while(start != NULL)
+    {
+	    if(start->_operator != 0)
+		{
+			printf("%c ",start->_operator);
+		}
+		else
+			printf("%d ",start->operand);
+		start = start->next;
+	}
+	printf("\n");
+}
+
+void showarray(struct EXPR *start,int pStart)
+{
+	int i;
+	for(i=0;i<pStart;i++)
+	{
+		if(start[i]._operator != 0)
+		{
+			printf("%c ",start[i]._operator);
+		}
+		else
+			printf("%d ",start[i].operand);
+	}
+	printf("\n");
+}
 
 static bool make_token(char *e) {
 	int position = 0;
@@ -281,7 +310,7 @@ uint32_t eval(char *e, bool *success) {
 	while(is_valid && operand_1->next != NULL)
 	{
 		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
-		//show(LinearTable,0);
+		showlink(LinearTable,0);
 		if(LinearTable[0].next->_operator == '@')
 		{
 			//printf("is in @\n");

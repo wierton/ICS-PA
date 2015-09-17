@@ -101,7 +101,14 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case '+':unit[pUnit++]._operator = '+';break;
 					case '-':unit[pUnit++]._operator = '-';break;
-					case '*':unit[pUnit++]._operator = '*';break;
+					case '*':
+							 if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))
+							 {
+								 unit[pUnit++]._operator = '@';
+								 break;
+							 }
+							 else
+								 unit[pUnit++]._operator = '*';break;
 					case '/':unit[pUnit++]._operator = '/';break;
 					case '(':unit[pUnit++]._operator = '(';break;
 					case ')':unit[pUnit++]._operator = ')';break;

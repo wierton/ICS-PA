@@ -164,9 +164,13 @@ static int cmd_x(char *args)
 
 static int cmd_p(char *args)
 {
-//	uint32_t result = 0;
+	int result = 0;
 	bool is_success = true;
-	eval(args,&is_success);
+	result = eval(args,&is_success);
+	if(is_success)
+		printf("%d\n",result);
+	else
+		printf("Invalid Expression!\n");
 	return 0;
 }
 

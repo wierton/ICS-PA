@@ -377,7 +377,7 @@ uint32_t eval(char *e, bool *success) {
 		*success = false;
 		result = -1;
 	}
-	printf("%d\n",result);
+	//printf("%d\n",result);
 	free(LinearTable);
 	free(Stack);
 	return result;

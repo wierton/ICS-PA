@@ -68,7 +68,6 @@ static struct rule {
 	 * Pay attention to the precedence level of different rules.
 	 */
 
-	{"[+-]+[0-9]+", NUM},                       //number
 	{" +", NOTYPE},				// spaces
 	{"\t+", NOTYPE},
 	{"\\++", '+'},					// plus
@@ -79,6 +78,7 @@ static struct rule {
 	{"\\(", '('},						//left parenthese
 	{"\\)", ')'},						//right parethese
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
+	{"[0-9]+", NUM},						//number
 	{"%[a-zA-Z]{3}", REG},
 	{"==", EQ}						// equal
 };

@@ -273,6 +273,7 @@ uint32_t eval(char *e, bool *success) {
 		//showarray(Stack,pStack);
 		if(unit[i]._operator != 0)
 		{
+			assert(pStack > 0);
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '$')
 			{
 				is_valid = false;

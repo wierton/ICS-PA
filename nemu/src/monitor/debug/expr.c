@@ -70,9 +70,8 @@ static struct rule {
 
 	{" +", NOTYPE},				// spaces
 	{"\t+", NOTYPE},
-	{"\\++", '+'},					// plus
-	{"--", '+'},
-	{"-|+-", '-'},					//minus
+	{"\\+", '+'},					// plus
+	{"-", '-'},					//minus
 	{"\\*", '*'},					//multiply
 	{"/", '/'},					//divide
 	{"\\(", '('},						//left parenthese

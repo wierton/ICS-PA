@@ -214,7 +214,9 @@ static bool make_token(char *e) {
 								unit[pUnit++]._operator ='\0';
 								unit[pUnit++]._operator ='-';
 							}
-							unit[pUnit++]._operator = '-';break;
+							else
+								unit[pUnit++]._operator = '-';
+							break;
 					case '*':
 							 if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))
 							 {

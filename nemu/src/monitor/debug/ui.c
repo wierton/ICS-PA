@@ -123,7 +123,7 @@ static int cmd_x(char *args)
 	char *para;
 	size_t len;
 	uint32_t read_addr = 0;
-	bool is_loop = true,is_innum = false,is_success;
+	bool is_loop = true,is_innum = false,is_success = false;
 
 	for(para=args;*para != '\0' && is_loop;para++)
 	{

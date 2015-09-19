@@ -112,11 +112,13 @@ Token tokens[32];
 
 int nr_token;
 
+#define UnitNum 64
+
 struct EXPR {
 	struct EXPR *next;
 	int operand;
 	char _operator;
-} unit[64];
+} unit[UnitNum];
 
 int pUnit;
 

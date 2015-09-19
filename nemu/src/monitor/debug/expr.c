@@ -276,7 +276,16 @@ uint32_t eval(char *e, bool *success) {
 			assert(pStack > 0);
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '$')
 			{
-				is_valid = false;
+				if(Stack[pStack-1]._operator == '(' && unit[i]._operator == '#')
+				{
+					pStack--;
+					if(pStack >0 && Stack[pStack-1]._operator == '@')
+					{
+						LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
+					}
+				}
+				else
+					is_valid = false;
 				break;
 			}
 			while(pStack != 0 && cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '>')

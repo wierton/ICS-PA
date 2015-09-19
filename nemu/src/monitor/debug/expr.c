@@ -200,6 +200,7 @@ static bool make_token(char *e) {
 							 sscanf(substr_start + 2,"%x",&(unit[pUnit++].operand));
 							 break;
 					case REG:
+						unit[pUnit]._operator = '\0';
 						strncpy(reg,substr_start+1,3);
 						reg[3] = 0;
 						strupr(reg);
@@ -223,7 +224,7 @@ static bool make_token(char *e) {
 							unit[pUnit++].operand = cpu.eip;
 						else
 							printf("Warning:%s,no such reg!\n",reg);
-						printf("%s:%d\n",reg,unit[pUnit].operand);
+						//printf("%s:%d\n",reg,unit[pUnit].operand);
 						break;
 					default: panic("please implement me");
 				}

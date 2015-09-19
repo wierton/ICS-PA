@@ -70,7 +70,7 @@ static struct rule {
 
 	{" +", NOTYPE},				// spaces
 	{"\t+", NOTYPE},
-	{"\\+", '+'},					// plus
+	{"\\++", '+'},					// plus
 	{"-", '-'},					//minus
 	{"\\*", '*'},					//multiply
 	{"/", '/'},					//divide
@@ -188,35 +188,8 @@ static bool make_token(char *e) {
 
 				switch(rules[i].token_type) {
 					case NOTYPE:break;
-					case '+':
-							if(pUnit == 0
-							|| unit[pUnit-1]._operator == '+'
-							|| unit[pUnit-1]._operator == '-'
-							|| unit[pUnit-1]._operator == '*'
-							|| unit[pUnit-1]._operator == '/');
-							else
-								unit[pUnit++]._operator = '+';break;
-					case '-':
-							if(pUnit == 0)
-							{
-								unit[pUnit].operand = 0;
-								unit[pUnit++]._operator ='\0';
-								unit[pUnit++]._operator ='-';
-							}
-							else if(unit[pUnit-1]._operator == '+')
-								unit[pUnit-1]._operator ='-';
-							else if(unit[pUnit-1]._operator == '-')
-								unit[pUnit-1]._operator ='+';
-							else if(unit[pUnit-1]._operator == '*'
-									||unit[pUnit-1]._operator == '/')
-							{
-								unit[pUnit].operand = 1;
-								unit[pUnit++]._operator ='\0';
-								unit[pUnit++]._operator ='-';
-							}
-							else
-								unit[pUnit++]._operator = '-';
-							break;
+					case '+':unit[pUnit++]._operator = '+';break;
+					case '-':unit[pUnit++]._operator = '-';break;
 					case '*':
 							 if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))
 							 {

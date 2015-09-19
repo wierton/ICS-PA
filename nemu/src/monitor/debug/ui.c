@@ -119,46 +119,42 @@ static int cmd_info(char *args)
 
 static int cmd_x(char *args)
 {
-	char xar;
+	int i;
+	char *para;
 	size_t len;
-	uint32_t read_addr;
-	char *para = args;
+	uint32_t read_addr = 0;
+	bool is_loop = true,is_innum = false,is_success;
 
-	if(*para == 'x' || *para == 'X')
+	for(para=args;*para != '\0' && is_loop;para++)
 	{
-		sscanf(para+1,"0x%x",&read_addr);
-		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,4));
-	}
-	else if(*para == 's' || *para == 'S')
-	{
-//		char ch;
-		sscanf(para+1,"0x%x",&read_addr);
-		printf("0x%0x\t0x%0x\n",read_addr,swaddr_read(read_addr,1));
-	}
-	else if(*para == 'c' || *para == 'C')
-	{
-	}
-	else if(*para >= '0' && *para <= '9')
-	{
-		sscanf(para,"%u%c0x%x",&len,&xar,&read_addr);
-//		printf("%u :%c: %x",len,xar,read_addr);
-		if(xar == 'x' || xar == 'X')
-		{}
-		else if(xar == 's' || xar == 'S')
+		switch(*para)
 		{
-			
+			case '0':case '1':case '2':case '3':case '4':
+			case '5':case '6':case '7':case '8':case '9':
+				is_innum = true;
+				sscanf(para,"%u",&len);
+				break;
+			case ' ':case '\t':
+				if(is_innum)
+				{
+					is_loop = false;
+					read_addr = eval(para,&is_success);
+				}
+				break;
+			default:panic("Invalid Parameter!\n");break;
 		}
-		else if(xar == 'c' || xar == 'C')
-		{}
-		else if(xar == ' ' || xar == '\t')
-		{
-			int i;
-			for(i=0;i<len;i++)
-				printf("0x%0x\t0x%0x\n",read_addr+4*i,swaddr_read(read_addr+4*i,4));
-		}
+	}
+	
+	if(is_success)
+	{
+		for(i=0;i<len;i++)
+			printf("0x%0u\t%u\n",read_addr,swaddr_read(read_addr+4*i,4));
 	}
 	else
-		printf("%s\n","Unknown parameter!");
+	{
+		printf("Invalid Expression!\n");
+	}
+	
 	return 0;
 }
 

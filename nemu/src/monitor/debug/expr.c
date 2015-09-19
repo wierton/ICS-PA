@@ -67,7 +67,8 @@ static struct rule {
 	 * Pay attention to the precedence level of different rules.
 	 */
 
-	{" +",	NOTYPE},				// spaces
+	{" +", NOTYPE},				// spaces
+	{"\t+", NOTYPE},
 	{"\\+", '+'},					// plus
 	{"-", '-'},					//minus
 	{"\\*", '*'},					//multiply
@@ -176,6 +177,7 @@ static bool make_token(char *e) {
 				reg[3] = 0;
 
 				switch(rules[i].token_type) {
+					case NOTYPE:break;
 					case '+':unit[pUnit++]._operator = '+';break;
 					case '-':unit[pUnit++]._operator = '-';break;
 					case '*':

@@ -72,7 +72,7 @@ static struct rule {
 	{"\t+", NOTYPE},
 	{"\\++", '+'},					// plus
 	{"--", '+'},
-	{"(-|-+|+-)", '-'},					//minus
+	{"-|-+|+-", '-'},					//minus
 	{"\\*", '*'},					//multiply
 	{"/", '/'},					//divide
 	{"\\(", '('},						//left parenthese

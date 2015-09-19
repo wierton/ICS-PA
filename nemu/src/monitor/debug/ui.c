@@ -148,7 +148,7 @@ static int cmd_x(char *args)
 		}
 	}
 
-	printf("len:%u\n",len);
+	//printf("len:%u\n",len);
 	
 	if(is_success)
 	{

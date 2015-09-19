@@ -264,12 +264,12 @@ uint32_t eval(char *e, bool *success) {
 	int pStack = 0;
 	Stack[pStack++]._operator = '#';
 
-	showarray(unit,pUnit);
+	//showarray(unit,pUnit);
 	int i = 0;
 	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
 	{
-		showarray(LinearTable,pLinearTable);
-		showarray(Stack,pStack);
+		//showarray(LinearTable,pLinearTable);
+		//showarray(Stack,pStack);
 		if(unit[i]._operator != 0)
 		{
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '$')
@@ -343,7 +343,7 @@ uint32_t eval(char *e, bool *success) {
 		switch(pOperator->_operator)
 		{
 		case '@':
-			printf("%u\n",(uint32_t)(operand_2->operand));
+			//printf("%u\n",(uint32_t)(operand_2->operand));
 			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
 			operand_2->next = pOperator->next;
 			break;
@@ -368,9 +368,15 @@ uint32_t eval(char *e, bool *success) {
 	}
 
 	if(is_valid)
+	{
+		*success = true;
 		result = operand_1->operand;
+	}
 	else
+	{
+		*success = false;
 		result = -1;
+	}
 	printf("%d\n",result);
 	free(LinearTable);
 	free(Stack);

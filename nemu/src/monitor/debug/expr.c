@@ -263,6 +263,7 @@ uint32_t eval(char *e, bool *success) {
 	int pStack = 0;
 	Stack[pStack++]._operator = '#';
 
+	showarray(unit,pUnit);
 	int i = 0;
 	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
 	{
@@ -312,7 +313,6 @@ uint32_t eval(char *e, bool *success) {
 	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = NULL,*pOperator = NULL;
 	while(is_valid && operand_1->next != NULL)
 	{
-		//printf("%d %d %c\n",operand_1->operand,operand_2->operand,pOperator->_operator);
 		printf("2:");
 		showlink(LinearTable,0);
 		if(LinearTable[0].next->_operator == '@')

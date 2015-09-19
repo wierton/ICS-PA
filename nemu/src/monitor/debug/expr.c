@@ -196,7 +196,25 @@ static bool make_token(char *e) {
 							|| unit[pUnit-1]._operator == '/');
 							else
 								unit[pUnit++]._operator = '+';break;
-					case '-':unit[pUnit++]._operator = '-';break;
+					case '-':
+							if(pUnit == 0)
+							{
+								unit[pUnit].operand = 0;
+								unit[pUnit++]._operator ='\0';
+								unit[pUnit++]._operator ='-';
+							}
+							else if(unit[pUnit-1]._operator == '+')
+								unit[pUnit-1]._operator ='-';
+							else if(unit[pUnit-1]._operator == '-')
+								unit[pUnit-1]._operator ='+';
+							else if(unit[pUnit-1]._operator == '*'
+									||unit[pUnit-1]._operator == '/')
+							{
+								unit[pUnit].operand = 1;
+								unit[pUnit++]._operator ='\0';
+								unit[pUnit++]._operator ='-';
+							}
+							unit[pUnit++]._operator = '-';break;
 					case '*':
 							 if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))
 							 {

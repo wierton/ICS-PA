@@ -167,7 +167,8 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-//				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				assert(pUnit >= 0 && pUnit <= UnitNum);
+				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -179,9 +180,22 @@ static bool make_token(char *e) {
 				char reg[4];
 				reg[3] = 0;
 
+				if(pUnit > UnitNum)
+				{
+					printf("The expression is too long!\n");
+					return false;
+				}
+
 				switch(rules[i].token_type) {
 					case NOTYPE:break;
-					case '+':unit[pUnit++]._operator = '+';break;
+					case '+':
+							if(pUnit == 0
+							|| unit[pUnit-1]._operator == '+'
+							|| unit[pUnit-1]._operator == '-'
+							|| unit[pUnit-1]._operator == '*'
+							|| unit[pUnit-1]._operator == '/');
+							else
+								unit[pUnit++]._operator = '+';break;
 					case '-':unit[pUnit++]._operator = '-';break;
 					case '*':
 							 if(pUnit == 0 || (unit[pUnit-1]._operator != 0 && unit[pUnit-1]._operator != ')'))

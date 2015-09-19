@@ -131,8 +131,11 @@ static int cmd_x(char *args)
 		{
 			case '0':case '1':case '2':case '3':case '4':
 			case '5':case '6':case '7':case '8':case '9':
-				is_innum = true;
-				sscanf(para,"%u",&len);
+				if(!is_innum)
+				{
+					is_innum = true;
+					sscanf(para,"%u",&len);
+				}
 				break;
 			case ' ':case '\t':
 				if(is_innum)
@@ -144,6 +147,8 @@ static int cmd_x(char *args)
 			default:panic("Invalid Parameter!\n");break;
 		}
 	}
+
+	printf("len:%u\n",len);
 	
 	if(is_success)
 	{

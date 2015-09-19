@@ -71,6 +71,7 @@ static struct rule {
 	{" +", NOTYPE},				// spaces
 	{"\t+", NOTYPE},
 	{"\\++", '+'},					// plus
+	{"--", '+'},
 	{"-", '-'},					//minus
 	{"\\*", '*'},					//multiply
 	{"/", '/'},					//divide

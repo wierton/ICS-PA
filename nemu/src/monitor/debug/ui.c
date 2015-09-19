@@ -153,7 +153,7 @@ static int cmd_x(char *args)
 	if(is_success)
 	{
 		for(i=0;i<len;i++)
-			printf("0x%0u\t%u\n",read_addr,swaddr_read(read_addr+4*i,4));
+			printf("0x%0x\t%u\n",read_addr,swaddr_read(read_addr+4*i,4));
 	}
 	else
 	{

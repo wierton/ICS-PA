@@ -363,8 +363,8 @@ uint32_t eval(char *e, bool *success) {
 	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = NULL,*pOperator = NULL;
 	while(is_valid && operand_1->next != NULL)
 	{
-		//printf("2:");
-		//showlink(LinearTable,0);
+		printf("2:");
+		showlink(LinearTable,0);
 		if(LinearTable[0].next->_operator == '@' || LinearTable[0].next->_operator == NOR)
 		{
 			//printf("is in @\n");

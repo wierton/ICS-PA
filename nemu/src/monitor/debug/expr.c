@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256,REG, NUM, HEX, EQ, PLUS, MINUS, MUL, DIV, LPA, RPA
+	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR
 
 	/* TODO: Add more token types */
 
@@ -79,7 +79,10 @@ static struct rule {
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
 	{"[0-9]+", NUM},						//number
 	{"%[a-zA-Z]{3}", REG},
-	{"==", EQ}						// equal
+	{"==", EQ},						// equal
+	{"!=", NEQ},
+	{"&&", AND},
+	{"||",OR}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -304,13 +307,7 @@ uint32_t eval(char *e, bool *success) {
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '=')
 			{
 				if(Stack[pStack-1]._operator == '(' && unit[i]._operator == ')')
-				{
 					pStack--;
-					if(pStack >0 && Stack[pStack-1]._operator == '@')
-					{
-						LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
-					}
-				}
 			}
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '<')
 			{

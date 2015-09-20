@@ -43,10 +43,11 @@ int swap_table(int c)
 		case ')':return 5;
 		case EQ :return 6;
 		case NEQ:return 7;
-		case OR :return 8;
-		case NOR:return 9;
-		case '@':return 10;
-		case '#':return 11;
+		case AND:return 8;
+		case OR :return 9;
+		case NOR:return 10;
+		case '@':return 11;
+		case '#':return 12;
 	}
 	return -1;
 }

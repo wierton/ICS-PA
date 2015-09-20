@@ -31,7 +31,7 @@ char cmp_table[][13] =
 	{'<','<','<','<','<','$','<','<','<','<','<','<','='} /* # */
 };
 
-int swap_table(char c)
+int swap_table(int c)
 {
 	switch(c)
 	{
@@ -41,8 +41,12 @@ int swap_table(char c)
 		case '/':return 3;
 		case '(':return 4;
 		case ')':return 5;
-		case '@':return 6;
-		case '#':return 7;
+		case EQ :return 6;
+		case NEQ:return 7;
+		case OR :return 8;
+		case NOR:return 9;
+		case '@':return 10;
+		case '#':return 11;
 	}
 	return -1;
 }
@@ -59,7 +63,7 @@ void strupr(char *args)
 	}
 }
 
-char cmp_operator(char a,char b)
+char cmp_operator(int a,int b)
 {
 	return cmp_table[swap_table(a)][swap_table(b)];
 }

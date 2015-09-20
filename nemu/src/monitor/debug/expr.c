@@ -296,8 +296,8 @@ uint32_t eval(char *e, bool *success) {
 	int i = 0;
 	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
 	{
-		//showarray(LinearTable,pLinearTable);
-		//showarray(Stack,pStack);
+		showarray(LinearTable,pLinearTable);
+		showarray(Stack,pStack);
 		if(unit[i]._operator != 0)
 		{
 			assert(pStack > 0);
@@ -348,7 +348,7 @@ uint32_t eval(char *e, bool *success) {
 	{
 		//printf("2:");
 		//showlink(LinearTable,0);
-		if(LinearTable[0].next->_operator == '@')
+		if(LinearTable[0].next->_operator == '@' || LinearTable[0].next->_operator == NOR)
 		{
 			//printf("is in @\n");
 			operand_2 = &LinearTable[0];

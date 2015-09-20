@@ -391,7 +391,7 @@ uint32_t eval(char *e, bool *success) {
 			pOperator = pOperator->next;
 		}
 		assert(operand_1 != NULL && operand_2 != NULL && pOperator != NULL);
-		assert(operand_1->_operator != 0 && operand_2->_operator != 0 && pOperator->_operator != 0);
+		assert(operand_1->_operator == 0 && operand_2->_operator == 0 && pOperator->_operator != 0);
 		switch(pOperator->_operator)
 		{
 		case NOR:

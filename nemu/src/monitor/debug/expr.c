@@ -93,7 +93,7 @@ static struct rule {
 	{"!=", NEQ},
 	{"&&", AND},
 	{"||",OR},
-	{"!", NOR}
+	{"\\!", NOR}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )

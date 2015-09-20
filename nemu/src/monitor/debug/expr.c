@@ -92,7 +92,7 @@ static struct rule {
 	{"==", EQ},						// equal
 	{"!=", NEQ},
 	{"&&", AND},
-	{"||",OR},
+	{"\\|\\|",OR},
 	{"\\!", NOR}
 };
 

@@ -120,7 +120,7 @@ int nr_token;
 struct EXPR {
 	struct EXPR *next;
 	int operand;
-	char _operator;
+	int _operator;
 } unit[UnitNum];
 
 int pUnit;
@@ -204,6 +204,11 @@ static bool make_token(char *e) {
 					case '/':unit[pUnit++]._operator = '/';break;
 					case '(':unit[pUnit++]._operator = '(';break;
 					case ')':unit[pUnit++]._operator = ')';break;
+					case EQ :unit[pUnit++]._operator = EQ ;break;
+					case NEQ:unit[pUnit++]._operator = NEQ;break;
+					case AND:unit[pUnit++]._operator = AND;break;
+					case OR :unit[pUnit++]._operator = OR ;break;
+					case NOR:unit[pUnit++]._operator = NOR;break;
 					case NUM:
 							 unit[pUnit]._operator = '\0';
 							 sscanf(substr_start,"%d", &(unit[pUnit++].operand));
@@ -359,6 +364,10 @@ uint32_t eval(char *e, bool *success) {
 
 		switch(pOperator->_operator)
 		{
+		case NOR:
+			operand_2->operand = !operand_2->operand;
+			operand_2->next = pOperator->next;
+			break;
 		case '@':
 			//printf("%u\n",(uint32_t)(operand_2->operand));
 			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
@@ -378,6 +387,22 @@ uint32_t eval(char *e, bool *success) {
 			break;
 		case '/':
 			operand_1->operand = operand_1->operand / operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case EQ:
+			operand_1->operand = operand_1->operand == operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case NEQ:
+			operand_1->operand = operand_1->operand != operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case AND:
+			operand_1->operand = operand_1->operand && operand_2->operand;
+			operand_1->next = pOperator->next;
+			break;
+		case OR:
+			operand_1->operand = operand_1->operand && operand_2->operand;
 			operand_1->next = pOperator->next;
 			break;
 		}

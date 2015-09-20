@@ -429,7 +429,7 @@ uint32_t eval(char *e, bool *success) {
 			operand_1->next = pOperator->next;
 			break;
 		case OR:
-			operand_1->operand = operand_1->operand && operand_2->operand;
+			operand_1->operand = operand_1->operand || operand_2->operand;
 			operand_1->next = pOperator->next;
 			break;
 		}

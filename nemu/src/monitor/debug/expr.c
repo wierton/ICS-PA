@@ -335,8 +335,8 @@ uint32_t eval(char *e, bool *success) {
 			while(pStack != 0 && cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '>')
 			{
 				LinearTable[pLinearTable++]._operator = Stack[--pStack]._operator;
-				showarray(LinearTable,pLinearTable);
-				showarray(Stack,pStack);
+				//showarray(LinearTable,pLinearTable);
+				//showarray(Stack,pStack);
 			}
 			if(cmp_operator(Stack[pStack-1]._operator,unit[i]._operator) == '=')
 			{

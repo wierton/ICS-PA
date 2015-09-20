@@ -141,7 +141,15 @@ void showlink(struct EXPR *start,int pStart)
     {
 	    if(start->_operator != 0)
 		{
-			printf("%c ",start->_operator);
+			switch(start->_operator)
+			{
+				case EQ :printf("== ");
+				case NEQ:printf("!= ");
+				case AND:printf("&& ");
+				case OR :printf("|| ");
+				case NOR:printf("! ");
+				default :printf("%c ",start->_operator);
+			}
 		}
 		else
 			printf("%d ",start->operand);
@@ -157,7 +165,15 @@ void showarray(struct EXPR *start,int pStart)
 	{
 		if(start[i]._operator != 0)
 		{
-			printf("%c ",start[i]._operator);
+			switch(start[i]._operator)
+			{
+				case EQ :printf("== ");
+				case NEQ:printf("!= ");
+				case AND:printf("&& ");
+				case OR :printf("|| ");
+				case NOR:printf("! ");
+				default :printf("%c ",start[i]._operator);	 
+			}
 		}
 		else
 			printf("%d ",start[i].operand);

@@ -88,7 +88,7 @@ static struct rule {
 	{"\\)", ')'},						//right parethese
 	{"0[xX][0-9a-fA-F]+", HEX},				//hex
 	{"[0-9]+", NUM},						//number
-	{"%[a-zA-Z]{3}", REG},
+	{"[%\\$][a-zA-Z]{3}", REG},
 	{"==", EQ},						// equal
 	{"!=", NEQ},
 	{"&&", AND},

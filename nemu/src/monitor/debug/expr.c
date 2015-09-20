@@ -292,7 +292,7 @@ uint32_t eval(char *e, bool *success) {
 	int pStack = 0;
 	Stack[pStack++]._operator = '#';
 
-	//showarray(unit,pUnit);
+	showarray(unit,pUnit);
 	int i = 0;
 	while(is_valid && (Stack[pStack-1]._operator != '#' || unit[i]._operator != '#'))
 	{

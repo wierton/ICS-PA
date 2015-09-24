@@ -227,6 +227,11 @@ static int cmd_w(char *args)
 
 static int cmd_d(char *args)
 {
+	int no;
+	bool is_valid;
+	no = eval(args,&is_valid);
+	if(is_valid)
+		free_wp(find_wp(no));
 	return 0;
 }
 

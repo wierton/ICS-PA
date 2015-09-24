@@ -22,17 +22,42 @@ void init_wp_list() {
 
 WP *new_wp()
 {
-	if(free_==NULL)
+	if(free_ == NULL)
 		assert(0);
 
-	WP *temp=free_;
-	free_=free_->next;
-	temp->next=head;
-	head=temp;
+	WP *temp = free_;
+	free_ = free_->next;
+	temp->next = head;
+	head = temp;
 	return temp;
 }
 
 void free_wp(WP *wp)
 {
-
+	assert(wp != NULL && head != NULL);
+	WP *p = head,*q = NULL;
+	while(p != wp && p!=NULL)
+	{
+		assert(p != NULL);
+		q = p;
+		p = p->next;
+	}
+	if(p == NULL)
+	{
+		printf("No such watchpoint!\n");
+		return;
+	}
+	if(q == NULL)
+	{
+		head = head->next;
+		wp->next = free_;
+		free_ = wp;
+	}
+	else
+	{
+		assert(p == wp && q->next == p);
+		q->next = p->next;
+		wp->next = free_;
+		free_ = wp;
+	}
 }

@@ -96,10 +96,19 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args)
 {
 	int steps;
-	if(args == NULL)
-		steps=1;
+	char *para,*judge;
+	para = strtok(args," ");
+	judge = strtok(NULL," ");
+	if(judge != NULL)
+	{
+		printf("Invalid parameter!\n");
+		return 0;
+	}
+
+	if(para == NULL)
+		steps = 1;
 	else
-		sscanf(args,"%u",&steps);
+		sscanf(para,"%u",&steps);
 	cpu_exec(steps);
 	return 0;
 }

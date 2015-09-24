@@ -25,10 +25,14 @@ WP *new_wp()
 	if(free_==NULL)
 		assert(0);
 
-	WP *temp=free_->next;
-	free_->next=temp->next;
+	WP *temp=free_;
+	free_=free_->next;
 	temp->next=head;
-	head->next=temp;
+	head=temp;
 	return temp;
 }
-	
+
+void free_wp(WP *wp)
+{
+
+}

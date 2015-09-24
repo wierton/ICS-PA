@@ -162,7 +162,13 @@ static int cmd_x(char *args)
 	}
 
 	para = strtok(args, " ");
-	expression = strtok(NULL, " ");
+	if(para != NULL)
+		expression = strtok(NULL, " ");
+	else
+	{
+		printf("Parameter is needed!\n");
+		return 0;
+	}
 
 	length = strlen(para);
 

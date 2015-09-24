@@ -176,6 +176,7 @@ static int cmd_x(char *args)
 		if(para[i] > '9' || para[i] < '0')
 		{
 			printf("%s is not a valid number!\n", para);
+			return 0;
 		}
 
 	sscanf(para, "%u", &len);

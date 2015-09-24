@@ -149,36 +149,38 @@ static int cmd_info(char *args)
 static int cmd_x(char *args)
 {
 	int i;
-	char *para;
+	char *para, *expression;
+	int length;
 	size_t len;
 	uint32_t read_addr = 0;
-	bool is_loop = true,is_innum = false,is_success = false;
+	bool is_success = false;
 
-	for(para=args;*para != '\0' && is_loop;para++)
+	if(args == NULL)
 	{
-		switch(*para)
-		{
-			case '0':case '1':case '2':case '3':case '4':
-			case '5':case '6':case '7':case '8':case '9':
-				if(!is_innum)
-				{
-					is_innum = true;
-					sscanf(para,"%u",&len);
-				}
-				break;
-			case ' ':case '\t':
-				if(is_innum)
-				{
-					is_loop = false;
-					read_addr = eval(para,&is_success);
-				}
-				break;
-			default:panic("Invalid Parameter!\n");break;
-		}
+		printf("Parameter is needed!\n");
+		return 0;
 	}
 
-	//printf("len:%u\n",len);
-	
+	para = strtok(args, " ");
+	expression = strtok(NULL, " ");
+
+	length = strlen(para);
+
+	if(expression == NULL)
+	{
+		printf("A parameter for address is needed!\n");
+		return 0;
+	}
+
+	for(i=0;i<length;i++)
+		if(para[i] > '9' || para[i] < '0')
+		{
+			printf("%s is not a valid number!\n", para);
+		}
+
+	sscanf(para, "%u", &len);
+	read_addr = eval(expression, &is_success);
+
 	if(is_success)
 	{
 		for(i=0;i<len;i++)

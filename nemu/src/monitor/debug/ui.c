@@ -46,6 +46,10 @@ static int cmd_x(char *args);
 
 static int cmd_p(char *args);
 
+static int cmd_w(char *args);
+
+static int cmd_d(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -59,7 +63,9 @@ static struct {
 	{ "si", "Execute the program x steps",cmd_si},
 	{ "info", "Print the reg or watch_point",cmd_info},
 	{ "x", "Read memory from given address",cmd_x},
-	{ "p", "Calculate the expression",cmd_p}
+	{ "p", "Calculate the expression",cmd_p},
+	{ "w", "Add a watchpoint",cmd_w},
+	{ "d", "Delete a watchpoint",cmd_d}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -175,6 +181,16 @@ static int cmd_p(char *args)
 		printf("%d\n",result);
 	else
 		printf("Invalid Expression!\n");
+	return 0;
+}
+
+static int cmd_w(char *args)
+{
+	return 0;
+}
+
+static int cmd_d(char *args)
+{
 	return 0;
 }
 

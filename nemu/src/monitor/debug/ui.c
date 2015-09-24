@@ -212,15 +212,19 @@ static int cmd_p(char *args)
 
 static int cmd_w(char *args)
 {
+	int value;
 	size_t len = strlen(args);
 	WP *wp;
 	bool is_valid;
-	eval(args, &is_valid);
+	value = eval(args, &is_valid);
 	if(is_valid)
 	{
 		wp = new_wp();
 		if(len <= WP_EXPR-1)
+		{
 			strncpy(wp->expr, args, len);
+			wp->value = value;
+		}
 	}
 	return 0;
 }

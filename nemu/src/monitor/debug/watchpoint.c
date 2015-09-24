@@ -63,7 +63,7 @@ void free_wp(WP *wp)
 
 WP *find_wp(int NO)
 {
-	if(NO > NR_WP)
+	if(NO > NR_WP || NO < 1)
 		return NULL;
 	else
 		return &wp_list[NO-1];

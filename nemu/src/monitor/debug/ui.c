@@ -155,12 +155,6 @@ static int cmd_x(char *args)
 	uint32_t read_addr = 0;
 	bool is_success = false;
 
-	if(args == NULL)
-	{
-		printf("Parameter is needed!\n");
-		return 0;
-	}
-
 	para = strtok(args, " ");
 	if(para != NULL)
 		expression = strtok(NULL, " ");

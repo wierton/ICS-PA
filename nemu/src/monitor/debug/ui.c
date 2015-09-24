@@ -97,11 +97,14 @@ static int cmd_si(char *args)
 {
 	int steps,len,i;
 	char *para = NULL,*judge = NULL;
-	if(args != NULL)
+	if(args == NULL)
 	{
-		para = strtok(args," ");
-		judge = strtok(NULL," ");
+		cpu_exec(1);
+		return 0;
 	}
+
+	para = strtok(args," ");
+	judge = strtok(NULL," ");
 	len = strlen(para);
 	
 	if(judge != NULL)

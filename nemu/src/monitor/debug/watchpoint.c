@@ -22,8 +22,7 @@ void init_wp_list() {
 
 WP *new_wp()
 {
-	if(free_ == NULL)
-		assert(0);
+	assert(free_ != NULL);
 
 	WP *temp = free_;
 	free_ = free_->next;

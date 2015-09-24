@@ -97,6 +97,7 @@ static int cmd_si(char *args)
 {
 	int steps,len,i;
 	char *para = NULL,*judge = NULL;
+	
 	if(args == NULL)
 	{
 		cpu_exec(1);
@@ -116,7 +117,7 @@ static int cmd_si(char *args)
 	for(i=0;i<len;i++)
 		if(para[i] > '9' || para[i] < '0')
 		{
-			printf("Parameter is not a valid number!\n");
+			printf("%s is not a valid number!\n",para);
 			return 0;
 		}
 
@@ -136,15 +137,12 @@ static int cmd_info(char *args)
 	{
 		printf("eax\t0x%04x\t%d\necx\t0x%04x\t%d\nedx\t0x%04x\t%d\nebx\t0x%04x\t%d\nesp\t0x%04x\t0x%04x\nebp\t0x%04x\t0x%04x\nesi\t0x%04x\t%d\nedi\t0x%04x\t%d\neip\t0x%04x\t0x%04x\n",cpu.eax,cpu.eax,cpu.ecx,cpu.ecx,cpu.edx,cpu.edx,cpu.ebx,cpu.ebx,cpu.esp,cpu.esp,cpu.ebp,cpu.ebp,cpu.esi,cpu.esi,cpu.edi,cpu.edi,cpu.eip,cpu.eip);
 	}
-	if(strcmp(args,"w")==0)
+	else if(strcmp(args,"w")==0)
 	{
-/*		WP *p = head;
-		while(p != NULL)
-		{
-			printf("%d\n",p->NO);
-			p = p->next;
-		}
-*/	}
+
+	}
+	else
+		printf("Unknown parameter:%s\n",args);
 	return 0;
 }
 

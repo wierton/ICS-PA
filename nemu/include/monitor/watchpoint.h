@@ -3,15 +3,21 @@
 
 #include "common.h"
 
+#define WP_EXPR 64
+
 typedef struct watchpoint {
 	int NO;
 	struct watchpoint *next;
 
 	/* TODO: Add more members if necessary */
-	char expr[64];
+	char expr[WP_EXPR];
 	int value;
 
 
 } WP;
+
+WP *new_wp();
+
+void free_wp(WP *wp);
 
 #endif

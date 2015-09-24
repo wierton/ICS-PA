@@ -22,11 +22,12 @@ void init_wp_list() {
 
 WP *new_wp()
 {
-	if(free_->next==NULL)
+	if(free_==NULL)
 		assert(0);
+
 	WP *temp=free_->next;
 	free_->next=temp->next;
-	temp->next=head->next;
+	temp->next=head;
 	head->next=temp;
 	return temp;
 }

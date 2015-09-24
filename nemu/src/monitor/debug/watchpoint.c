@@ -68,3 +68,18 @@ WP *find_wp(int NO)
 	else
 		return &wp_list[NO-1];
 }
+
+void print_wp()
+{
+	WP *temp = head;
+	if(head == NULL)
+		printf("No watchpoint!\n");
+	else
+	{
+		while(temp != NULL)
+		{
+			printf("%d:%s %d\n", temp->NO, temp->expr, temp->value);
+			temp = temp->next;
+		}
+	}
+}

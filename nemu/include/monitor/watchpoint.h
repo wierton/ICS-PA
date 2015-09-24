@@ -22,4 +22,6 @@ void free_wp(WP *wp);
 
 WP *find_wp(int NO);
 
+void print_wp();
+
 #endif

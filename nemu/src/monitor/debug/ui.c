@@ -139,6 +139,7 @@ static int cmd_info(char *args)
 	}
 	else if(strcmp(args,"w")==0)
 	{
+		print_wp();
 
 	}
 	else

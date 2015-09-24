@@ -3,6 +3,9 @@
 #include "monitor/watchpoint.h"
 #include "nemu.h"
 
+#include <sys/types.h>
+#include <regex.h>
+
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -95,10 +98,16 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args)
 {
-	int steps;
+	int steps,len;
 	char *para,*judge;
 	para = strtok(args," ");
 	judge = strtok(NULL," ");
+	len = strlen(para);
+	regex_t reg;
+	regmatch_t pmatch;
+
+	assert(regcomp(&reg,"[0-9]+",REG_EXTENDED) == 0);
+
 	if(judge != NULL)
 	{
 		printf("Invalid parameter!\n");
@@ -107,8 +116,16 @@ static int cmd_si(char *args)
 
 	if(para == NULL)
 		steps = 1;
-	else
+	else if((regexec(&reg, para, 1, &pmatch, 0) == 0) && pmatch.rm_so == 0 && pmatch.rm_eo == len-1)
+	{
 		sscanf(para,"%u",&steps);
+	}
+	else
+	{
+		printf("Invalid Parameter!\n");
+		return 0;
+	}
+	
 	cpu_exec(steps);
 	return 0;
 }

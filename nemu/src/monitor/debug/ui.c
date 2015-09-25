@@ -95,37 +95,17 @@ static int cmd_help(char *args) {
 
 static int cmd_si(char *args)
 {
-	int steps,len,i;
-	char *para = NULL,*judge = NULL;
+	int steps;
+	bool is_valid;
 	
-	para = strtok(args," ");
-	if(para != NULL)
-		judge = strtok(NULL," ");
-	else
+	if(args == NULL)
 	{
 		cpu_exec(1);
 		return 0;
 	}
-	len = strlen(para);
 	
-	if(judge != NULL)
-	{
-		printf("Invalid parameter!\n");
-		return 0;
-	}
-
-	for(i=0;i<len;i++)
-		if(para[i] > '9' || para[i] < '0')
-		{
-			printf("%s is not a valid number!\n",para);
-			return 0;
-		}
-
-	if(para == NULL)
-		steps = 1;
-	else
-		sscanf(para,"%u",&steps);
-	
+	steps = eval(args, &is_valid);
+	assert(is_valid);
 	cpu_exec(steps);
 	return 0;
 }
@@ -140,7 +120,6 @@ static int cmd_info(char *args)
 	else if(strcmp(args,"w")==0)
 	{
 		print_wp();
-
 	}
 	else
 		printf("Unknown parameter:%s\n",args);

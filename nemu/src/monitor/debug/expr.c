@@ -52,6 +52,53 @@ int swap_table(int c)
 	return -1;
 }
 
+int priority(int _operator)
+{
+	switch(_operator)
+	{
+		case '+':return 4;
+		case '-':return 4;
+		case '*':return 3;
+		case '/':return 3;
+		case '(':return 0;
+		case ')':return 1000;
+		case EQ :return 7;
+		case NEQ:return 7;
+		case AND:return 11;
+		case OR :return 12;
+		case NOR:return 2;
+		case '@':return 2;
+		case '#':return 2000;
+		default:return -1;
+	}
+}
+
+char cmp_operator(int a, int b)
+{
+	if(a == '(' && b == ')')
+		return '=';
+	if(a == ')' && b == '(')
+		return '$';
+	if(a == '(' && b == '#')
+		return '$';
+	if(a == '#' && b == '#')
+		return '=';
+	if(a == '(' || b == '(')
+		return '<';
+	if(a == ')' || b == ')')
+		return '>';
+	if(a == b)
+		return '>';
+	if(priority(a) > priority(b))
+		return '<';
+	if(priority(a) < priority(b))
+		return '>';
+	if(priority(a) == priority(b))
+		return '>';
+	return '=';
+}
+
+
 void strupr(char *args)
 {
 	int i,len = strlen(args);
@@ -64,10 +111,11 @@ void strupr(char *args)
 	}
 }
 
-char cmp_operator(int a,int b)
+/*char cmp_operator(int a,int b)
 {
 	return cmp_table[swap_table(a)][swap_table(b)];
 }
+*/
 
 static struct rule {
 	char *regex;

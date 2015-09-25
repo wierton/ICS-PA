@@ -188,6 +188,8 @@ static int cmd_w(char *args)
 			strncpy(wp->expr, args, len);
 			wp->value = value;
 		}
+		else
+			printf("Expression is too long!\n");
 	}
 	return 0;
 }

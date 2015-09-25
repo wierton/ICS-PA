@@ -95,6 +95,7 @@ bool check_wp()
 		assert(is_valid);
 		printf("%d:%s %d -> %d\n",temp->NO, temp->expr, temp->value, value);
 		return_value = false;
+		temp = temp->next;
 	}
 	return return_value;
 }

@@ -146,7 +146,7 @@ static int cmd_x(char *args)
 	assert(para != NULL && args + len_args > para + len_para);
 
 	expression = strtok(NULL, " ");
-	assert(expression != NULL);
+	//assert(expression != NULL);
 	
 	len = eval(para, &para_success);
 	read_addr = eval(expression, &addr_success);

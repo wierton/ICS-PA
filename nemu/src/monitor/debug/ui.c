@@ -141,6 +141,7 @@ static int cmd_x(char *args)
 	len_args = strlen(args);
 
 	para = strtok(args, " ");
+	assert(para != NULL);
 	len_para = strlen(para);
 	assert(para != NULL && args + len_args > para + len_para);
 

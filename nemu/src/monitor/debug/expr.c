@@ -291,7 +291,7 @@ static bool make_token(char *e) {
 
 uint32_t eval(char *e, bool *success) {
 	init_regex();
-	if(!make_token(e)) {
+	if(e == NULL || !make_token(e)) {
 		*success = false;
 		return 0;
 	}

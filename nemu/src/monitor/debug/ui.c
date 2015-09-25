@@ -130,51 +130,33 @@ static int cmd_x(char *args)
 {
 	int i;
 	char *para, *expression;
-	int length;
+	int len_para, len_args;
 	size_t len;
 	uint32_t read_addr = 0;
-	bool is_success = false;
+	bool para_success = false, addr_success = false;
+
+	if(args == NULL)
+		return 0;
+
+	len_args = strlen(args);
 
 	para = strtok(args, " ");
-	if(para != NULL)
-		expression = strtok(NULL, " ");
-	else
-	{
-		printf("Parameter is needed!\n");
-		return 0;
-	}
+	len_para = strlen(para);
+	assert(para != NULL && args + len_args > para + len_para);
 
-	length = strlen(para);
-
-	if(expression == NULL)
-	{
-		printf("A parameter for address is needed!\n");
-		return 0;
-	}
-
-	for(i=0;i<length;i++)
-		if(para[i] > '9' || para[i] < '0')
-		{
-			printf("%s is not a valid number!\n", para);
-			return 0;
-		}
-
-	sscanf(para, "%u", &len);
-	read_addr = eval(expression, &is_success);
-
-	if(is_success)
-	{
-		for(i=0;i<len;i++)
-		{
-			uint32_t value = swaddr_read(read_addr+4*i,4);
-			printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
-		}
-	}
-	else
-	{
-		printf("Invalid Expression!\n");
-	}
+	expression = strtok(NULL, " ");
 	
+	len = eval(para, &para_success);
+	read_addr = eval(expression, &addr_success);
+
+	assert(para_success && addr_success);
+
+	for(i=0;i<len;i++)
+	{
+		uint32_t value = swaddr_read(read_addr+4*i,4);
+		printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
+	}
+		
 	return 0;
 }
 

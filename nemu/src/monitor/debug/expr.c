@@ -72,12 +72,6 @@ void strupr(char *args)
 	}
 }
 
-/*char cmp_operator(int a,int b)
-{
-	return cmp_table[swap_table(a)][swap_table(b)];
-}
-*/
-
 static struct rule {
 	char *regex;
 	int token_type;

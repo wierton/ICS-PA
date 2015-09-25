@@ -83,3 +83,18 @@ void print_wp()
 		}
 	}
 }
+
+bool check_wp()
+{
+	WP *temp = head;
+	int value;
+	bool is_valid, return_value = true;
+	while(temp != NULL)
+	{
+		value = eval(temp->expr,&is_valid);
+		assert(is_valid);
+		printf("%d:%s %d -> %d\n",temp->NO, temp->expr, temp->value, value);
+		return_value = false;
+	}
+	return return_value;
+}

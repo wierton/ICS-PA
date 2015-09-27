@@ -449,7 +449,7 @@ uint32_t eval(char *e, bool *success) {
 		operand_1 = &LinearTable[0];
 	}
 
-	if(is_valid)
+	if(is_valid && operand_1->_operator == 0)
 	{
 		*success = true;
 		result = operand_1->operand;

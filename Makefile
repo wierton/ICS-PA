@@ -71,5 +71,5 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 submit: clean
 	cd .. && tar cvj $(shell pwd | grep -o '[^/]*$$') > $(STU_ID).tar.bz2
 
-count: $(nemu_BIN)
-	find . -name "*.c" -or -name "*.h" |xargs grep -v "[^$$]"|wc -l
+count:
+	find ./nemu -name "*.c" -or -name "*.h" |xargs grep -v "^$$"|wc -l

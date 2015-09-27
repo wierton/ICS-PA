@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR
+	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR, GEQ, LEQ
 
 	/* TODO: Add more token types */
 
@@ -23,6 +23,10 @@ int priority(int _operator)
 		case '/':return 3;
 		case '(':return 0;
 		case ')':return 1000;
+		case '>':return 6;
+		case '<':return 6;
+		case GEQ:return 6;
+		case LEQ:return 6;
 		case EQ :return 7;
 		case NEQ:return 7;
 		case AND:return 11;

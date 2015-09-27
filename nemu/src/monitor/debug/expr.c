@@ -370,7 +370,7 @@ uint32_t eval(char *e, bool *success) {
 	LinearTable[i].next = NULL;
 
 	showlink(LinearTable,0);
-	showarray(LinearTable,0);
+	//showarray(LinearTable,0);
 
 	struct EXPR *operand_1 = &LinearTable[0],*operand_2 = NULL,*pOperator = NULL;
 	while(is_valid && operand_1->next != NULL)

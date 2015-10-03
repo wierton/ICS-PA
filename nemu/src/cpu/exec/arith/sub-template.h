@@ -31,5 +31,9 @@ make_instr_helper(i2rm)
 make_instr_helper(r2rm)
 make_instr_helper(rm2r)
 
+make_helper(concat(sub_si2rm_, SUFFIX)) {
+	return 5;
+}
+
 #include "cpu/exec/template-end.h"
 

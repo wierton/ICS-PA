@@ -31,6 +31,30 @@ typedef struct {
 		struct {uint16_t ax,cx,dx,bx,sp,bp,si,di;};
 		struct {uint8_t al,ah,cl,ch,bl,bh,sl,sh,dl,dh;};
 	};
+	union{
+		struct{
+			unsigned CF:1;
+			const unsigned :1;
+			unsigned PF:1;
+			const unsigned :1;
+			unsigned AF:1;
+			const unsigned :1;
+			unsigned ZF:1;
+			unsigned SF:1;
+			unsigned TF:1;
+			unsigned IF:1;
+			unsigned DF:1;
+			unsigned OF:1;
+			unsigned OLIP:2;
+			unsigned NT:1;
+			const unsigned :1;
+			unsigned RF:1;
+			unsigned VM:1;
+			const unsigned :16;
+		};
+		uint32_t EFLAGS;
+	};
+
 	swaddr_t eip;
 
 } CPU_state;

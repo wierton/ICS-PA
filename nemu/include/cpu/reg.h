@@ -50,7 +50,7 @@ typedef struct {
 			const unsigned :1;
 			unsigned RF:1;
 			unsigned VM:1;
-			const unsigned :16;
+			const unsigned :14;
 		};
 		uint32_t EFLAGS;
 	};

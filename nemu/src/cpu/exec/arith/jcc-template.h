@@ -3,10 +3,9 @@
 #define instr jcc
 
 static void do_execute() {
-	printf("arith/jcc-template.h:%x\n", cpu.eip);
+	printf("arith/jcc-template.h:%x\n", op_dest->val);
 	if(cpu.ZF == 1)
-		cpu.eip = op_dest->val;
-	printf("arith/jcc-template.h:%x\n", cpu.eip);
+		cpu.eip = cpu.eip + op_dest->val;
 	print_asm_template1();
 }
 

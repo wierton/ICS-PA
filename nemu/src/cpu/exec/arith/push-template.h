@@ -3,7 +3,8 @@
 #define instr push
 
 static void do_execute() {
-	cpu.eip = op_dest->val;
+	cpu.esp = cpu.esp - DATA_BYTE * 8;
+	MEM_W(cpu.eip, op_src->val);
 }
 
 make_instr_helper(i)

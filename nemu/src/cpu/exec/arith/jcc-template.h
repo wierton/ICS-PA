@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	printf("arith/jcc-template.h:%x\n", cpu.eip);
-	cpu.eip = op_src->val;
+	cpu.eip = op_dest->val;
 	printf("arith/jcc-template.h:%x\n", cpu.eip);
 	print_asm_template1();
 }

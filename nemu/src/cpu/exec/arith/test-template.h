@@ -10,7 +10,6 @@ static void do_execute() {
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(op_dest->val);
 	cpu.CF = 0;
-	printf("%x\n",cpu.ZF);
 	print_asm_template2();
 }
 

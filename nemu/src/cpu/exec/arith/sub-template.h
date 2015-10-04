@@ -4,6 +4,7 @@
 #define instr sub
 
 static void do_execute() {
+	printf("%x,%x\n",op_src->val,op_dest->val);
 	OPERAND_W(op_dest, op_src->val-op_dest->val);
 	cpu.OF = subOK(op_src->val, op_dest->val);
 	cpu.SF = (op_dest->val)>>31;

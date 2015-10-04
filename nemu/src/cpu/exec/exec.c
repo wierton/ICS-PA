@@ -233,6 +233,7 @@ make_helper(exec) {
 }
 
 static make_helper(_2byte_esc) {
+	printf("second table!\n");
 	eip ++;
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;

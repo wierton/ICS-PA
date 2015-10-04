@@ -31,7 +31,7 @@ make_group(group1_v,
 /* 0x83 */
 make_group(group1_sx_v,
 	inv, inv, inv, inv, 
-	inv, sub_i2rm_v, inv, cmp_i2rm_v)
+	inv, sub_i2rm_b, inv, cmp_i2rm_v)
 
 /* 0xc0 */
 make_group(group2_i_b,
@@ -230,7 +230,7 @@ helper_fun _2byte_opcode_table [256] = {
 
 make_helper(exec) {
 	ops_decoded.opcode = instr_fetch(eip, 1);
-	printf("%x,%p,%p\n", ops_decoded.opcode, opcode_table[ ops_decoded.opcode ], group1_sx_v);
+	printf("%x\n", ops_decoded.opcode);
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 

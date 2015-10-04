@@ -10,6 +10,7 @@ static void do_execute() {
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(op_dest->val);
 	cpu.CF = 0;
+	print_asm_template2();
 }
 
 make_instr_helper(i2a)

@@ -7,4 +7,6 @@ int sign(int x);
 
 int bitParity(int x);
 
+int subOK(int x, int y);
+
 #endif

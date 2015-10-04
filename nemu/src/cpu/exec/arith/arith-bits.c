@@ -21,3 +21,12 @@ int bitParity(int x) {
 	int e=d^(d>>1);
 	return e&0x1;
 }
+
+int subOK(int x, int y) {
+	int a=x;
+	int b=~y+1;
+	int sum=a+b;
+	int p=(~x&y&sum)|(x&~y&~sum);
+	return !((p>>31)&0x1);
+}
+

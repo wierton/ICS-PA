@@ -1,10 +1,14 @@
 #include "cpu/exec/template-start.h"
+#include "arith-bits.h"
 
 #define instr cmp
 
-
 static void do_execute() {
-
+	cpu.OF = subOK(op_src->val, op_dest->val);
+	cpu.SF = (op_dest->val)>>31;
+	cpu.ZF = (op_dest->val == 0);
+	cpu.PF = anyEvenBit(op_dest->val);
+	cpu.CF = (op_src->val < op_dest->val);
 	print_asm_template2();
 }
 

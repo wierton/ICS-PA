@@ -4,7 +4,10 @@
 #define instr sub
 
 static void do_execute() {
+	printf("eip:%x\t",cpu.eip);
+	printf("%x,%x\t", op_src->val, op_dest->val);
 	OPERAND_W(op_dest, op_src->val-op_dest->val);
+	printf("eip:%x\n",cpu.eip);
 	cpu.OF = subOK(op_src->val, op_dest->val);
 	cpu.SF = (op_dest->val)>>31;
 	cpu.ZF = (op_dest->val == 0);

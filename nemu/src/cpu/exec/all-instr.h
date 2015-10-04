@@ -5,6 +5,7 @@
 
 #include "arith/sub.h"
 #include "arith/cmp.h"
+#include "arith/call.h"
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"

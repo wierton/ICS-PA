@@ -7,6 +7,7 @@
 #include "arith/cmp.h"
 #include "arith/call.h"
 #include "arith/test.h"
+#include "arith/jcc.h"
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"

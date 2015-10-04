@@ -6,6 +6,7 @@
 #include "arith/sub.h"
 #include "arith/cmp.h"
 #include "arith/call.h"
+#include "arith/push.h"
 #include "arith/test.h"
 #include "arith/jcc.h"
 #include "arith/dec.h"

@@ -13,9 +13,8 @@ make_instr_helper(i2rm)
 make_instr_helper(r2rm)
 make_instr_helper(rm2r)
 
-make_helper(concat(cmp_si2rm_, SUFFIX)) {
-
-	return 5;
-}
+#if DATA_BYTE != 1
+make_instr_helper(si2rm)
+#endif
 
 #include "cpu/exec/template-end.h"

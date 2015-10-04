@@ -2,6 +2,7 @@
 
 #define instr cmp
 
+
 static void do_execute() {
 
 	print_asm_template2();

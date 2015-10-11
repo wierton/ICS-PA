@@ -3,8 +3,7 @@
 #define instr call
 
 static void do_execute() {
-	OPERAND_W(op_src,cpu.eip + op_src->val);
-	cpu.eip = op_src->val;
+	cpu.eip += op_src->val;
 	print_asm_template1();
 }
 

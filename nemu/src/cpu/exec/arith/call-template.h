@@ -3,8 +3,8 @@
 #define instr call
 
 static void do_execute() {
-	op_dest->val = cpu.eip + op_src->val;
-	cpu.eip += op_dest->val;
+	op_src->val = cpu.eip + op_src->val;
+	cpu.eip = op_src->val;
 	print_asm_template1();
 }
 

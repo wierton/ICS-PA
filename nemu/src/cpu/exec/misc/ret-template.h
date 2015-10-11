@@ -9,3 +9,6 @@ make_helper(ret)
 	print_asm("ret");
 	return 1;
 }
+
+
+#include "cpu/exec/template-end.h"

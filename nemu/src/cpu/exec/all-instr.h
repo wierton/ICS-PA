@@ -32,5 +32,6 @@
 #include "misc/jcc.h"
 #include "misc/jmp.h"
 #include "misc/leave.h"
+#include "misc/ret.h"
 
 #include "special/special.h"

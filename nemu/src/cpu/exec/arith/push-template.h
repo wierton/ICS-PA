@@ -3,7 +3,7 @@
 #define instr push
 
 static void do_execute() {
-	cpu.esp = cpu.esp - DATA_BYTE * 8;
+	cpu.esp = cpu.esp - DATA_BYTE;
 	MEM_W(cpu.esp, op_src->val);
 }
 

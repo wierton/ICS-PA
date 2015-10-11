@@ -8,7 +8,6 @@
 #include "arith/call.h"
 #include "arith/push.h"
 #include "arith/test.h"
-#include "arith/jcc.h"
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"
@@ -29,5 +28,6 @@
 #include "string/rep.h"
 
 #include "misc/misc.h"
+#include "misc/jcc.h"
 
 #include "special/special.h"

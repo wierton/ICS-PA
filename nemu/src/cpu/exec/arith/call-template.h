@@ -4,8 +4,8 @@
 
 static void do_execute() {
 	cpu.eip += op_src->val;
-	MEM_W(cpu.esp, cpu.eip);
 	cpu.esp -= DATA_BYTE;
+	MEM_W(cpu.esp, cpu.eip);
 	print_asm_template1();
 }
 

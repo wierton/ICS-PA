@@ -9,4 +9,6 @@ int bitParity(int x);
 
 int subOK(int x, int y);
 
+int addOK(int x, int y);
+
 #endif

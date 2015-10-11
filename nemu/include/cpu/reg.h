@@ -28,7 +28,22 @@ typedef struct {
 	/* Do NOT change the order of the GPRs' definitions. */
 
 		struct {uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};
-		struct {uint16_t ax,cx,dx,bx,sp,bp,si,di;};
+		struct {
+			uint16_t ax;
+			uint16_t :16;
+			uint16_t cx;
+			uint16_t :16;
+			uint16_t dx;
+			uint16_t :16;
+			uint16_t bx;
+			uint16_t :16;
+			uint16_t sp;
+			uint16_t :16;
+			uint16_t bp;
+			uint16_t :16;
+			uint16_t si;
+			uint16_t :16;
+			uint16_t di;};
 		struct {uint8_t al,ah,cl,ch,bl,bh,sl,sh,dl,dh;};
 	};
 	union{

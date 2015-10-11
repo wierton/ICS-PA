@@ -69,8 +69,10 @@ typedef struct {
 		};
 		uint32_t EFLAGS;
 	};
-
-	swaddr_t eip;
+	union{
+		swaddr_t eip;
+		uint16_t ip;
+	};
 
 } CPU_state;
 

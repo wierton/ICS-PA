@@ -2,8 +2,8 @@
 
 static void do_jcc_execute(int diplacement,char jcc_instr[])
 {
-	DATA_TYPE eip_dis = op_src->val;
-	printf("jcc:%x %d\n",(int)op_src->val,(int)op_src->val);
+	DATA_TYPE_S eip_dis = op_src->val;
+	printf("jcc:%x %d\n",eip_dis,eip_dis);
 	cpu.eip = cpu.eip + eip_dis;
 	print_asm("%s $0x%x",jcc_instr,cpu.eip+diplacement);
 }

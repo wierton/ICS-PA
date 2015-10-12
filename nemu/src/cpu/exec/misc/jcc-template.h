@@ -57,7 +57,7 @@ make_jcc_helper(i,cpu.SF!=cpu.OF,1)
 #undef instr
 	
 #define instr jle
-make_jcc_helper(i,cpu.ZF,cpu.SF!=cpu.OF)
+make_jcc_helper(i,(cpu.ZF || (cpu.SF!=cpu.OF)),1)
 #undef instr
 	
 #define instr jna

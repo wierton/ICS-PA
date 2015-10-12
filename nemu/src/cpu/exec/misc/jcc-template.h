@@ -4,9 +4,9 @@ static void do_jcc_execute(bool flag,int diplacement,char jcc_instr[])
 {
 	if(flag)
 	{
-		printf("%s $0x%x\n",jcc_instr,cpu.eip+diplacement);
 		DATA_TYPE_S eip_dis = op_src->val;
 		cpu.eip = cpu.eip + eip_dis;
+		printf("%s $0x%x\n",jcc_instr,cpu.eip+diplacement);
 	}
 	print_asm("%s $0x%x",jcc_instr,cpu.eip+diplacement);
 }

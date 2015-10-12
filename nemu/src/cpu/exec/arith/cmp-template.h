@@ -10,6 +10,9 @@ static void do_execute() {
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);
 	cpu.CF = (op_dest->val < op_src->val);
+	printf("dst:%d src:%d\n",op_dest->val,op_src->val);
+	printf("OF SF ZF PF CF\n");
+	printf("%d  %d  %d  %d  %d\n",cpu.OF,cpu.SF,cpu.ZF,cpu.PF,cpu.CF);
 	print_asm_template2();
 }
 

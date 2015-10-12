@@ -3,7 +3,7 @@
 static void do_jcc_execute(bool flag,int diplacement,char jcc_instr[])
 {
 	DATA_TYPE_S eip_dis = op_src->val;
-	DATA_TYPE eip_pos = cpu.eip;
+	int eip_pos = cpu.eip;
 	if(flag)
 	{
 		cpu.eip = cpu.eip + eip_dis;

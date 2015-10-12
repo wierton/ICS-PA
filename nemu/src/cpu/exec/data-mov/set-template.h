@@ -4,6 +4,7 @@
 
 static void do_eflags_execute(bool flag,int diplacement,char set_flagstr[])
 {
+	printf("%s %s",set_flagstr,op_src->str);
 	if(flag)
 		OPERAND_W(op_src,1);
 	else

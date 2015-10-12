@@ -23,7 +23,7 @@
 	int len=concat(decode_i_, SUFFIX)(cpu.eip+1);\
 	if((flag1) && (flag2))\
 	{\
-		do_jcc_execute(len+1);\
+		do_jcc_execute(len+1,str(instr));\
 	}\
 	return len+1;\
 }

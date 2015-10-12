@@ -1,8 +1,9 @@
 #include "cpu/exec/template-start.h"
 
-static void do_jcc_execute(int diplacement) {
+static void do_jcc_execute(int diplacement,char jcc_instr[])
+{
 	cpu.eip = cpu.eip + op_src->val;
-	print_asm(str(jcc)" $0x%x",cpu.eip+diplacement);
+	print_asm("%s $0x%x",jcc_instr,cpu.eip+diplacement);
 }
 
 #define instr jcc

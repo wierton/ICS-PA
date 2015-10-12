@@ -31,3 +31,5 @@ make_helper(setp_rm_b);
 make_helper(setpe_rm_b);
 make_helper(setpo_rm_b);
 make_helper(sets_rm_b);
+
+#endif

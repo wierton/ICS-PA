@@ -3,6 +3,7 @@
 #include "data-mov/mov.h"
 #include "data-mov/xchg.h"
 #include "data-mov/movzx.h"
+#include "data-mov/set.h"
 
 #include "arith/add.h"
 #include "arith/sub.h"

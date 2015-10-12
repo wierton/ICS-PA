@@ -23,7 +23,7 @@ make_jcc_helper(i,cpu.CF,1)
 #undef instr
 	
 #define instr jbe
-make_jcc_helper(i,cpu.CF,cpu.ZF)
+make_jcc_helper(i,cpu.CF || cpu.ZF,1)
 #undef instr
 	
 #define instr jc
@@ -79,7 +79,7 @@ make_jcc_helper(i,!cpu.ZF,1)
 #undef instr
 	
 #define instr jng
-make_jcc_helper(i,cpu.ZF,cpu.SF!=cpu.OF)
+make_jcc_helper(i,cpu.ZF || (cpu.SF!=cpu.OF),1)
 #undef instr
 	
 #define instr jnge

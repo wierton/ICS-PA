@@ -12,7 +12,7 @@ static void do_execute() {
 	cpu.CF = (op_dest->val < op_src->val);
 	printf("dst:%d src:%d\n",op_dest->val,op_src->val);
 	printf("OF SF ZF PF CF\n");
-	printf("%d  %d  %d  %d  %d\n",cpu.OF,cpu.SF,cpu.ZF,cpu.PF,cpu.CF);
+	printf("%d  %d  %d  %d  %d\n\n",cpu.OF,cpu.SF,cpu.ZF,cpu.PF,cpu.CF);
 	print_asm_template2();
 }
 

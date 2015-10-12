@@ -1,5 +1,5 @@
-#ifndef __ARITH_BITS_H__
-#define __ARITH_BITS_H__
+#ifndef __BIT_FUNC_H__
+#define __BIT_FUNC_H__
 
 int anyEvenBit(int x);
 

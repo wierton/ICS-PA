@@ -1,5 +1,5 @@
 #include "cpu/exec/helper.h"
-#include "arith-bits.h"
+#include "cpu/exec/bit-func.h"
 
 int anyEvenBit(int x) {
 	int a=x|(x>>16);

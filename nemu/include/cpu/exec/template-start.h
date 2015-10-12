@@ -1,4 +1,5 @@
 #include "cpu/exec/helper.h"
+#include "cpu/exec/bit-func.h"
 
 #if DATA_BYTE == 1
 

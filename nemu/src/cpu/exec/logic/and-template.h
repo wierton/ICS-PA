@@ -11,7 +11,7 @@ static void do_execute () {
 	cpu.OF = 0;
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);
-	//cpu.PF = anyEvenBit(dst);
+	cpu.PF = anyEvenBit(dst);
 	cpu.CF = 0;
 
 	print_asm_template2();

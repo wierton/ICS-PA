@@ -4,13 +4,11 @@
 
 static void do_eflags_execute(bool flag,int diplacement,char set_flagstr[])
 {
-	DATA_TYPE_S eip_dis = op_src->val;
-	int eip_pos = cpu.eip;
 	if(flag)
-	{
-		cpu.eip = cpu.eip + eip_dis;
-	}
-	print_asm("%s $0x%x",set_flagstr,eip_pos+eip_dis+diplacement);
+		OPERAND_W(op_dest,1);
+	else
+		OPERAND_W(op_dest,0);
+	print_asm("%s %s",set_flagstr,op_src->str);
 }
 
 

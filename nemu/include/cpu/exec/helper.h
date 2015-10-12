@@ -22,7 +22,7 @@
 	make_helper(concat5(flagstr, _, type, _, SUFFIX)){ \
 	int len=concat4(decode_,type,_, SUFFIX)(cpu.eip+1);\
 	bool flag = ((flag1) && (flag2));\
-	do_eflags_execute(flag,len+1,str(instr));\
+	do_eflags_execute(flag,len+1,str(flagstr));\
 	return len+1;\
 }
 

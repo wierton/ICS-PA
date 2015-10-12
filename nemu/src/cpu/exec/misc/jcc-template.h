@@ -7,7 +7,6 @@ static void do_jcc_execute(bool flag,int diplacement,char jcc_instr[])
 	if(flag)
 	{
 		cpu.eip = cpu.eip + eip_dis;
-		printf("%s $0x%x\n",jcc_instr,cpu.eip+diplacement);
 	}
 	print_asm("%s $0x%x",jcc_instr,eip_pos+eip_dis+diplacement);
 }

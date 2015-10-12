@@ -4,7 +4,7 @@
 #define instr cmp
 
 static void do_execute() {
-	DATA_TYPE dst = op_dest->val - op_src->val;
+	int dst = op_dest->val - op_src->val;
 	cpu.OF = subOK(op_dest->val, op_src->val);
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);

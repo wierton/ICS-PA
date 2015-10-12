@@ -5,7 +5,7 @@
 
 static void do_execute() {
 	int dst = op_dest->val - op_src->val;
-	cpu.OF = subOK(op_dest->val, op_src->val);
+	cpu.OF = !subOK(op_dest->val, op_src->val);
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);

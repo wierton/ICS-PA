@@ -5,8 +5,7 @@
 
 static void do_execute() {
 	DATA_TYPE dst = op_dest->val - op_src->val;
-	printf("%d,%d\n",op_dest->val,op_src->val);
-	cpu.OF = subOK(op_src->val, op_dest->val);
+	cpu.OF = subOK(op_dest->val, op_src->val);
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);

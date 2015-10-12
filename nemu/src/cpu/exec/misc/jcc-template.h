@@ -3,6 +3,7 @@
 static void do_jcc_execute(int diplacement,char jcc_instr[])
 {
 	DATA_TYPE eip_dis = op_src->val;
+	printf("call:%x %d\n",op_src->val,op_src->val);
 	cpu.eip = cpu.eip + eip_dis;
 	print_asm("%s $0x%x",jcc_instr,cpu.eip+diplacement);
 }

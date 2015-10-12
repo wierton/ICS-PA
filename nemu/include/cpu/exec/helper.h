@@ -16,6 +16,21 @@
 		return idex(eip, concat4(decode_, type, _, SUFFIX), do_execute); \
 	}
 
+#define do_jcc_execute concat4(do_,jcc, _, SUFFIX)
+
+#define make_jcc_helper(type, flag1, flag2)\
+	make_helper(concat5(instr, _, type, _, SUFFIX)){ \
+	int len=concat(decode_i_, SUFFIX)(cpu.eip+1);\
+	if((flag1) && (flag2))\
+	{\
+		do_jcc_execute(len+1);\
+	}\
+	return len+1;\
+}
+
+
+
+
 extern char assembly[];
 #ifdef DEBUG
 #define print_asm(...) Assert(snprintf(assembly, 80, __VA_ARGS__) < 80, "buffer overflow!")

@@ -1,6 +1,8 @@
 #include "cpu/exec/template-start.h"
 
-static void do_jcc_execute(bool flag,int diplacement,char jcc_instr[])
+#define instr jcc
+
+static void do_eflags_execute(bool flag,int diplacement,char jcc_flagstr[])
 {
 	DATA_TYPE_S eip_dis = op_src->val;
 	int eip_pos = cpu.eip;
@@ -8,133 +10,134 @@ static void do_jcc_execute(bool flag,int diplacement,char jcc_instr[])
 	{
 		cpu.eip = cpu.eip + eip_dis;
 	}
-	print_asm("%s $0x%x",jcc_instr,eip_pos+eip_dis+diplacement);
+	print_asm("%s $0x%x",jcc_flagstr,eip_pos+eip_dis+diplacement);
 }
 
-#define instr jcc
-make_jcc_helper(i,!cpu.CF,!cpu.ZF)
-#undef instr
+
+#define flagstr jcc
+make_eflags_helper(i,!cpu.CF,!cpu.ZF)
+#undef flagstr
 
 
-#define instr ja
-make_jcc_helper(i,!cpu.CF,!cpu.ZF)
-#undef instr
+#define flagstr ja
+make_eflags_helper(i,!cpu.CF,!cpu.ZF)
+#undef flagstr
 	
-#define instr jae
-make_jcc_helper(i,!cpu.CF,1)
-#undef instr
+#define flagstr jae
+make_eflags_helper(i,!cpu.CF,1)
+#undef flagstr
 	
-#define instr jb
-make_jcc_helper(i,cpu.CF,1)
-#undef instr
+#define flagstr jb
+make_eflags_helper(i,cpu.CF,1)
+#undef flagstr
 	
-#define instr jbe
-make_jcc_helper(i,cpu.CF || cpu.ZF,1)
-#undef instr
+#define flagstr jbe
+make_eflags_helper(i,cpu.CF || cpu.ZF,1)
+#undef flagstr
 	
-#define instr jc
-make_jcc_helper(i,cpu.CF,1)
-#undef instr
+#define flagstr jc
+make_eflags_helper(i,cpu.CF,1)
+#undef flagstr
 	
-#define instr je
-make_jcc_helper(i,cpu.ZF,1)
-#undef instr
+#define flagstr je
+make_eflags_helper(i,cpu.ZF,1)
+#undef flagstr
 	
-#define instr jz
-make_jcc_helper(i,cpu.ZF,1)
-#undef instr
+#define flagstr jz
+make_eflags_helper(i,cpu.ZF,1)
+#undef flagstr
 	
-#define instr jg
-make_jcc_helper(i,!cpu.ZF,cpu.SF==cpu.OF)
-#undef instr
+#define flagstr jg
+make_eflags_helper(i,!cpu.ZF,cpu.SF==cpu.OF)
+#undef flagstr
 	
-#define instr jge
-make_jcc_helper(i,cpu.SF==cpu.OF,1)
-#undef instr
+#define flagstr jge
+make_eflags_helper(i,cpu.SF==cpu.OF,1)
+#undef flagstr
 	
-#define instr jl
-make_jcc_helper(i,cpu.SF!=cpu.OF,1)
-#undef instr
+#define flagstr jl
+make_eflags_helper(i,cpu.SF!=cpu.OF,1)
+#undef flagstr
 	
-#define instr jle
-make_jcc_helper(i,(cpu.ZF || (cpu.SF!=cpu.OF)),1)
-#undef instr
+#define flagstr jle
+make_eflags_helper(i,(cpu.ZF || (cpu.SF!=cpu.OF)),1)
+#undef flagstr
 	
-#define instr jna
-make_jcc_helper(i,cpu.CF,cpu.SF)
-#undef instr
+#define flagstr jna
+make_eflags_helper(i,cpu.CF,cpu.SF)
+#undef flagstr
 	
-#define instr jnae
-make_jcc_helper(i,cpu.CF,1)
-#undef instr
+#define flagstr jnae
+make_eflags_helper(i,cpu.CF,1)
+#undef flagstr
 	
-#define instr jnb
-make_jcc_helper(i,!cpu.CF,1)
-#undef instr
+#define flagstr jnb
+make_eflags_helper(i,!cpu.CF,1)
+#undef flagstr
 	
-#define instr jnbe
-make_jcc_helper(i,!cpu.ZF,!cpu.ZF)
-#undef instr
+#define flagstr jnbe
+make_eflags_helper(i,!cpu.ZF,!cpu.ZF)
+#undef flagstr
 	
-#define instr jnc
-make_jcc_helper(i,!cpu.CF,1)
-#undef instr
+#define flagstr jnc
+make_eflags_helper(i,!cpu.CF,1)
+#undef flagstr
 	
-#define instr jne
-make_jcc_helper(i,!cpu.ZF,1)
-#undef instr
+#define flagstr jne
+make_eflags_helper(i,!cpu.ZF,1)
+#undef flagstr
 	
-#define instr jng
-make_jcc_helper(i,cpu.ZF || (cpu.SF!=cpu.OF),1)
-#undef instr
+#define flagstr jng
+make_eflags_helper(i,cpu.ZF || (cpu.SF!=cpu.OF),1)
+#undef flagstr
 	
-#define instr jnge
-make_jcc_helper(i,cpu.SF!=cpu.OF,1)
-#undef instr
+#define flagstr jnge
+make_eflags_helper(i,cpu.SF!=cpu.OF,1)
+#undef flagstr
 	
-#define instr jnl
-make_jcc_helper(i,cpu.SF==cpu.OF,1)
-#undef instr
+#define flagstr jnl
+make_eflags_helper(i,cpu.SF==cpu.OF,1)
+#undef flagstr
 	
-#define instr jnle
-make_jcc_helper(i,!cpu.ZF,cpu.SF==cpu.OF)
-#undef instr
+#define flagstr jnle
+make_eflags_helper(i,!cpu.ZF,cpu.SF==cpu.OF)
+#undef flagstr
 	
-#define instr jno
-make_jcc_helper(i,!cpu.OF,1)
-#undef instr
+#define flagstr jno
+make_eflags_helper(i,!cpu.OF,1)
+#undef flagstr
 	
-#define instr jnp
-make_jcc_helper(i,!cpu.PF,1)
-#undef instr
+#define flagstr jnp
+make_eflags_helper(i,!cpu.PF,1)
+#undef flagstr
 	
-#define instr jns
-make_jcc_helper(i,!cpu.SF,1)
-#undef instr
+#define flagstr jns
+make_eflags_helper(i,!cpu.SF,1)
+#undef flagstr
 	
-#define instr jnz
-make_jcc_helper(i,!cpu.ZF,1)
-#undef instr
+#define flagstr jnz
+make_eflags_helper(i,!cpu.ZF,1)
+#undef flagstr
 	
-#define instr jo
-make_jcc_helper(i,cpu.OF,1)
-#undef instr
+#define flagstr jo
+make_eflags_helper(i,cpu.OF,1)
+#undef flagstr
 	
-#define instr jp
-make_jcc_helper(i,cpu.PF,1)
-#undef instr
+#define flagstr jp
+make_eflags_helper(i,cpu.PF,1)
+#undef flagstr
 	
-#define instr jpe
-make_jcc_helper(i,cpu.PF,1)
-#undef instr
+#define flagstr jpe
+make_eflags_helper(i,cpu.PF,1)
+#undef flagstr
 	
-#define instr jpo
-make_jcc_helper(i,!cpu.PF,1)
-#undef instr
+#define flagstr jpo
+make_eflags_helper(i,!cpu.PF,1)
+#undef flagstr
 	
-#define instr js
-make_jcc_helper(i,cpu.SF,1)
-#undef instr
+#define flagstr js
+make_eflags_helper(i,cpu.SF,1)
+#undef flagstr
 
 
 #include "cpu/exec/template-end.h"

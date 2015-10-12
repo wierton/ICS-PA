@@ -16,13 +16,13 @@
 		return idex(eip, concat4(decode_, type, _, SUFFIX), do_execute); \
 	}
 
-#define do_jcc_execute concat4(do_,jcc, _, SUFFIX)
+#define do_eflags_execute concat4(do_,instr, _, SUFFIX)
 
-#define make_jcc_helper(type, flag1, flag2)\
-	make_helper(concat5(instr, _, type, _, SUFFIX)){ \
-	int len=concat(decode_i_, SUFFIX)(cpu.eip+1);\
+#define make_eflags_helper(type, flag1, flag2)\
+	make_helper(concat5(flagstr, _, type, _, SUFFIX)){ \
+	int len=concat4(decode_,type,_, SUFFIX)(cpu.eip+1);\
 	bool flag = ((flag1) && (flag2));\
-	do_jcc_execute(flag,len+1,str(instr));\
+	do_eflags_execute(flag,len+1,str(instr));\
 	return len+1;\
 }
 

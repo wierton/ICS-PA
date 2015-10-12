@@ -5,9 +5,9 @@
 static void do_eflags_execute(bool flag,int diplacement,char set_flagstr[])
 {
 	if(flag)
-		OPERAND_W(op_dest,1);
+		OPERAND_W(op_src,1);
 	else
-		OPERAND_W(op_dest,0);
+		OPERAND_W(op_src,0);
 	print_asm("%s %s",set_flagstr,op_src->str);
 }
 

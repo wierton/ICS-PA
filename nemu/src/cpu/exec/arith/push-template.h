@@ -16,7 +16,7 @@ make_helper(push_i_b)
 	int len = decode_i_b(eip+1);
 	cpu.esp -= DATA_BYTE;
 	MEM_W(cpu.esp, op_src->val);
-	print_asm("push"str(SUFFIX)" $0x%x",op_src->val);
+	print_asm_template1();
 	return len+1;
 }
 #endif

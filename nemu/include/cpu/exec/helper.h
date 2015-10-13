@@ -20,6 +20,7 @@
 
 #define make_eflags_helper(type, flag1, flag2)\
 	make_helper(concat5(flagstr, _, type, _, SUFFIX)){ \
+	printf("$0x%x\t",eip);\
 	int len=concat4(decode_,type,_, SUFFIX)(eip+1);\
 	bool flag = ((flag1) && (flag2));\
 	do_eflags_execute(flag,len+1,str(flagstr));\

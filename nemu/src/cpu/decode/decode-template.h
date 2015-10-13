@@ -70,7 +70,6 @@ static int concat3(decode_r_, SUFFIX, _internal) (swaddr_t eip, Operand *op) {
 
 static int concat3(decode_rm_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Operand *reg) {
 	rm->size = DATA_BYTE;
-	printf("decode_rm:$0x%x\t",eip);
 	int len = read_ModR_M(eip, rm, reg);
 	reg->val = REG(reg->reg);
 

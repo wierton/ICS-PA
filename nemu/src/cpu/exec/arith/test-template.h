@@ -8,7 +8,7 @@ static void do_execute() {
 	cpu.OF = 0;
 	cpu.SF = MSB(dst);
 	cpu.ZF = (dst == 0);
-	cpu.PF = anyEvenBit(op_dest->val);
+	cpu.PF = anyEvenBit(dst);
 	cpu.CF = 0;
 	print_asm_template2();
 }

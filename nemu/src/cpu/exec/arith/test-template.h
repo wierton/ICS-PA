@@ -6,7 +6,7 @@
 static void do_execute() {
 	DATA_TYPE dst = op_src->val & op_dest->val;
 	cpu.OF = 0;
-	cpu.SF = dst>>31;
+	cpu.SF = MSB(dst);
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(op_dest->val);
 	cpu.CF = 0;

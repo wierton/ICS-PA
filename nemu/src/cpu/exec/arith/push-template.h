@@ -4,6 +4,7 @@
 
 static void do_execute() {
 	cpu.esp -= (DATA_BYTE == 2)?2:4;
+	printf("%d\n",op_src->val);
 	MEM_W(cpu.esp, op_src->val);
 	print_asm_template1();
 }

@@ -3,10 +3,9 @@
 #define instr and
 
 static void do_execute () {
-	int src_val = (DATA_TYPE_S)op_src->val;
-	printf("and:%x\n", src_val);
 	DATA_TYPE result = op_dest->val & op_src->val;
 	OPERAND_W(op_dest, result);
+	printf("and:%x,%x",op_dest->val, op_src->val);
 
 	/* TODO: Update EFLAGS. */
 	DATA_TYPE dst = op_dest->val & op_src->val;

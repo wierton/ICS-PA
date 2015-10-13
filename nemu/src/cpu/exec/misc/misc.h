@@ -5,5 +5,6 @@ make_helper(nop);
 make_helper(int3);
 make_helper(lea);
 make_helper(cdq);
+make_helper(cld);
 
 #endif

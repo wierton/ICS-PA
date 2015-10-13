@@ -24,13 +24,17 @@ make_helper(lea) {
 	return 1 + len;
 }
 
-#define DATA_BYTE 4
-
 make_helper(cdq)
 {
 	if(cpu.eax < 0)
 		cpu.edx = 0xffffff;
 	else
 		cpu.edx = 0x0;
+	return 1;
+}
+
+make_helper(cld)
+{
+	cpu.DF = 0;
 	return 1;
 }

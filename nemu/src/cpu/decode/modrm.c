@@ -110,7 +110,7 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 	}
 	else {
 		int instr_len = load_addr(eip, &m, rm);
-		printf("read_ModR_M_$2\n");
+		printf("read_ModR_M_$2:$0x%x\n",rm->addr);
 		rm->val = swaddr_read(rm->addr, rm->size);
 		return instr_len;
 	}

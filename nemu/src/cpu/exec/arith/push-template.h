@@ -22,7 +22,7 @@ make_helper(push_i_b)
 #endif
 
 #if DATA_BYTE != 1
-make_instr_helper(rm_1)
+make_instr_helper(rm)
 make_instr_helper(r)
 #endif
 

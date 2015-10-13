@@ -12,7 +12,7 @@ static void do_execute () {
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);
-	cpu.CF = (op_dest->val < op_src->val);
+	cpu.CF = !addOK(op_src->val, 1);
 
 	print_asm_template1();
 }

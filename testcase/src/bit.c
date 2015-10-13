@@ -12,6 +12,7 @@ bool getbit(void *buf, int offset){
 	nemu_assert(byte < 2);
 	nemu_assert(test == buf);
 	nemu_assert(test[byte] != 0);
+	nemu_assert(((uint8_t *)buf) != NULL);
 	nemu_assert(((uint8_t *)buf)[byte] != 0);
 	return (((uint8_t *)buf)[byte] & mask) != 0;
 }

@@ -25,6 +25,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
+	printf("swaddr_read:$0x%x\n",addr);
 	return lnaddr_read(addr, len);
 }
 

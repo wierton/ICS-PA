@@ -20,6 +20,7 @@ int ans[] = {-1, 0, 2, 5, 5, 8, 8, 8, 8, 10, 10, 10, 10, 15, -1};
 int main() {
 	int i;
 	for(i = 0; i < 15; i ++) {
+		nemu_assert(i < 8);
 		nemu_assert(switch_case(i - 1) == ans[i]);
 	}
 

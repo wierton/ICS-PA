@@ -14,6 +14,7 @@ static void do_execute() {
 	cpu.ZF = (dst_3 == 0);
 	cpu.PF = anyEvenBit(dst_3);
 	cpu.CF = cpu.OF;
+	printf("%d %d %d %d\n",op_dest->val,op_src->val,cpu.CF,op_dest->val + op_src->val + cpu.CF);
 	OPERAND_W(op_dest, op_dest->val + op_src->val + cpu.CF);
 	print_asm_template2();
 }

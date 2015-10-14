@@ -34,6 +34,5 @@ uint32_t addOK(uint32_t x, uint32_t y)
 {
 	uint32_t sum=x+y;
 	uint32_t p=(sum < x || sum < y);
-	printf("%u %u %u %u\n",x,y,sum,p);
 	return !p;
 }

@@ -9,6 +9,6 @@ int bitParity(int x);
 
 int subOK(int x, int y);
 
-int addOK(int x, int y);
+uint32_t addOK(uint32_t x, uint32_t y);
 
 #endif

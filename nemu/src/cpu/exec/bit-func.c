@@ -30,9 +30,9 @@ int subOK(int x, int y) {
 	return !((p>>31)&0x1);
 }
 
-int addOK(int x, int y)
+uint32_t addOK(uint32_t x, uint32_t y)
 {
-	int sum=x+y;
-	int p=(x&y&~sum);
+	uint32_t sum=x+y;
+	uint32_t p=(x&y&~sum);
 	return !((p>>31)&0x1);
 }

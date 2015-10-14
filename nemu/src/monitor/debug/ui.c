@@ -141,8 +141,8 @@ static int cmd_info(char *args)
 
 static int cmd_x(char *args)
 {
-	int i;
-	char *para, *expression;
+	int i=0;
+	char ch,*para, *expression;
 	int len_para, len_args;
 	size_t len;
 	uint32_t read_addr = 0;
@@ -165,11 +165,21 @@ static int cmd_x(char *args)
 
 	assert(para_success && addr_success);
 
-	for(i=0;i<len;i++)
+	if(strcmp(para, "s")==0)
 	{
-		uint32_t value = swaddr_read(read_addr+4*i,4);
-		printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
+		do
+		{
+			ch = swaddr_read(read_addr+i,1);
+			printf("%c",ch);
+			i++;
+		}while(ch != 0);
 	}
+	else
+		for(i=0;i<len;i++)
+		{
+			uint32_t value = swaddr_read(read_addr+4*i,4);
+			printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
+		}
 		
 	return 0;
 }

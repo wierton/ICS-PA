@@ -33,6 +33,6 @@ int subOK(int x, int y) {
 uint32_t addOK(uint32_t x, uint32_t y)
 {
 	uint32_t sum=x+y;
-	uint32_t p=(x&y&~sum);
+	uint32_t p=(sum < x || sum < y);
 	return !((p>>31)&0x1);
 }

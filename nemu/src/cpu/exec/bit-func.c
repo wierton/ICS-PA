@@ -33,6 +33,6 @@ int subOK(int x, int y) {
 int addOK(int x, int y)
 {
 	int sum=x+y;
-	int p=(x&y&~sum)|(~x&~y&sum);
+	int p=(x&y&~sum);
 	return !((p>>31)&0x1);
 }

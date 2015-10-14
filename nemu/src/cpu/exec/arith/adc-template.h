@@ -3,17 +3,17 @@
 #define instr adc
 
 static void do_execute() {
-	int dst_2 = op_dest->val + op_src->val;
-	int dst_3 = op_dest->val + op_src->val + cpu.OF;
+	DATA_TYPE dst_2 = op_dest->val + op_src->val;
+	DATA_TYPE dst_3 = op_dest->val + op_src->val + cpu.CF;
 	int o2f = !addOK(op_dest->val, op_src->val);
 	if (o2f || (dst_3 < dst_2))
 		cpu.OF = 1;
 	else
 		cpu.OF = 0;
-	cpu.SF = (dst_3)>>31;
+	cpu.SF = MSB(dst_3);
 	cpu.ZF = (dst_3 == 0);
 	cpu.PF = anyEvenBit(dst_3);
-	cpu.CF = !addOK(op_dest->val, op_src->val);
+	cpu.CF = cpu.OF;
 	OPERAND_W(op_dest, op_dest->val + op_src->val + cpu.CF);
 	print_asm_template2();
 }

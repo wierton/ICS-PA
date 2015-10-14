@@ -3,9 +3,9 @@
 #define instr add
 
 static void do_execute() {
-	int dst = op_dest->val + op_src->val;
+	DATA_TYPE dst = op_dest->val + op_src->val;
 	cpu.OF = !addOK(op_dest->val, op_src->val);
-	cpu.SF = (dst)>>31;
+	cpu.SF = MSB(dst);
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);
 	cpu.CF = !addOK(op_dest->val, op_src->val);

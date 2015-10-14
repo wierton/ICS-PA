@@ -11,7 +11,7 @@ static void do_execute() {
 make_helper(concat(jmp_rm_, SUFFIX))
 {
 	int len = concat(decode_rm_,SUFFIX)(eip+1);
-	cpu.eip = op_src->val;
+	cpu.eip = op_src->val - (len+1);
 	print_asm_template1();
 	return len+1;
 

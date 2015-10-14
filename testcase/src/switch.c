@@ -2,8 +2,6 @@
 
 int switch_case(int n) {
 	int ret;
-	nemu_assert(n >= -1);
-	nemu_assert(n < 16);
 	switch(n) {
 		case 0: ret = 0; break;
 		case 1: ret = 2; break;

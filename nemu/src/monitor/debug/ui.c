@@ -163,8 +163,6 @@ static int cmd_x(char *args)
 	len = eval(para, &para_success);
 	read_addr = eval(expression, &addr_success);
 
-	assert(para_success && addr_success);
-
 	if(strcmp(para, "s")==0)
 	{
 		do
@@ -173,13 +171,16 @@ static int cmd_x(char *args)
 			printf("%c",ch);
 			i++;
 		}while(ch != 0);
+		return 0;
 	}
-	else
-		for(i=0;i<len;i++)
-		{
-			uint32_t value = swaddr_read(read_addr+4*i,4);
-			printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
-		}
+
+	assert(para_success && addr_success);
+
+	for(i=0;i<len;i++)
+	{
+		uint32_t value = swaddr_read(read_addr+4*i,4);
+		printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
+	}
 		
 	return 0;
 }

@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/if-else
+USERPROG := obj/testcase/pascal
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)

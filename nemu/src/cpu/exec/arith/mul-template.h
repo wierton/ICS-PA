@@ -18,7 +18,7 @@ static void do_execute() {
 	/* There is no need to update EFLAGS, since no other instructions 
 	 * in PA will test the flags updated by this instruction.
 	 */
-
+	cpu.CF = (result < REG(R_EAX) || result < src);
 	print_asm_template1();
 }
 

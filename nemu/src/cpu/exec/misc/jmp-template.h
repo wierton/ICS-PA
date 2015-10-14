@@ -12,6 +12,7 @@ make_helper(concat(jmp_rm_, SUFFIX))
 {
 	int len = concat(decode_rm_,SUFFIX)(eip+1);
 	cpu.eip = op_src->val;
+	print_asm_template1();
 	return len+1;
 
 }

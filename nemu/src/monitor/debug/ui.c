@@ -121,6 +121,11 @@ static int cmd_info(char *args)
 	{
 		print_wp();
 	}
+	else if(strcmp(args,"f")==0)
+	{
+		printf("OF SF ZF PF CF\n");
+		printf("%d  %d  %d  %d  %d", cpu.OF, cpu.SF, cpu.ZF, cpu.PF, cpu.CF);
+	}
 	else
 		printf("Unknown parameter:%s\n",args);
 	return 0;

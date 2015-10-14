@@ -164,12 +164,14 @@ static int cmd_x(char *args)
 
 	if(strcmp(para, "s")==0)
 	{
+		printf("0x%8x:",read_addr);
 		do
 		{
 			ch = swaddr_read(read_addr+i,1);
 			printf("%c",ch);
 			i++;
 		}while(ch != 0);
+		printf("\n");
 		return 0;
 	}
 

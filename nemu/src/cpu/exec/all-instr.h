@@ -7,7 +7,9 @@
 #include "data-mov/pop.h"
 
 #include "arith/add.h"
+#include "arith/adc.h"
 #include "arith/sub.h"
+#include "arith/sbb.h"
 #include "arith/cmp.h"
 #include "arith/call.h"
 #include "arith/push.h"

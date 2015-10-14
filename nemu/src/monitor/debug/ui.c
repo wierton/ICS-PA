@@ -160,7 +160,6 @@ static int cmd_x(char *args)
 
 	expression = strtok(NULL, " ");
 		
-	len = eval(para, &para_success);
 	read_addr = eval(expression, &addr_success);
 
 	if(strcmp(para, "s")==0)
@@ -174,6 +173,7 @@ static int cmd_x(char *args)
 		return 0;
 	}
 
+	len = eval(para, &para_success);
 	assert(para_success && addr_success);
 
 	for(i=0;i<len;i++)

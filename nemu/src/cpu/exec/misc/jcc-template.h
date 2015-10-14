@@ -76,7 +76,7 @@ make_eflags_helper(i,!cpu.CF,1)
 #undef flagstr
 	
 #define flagstr jnbe
-make_eflags_helper(i,!cpu.ZF,!cpu.ZF)
+make_eflags_helper(i,!cpu.CF,!cpu.ZF)
 #undef flagstr
 	
 #define flagstr jnc

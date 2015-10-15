@@ -6,10 +6,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	if(b != 0)
-		return (a/b)<<16;
-	else
-		return 0;
+	return (a/b)<<16;
 }
 
 FLOAT f2F(float a) {
@@ -20,12 +17,23 @@ FLOAT f2F(float a) {
 	int power=((uf&0x7f800000)>>23)-127-23;
 	frac = (j>>8)|frac;
 	if(power>=-16)
-		return frac<<(power+16);
-	return frac>>(-16-power);
+	{
+		if(j)
+			return ~(frac<<(power+16));
+		else
+			return frac<<(power+16);
+	}
+	if(j)
+		return ~(frac>>(-16-power));
+	else
+		return frac>>(-16-power);
 }
 
 FLOAT Fabs(FLOAT a) {
-	return a&0x7fffffff;
+	int s=(a>>31);
+	if(s)
+		return !a;
+	return a;
 }
 
 FLOAT sqrt(FLOAT x) {

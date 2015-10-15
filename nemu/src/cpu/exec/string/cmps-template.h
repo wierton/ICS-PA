@@ -6,7 +6,7 @@ make_helper(concat(cmps_,SUFFIX))
 {
 	DATA_TYPE dst = MEM_R(cpu.edi);
 	DATA_TYPE src = MEM_R(cpu.esi);
-	int32_t result = src - dst;
+	int32_t result = dst - src;
 	cpu.OF = !subOK(dst, src);
 	cpu.SF = MSB(result);
 	cpu.ZF = (result == 0);

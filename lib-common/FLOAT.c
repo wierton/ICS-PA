@@ -20,13 +20,19 @@ FLOAT f2F(float a) {
 	if(power>=-16)
 	{
 		if(sign)
-			return (~result);
+		{
+			result = ~result;
+			return result;
+		}
 		else
 			return result;
 	}
 	result = (frac>>(-16-power));
 	if(sign)
-		return (~result);
+	{
+		result = ~result;
+		return result;
+	}
 	else
 		return result;
 }

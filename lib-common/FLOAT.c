@@ -1,26 +1,10 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(a&0x80000000));
-	if(sa && !sb)
-		return ~(((~a)*b)>>16);
-	if(!sa && sb)
-		return ~((a*(~b))>>16);
-	if(sa && sb)
-		return (((~a)*(~b))>>16);
 	return ((a*b)>>16);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(a&0x80000000));
-	if(sa && !sb)
-		return ~(((~a)/b)<<16);
-	if(!sa && sb)
-		return ~((a/(~b))<<16);
-	if(sa && sb)
-		return (((~a)/(~b))<<16);
 	return ((a/b)<<16);
 }
 
@@ -55,7 +39,7 @@ FLOAT f2F(float a) {
 FLOAT Fabs(FLOAT a) {
 	int sa = (!!(a&0x80000000));
 	if(sa)
-		return ~a;
+		return ~a+1;
 	return a;
 }
 

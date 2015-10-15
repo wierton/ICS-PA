@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/matrix-mul-small
+USERPROG := obj/testcase/select-sort
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)

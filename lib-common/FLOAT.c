@@ -1,7 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	long long t = a*b;
+	int t = a*b;
 	return t>>16;
 }
 
@@ -10,9 +10,17 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
-	int p = a;
-	int q = a*65536;
-	return (p<<16|q);
+	int uf =(int)((int*)(&a));
+	int j=(uf&0x80000000);
+	int q=(uf&0x807fffff)|((j>>8)|0x800000);
+	int power=((uf&0x7f800000)>>23)-127;
+	if(power<0)
+		return 0;
+	if(power>31)
+		return 0x80000000;
+	if(power>=23)
+		return q<<(power-23);
+	return q>>(23-power);
 }
 
 FLOAT Fabs(FLOAT a) {

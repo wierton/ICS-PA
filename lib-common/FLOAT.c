@@ -10,22 +10,25 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
+	int result;
 	int uf = *((int*)(&a));
 	int sign=(!!(uf&0x80000000));
 	int frac=((uf&0x7fffff)|0x800000);
 //	int q=(uf&0x807fffff)|((j>>8)|0x800000);
 	int power=((uf&0x7f800000)>>23)-127-23;
+	result = frac<<(power+16);
 	if(power>=-16)
 	{
 		if(sign)
-			return ~(frac<<(power+16));
+			return ~result;
 		else
-			return frac<<(power+16);
+			return result;
 	}
+	result = (frac>>(-16-power));
 	if(sign)
-		return ~(frac>>(-16-power));
+		return ~result;
 	else
-		return frac>>(-16-power);
+		return result;
 }
 
 FLOAT Fabs(FLOAT a) {

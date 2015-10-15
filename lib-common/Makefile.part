@@ -3,7 +3,8 @@
 FLOAT_OBJ := $(FLOAT:.a=.o)
 
 $(FLOAT): $(FLOAT_OBJ)
+	mkdir -p obj/lib-common
 	ar r $(FLOAT) $(FLOAT_OBJ)
+	$(CC) -m32 -fno-builtin FLOAT.c
 
 # TODO: write a rule for generating $(FLOAT_OBJ)
-

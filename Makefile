@@ -1,6 +1,6 @@
 ##### global settings #####
 
-.PHONY: nemu entry all_testcase kernel run gdb test submit clean
+.PHONY: nemu entry all_testcase kernel run gdb test submit clean count
 
 CC := gcc
 LD := ld
@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/matrix-mul
+USERPROG := obj/testcase/leap-year
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)

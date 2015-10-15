@@ -5,6 +5,7 @@
 
 int main() {
 	FLOAT a = f2F(0.5);
+	nemu_assert(a == 0x00008000);
 	FLOAT b = f2F(0.5);
 	FLOAT c = f2F(-0.5);
 

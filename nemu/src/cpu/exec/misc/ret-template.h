@@ -15,8 +15,9 @@ make_helper(ret)
 #if DATA_BYTE == 2
 make_helper(ret_w)
 {
-	cpu.eip = MEM_R(cpu.esp);
 	int len = decode_i_w(eip + 1);
+	cpu.eip = MEM_R(cpu.esp);
+	cpu.esp += DATA_BYTE;
 	cpu.esp += op_src->val;
 	print_asm("ret $0x%x",op_src->val);
 	return len + 1;

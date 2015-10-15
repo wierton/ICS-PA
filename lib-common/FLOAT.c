@@ -9,7 +9,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	if(b != 0)
 		return (a/b)<<16;
 	else
-		return -1;
+		return 0;
 }
 
 FLOAT f2F(float a) {

@@ -15,7 +15,7 @@ make_helper(concat(stos_,SUFFIX))
 #if DATA_BYTE == 4
 	print_asm("stos $eax,$es:($edi)");
 #endif
-	cpu.edi++;
+	cpu.edi += DATA_BYTE;
 	return 1;
 }
 

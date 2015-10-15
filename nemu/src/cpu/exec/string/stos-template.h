@@ -6,7 +6,15 @@ make_helper(concat(stos_,SUFFIX))
 {
 	DATA_TYPE result = cpu.eax;
 	MEM_W(cpu.edi,result);
+#if DATA_BYTE == 1
 	print_asm("stos $al,$es:($edi)");
+#endif
+#if DATA_BYTE == 2
+	print_asm("stos $ax,$es:($edi)");
+#endif
+#if DATA_BYTE == 4
+	print_asm("stos $eax,$es:($edi)");
+#endif
 	cpu.edi++;
 	return 1;
 }

@@ -6,7 +6,10 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	return (a/b)<<16;
+	if(b != 0)
+		return (a/b)<<16;
+	else
+		return -1;
 }
 
 FLOAT f2F(float a) {

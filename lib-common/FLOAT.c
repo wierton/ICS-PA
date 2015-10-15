@@ -1,8 +1,20 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	int frac = 0xffff&(((a&0xffff)*(b&0xffff))>>16);
-	int num = (((a>>16)*(b>>16))<<16)&0xffff0000;
+	int abs_a=a,abs_b=b;
+	int sa = (!!(a&0x80000000));
+	int sb = (!!(a&0x80000000));
+	if(sa)
+		abs_a=~a+1;
+	if(sb)
+		abs_b=~b+1;
+	int frac_a = abs_a & 0xffff;
+	int frac_b = abs_b & 0xffff;
+	int n_a = abs_a>>16;
+	int n_b = abs_b>>16;
+	int frac_num = (n_a*frac_b + n_b*frac_a + ((frac_a*frac_b+0x8000)>>16));
+	int frac = frac_num&0xffff;
+	int num = (n_a*n_b+(frac_num>>16))&0xffff0000;
 	return frac|num;
 }
 

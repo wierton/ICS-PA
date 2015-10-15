@@ -22,8 +22,8 @@ FLOAT f2F(float a) {
 	if(power>31)
 		return 0x80000000;
 	if(power>=23)
-		return q<<(power-23);
-	return q>>(23-power);
+		return q<<(power-23+16);
+	return q>>(23-power-16);
 }
 
 FLOAT Fabs(FLOAT a) {

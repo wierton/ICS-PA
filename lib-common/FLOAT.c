@@ -10,7 +10,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT f2F(float a) {
-	int uf =(int)((int*)(&a));
+	int uf = *((int*)(&a));
 	int j=(uf&0x80000000);
 	int q=(uf&0x807fffff)|((j>>8)|0x800000);
 	int power=((uf&0x7f800000)>>23)-127;

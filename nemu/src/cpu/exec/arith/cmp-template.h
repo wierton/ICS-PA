@@ -4,11 +4,13 @@
 #define instr cmp
 
 static void do_execute() {
-	int dst = op_dest->val - op_src->val;
-	cpu.OF = !subOK(op_dest->val, op_src->val);
-	cpu.SF = (dst)>>31;
-	cpu.ZF = (dst == 0);
-	cpu.PF = anyEvenBit(dst);
+	DATA_TYPE_S dst = op_dest->val;
+	DATA_TYPE_S src = op_src->val;
+	DATA_TYPE result = dst - src;
+	cpu.OF = !subOK(dst, src);
+	cpu.SF = MSB(result);
+	cpu.ZF = (result == 0);
+	cpu.PF = anyEvenBit(result);
 	cpu.CF = (op_dest->val < op_src->val);
 	print_asm_template2();
 }

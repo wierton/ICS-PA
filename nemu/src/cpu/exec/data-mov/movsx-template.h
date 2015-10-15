@@ -2,14 +2,26 @@
 
 #define instr movsx
 
-static void do_execute() {
-	OPERAND_W(op_dest, op_src->val);
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_helper(concat(movsb_,SUFFIX))
+{
+	int len = concat(decode_rm2r_,SUFFIX)(eip+1);
+	int8_t result_t = op_src->val;
+	int32_t result = result_t;
+	OPERAND_W(op_dest,result);
 	print_asm_template2();
+	return len + 1;
 }
 
-
-#if DATA_BYTE == 2 || DATA_BYTE == 4
-make_instr_helper(rm2r)
+make_helper(concat(movsw_,SUFFIX))
+{
+	int len = concat(decode_rm2r_,SUFFIX)(eip+1);
+	int16_t result_t = op_src->val;
+	int32_t result = result_t;
+	OPERAND_W(op_dest,result);
+	print_asm_template2();
+	return len + 1;
+}
 #endif
 
 #include "cpu/exec/template-end.h"

@@ -10,4 +10,5 @@
 
 /* for instruction encoding overloading */
 
-make_helper_v(movsx_rm2r)
+make_helper_v(movsb)
+make_helper_v(movsw)

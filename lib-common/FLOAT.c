@@ -20,7 +20,7 @@ FLOAT f2F(float a) {
 		result = frac<<(power+16);
 		if(sign)
 		{
-			result = ~result;
+			result = ~result+1;
 			return result;
 		}
 		else
@@ -29,7 +29,7 @@ FLOAT f2F(float a) {
 	result = (frac>>(-16-power));
 	if(sign)
 	{
-		result = ~result;
+		result = ~result+1;
 		return result;
 	}
 	else

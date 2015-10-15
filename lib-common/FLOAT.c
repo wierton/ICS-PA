@@ -16,12 +16,12 @@ FLOAT f2F(float a) {
 	int uf = *((int*)(&a));
 	int j=(uf&0x80000000);
 	int frac=((uf&0x7fffff)|0x800000);
-	int q=(uf&0x807fffff)|((j>>8)|0x800000);
+//	int q=(uf&0x807fffff)|((j>>8)|0x800000);
 	int power=((uf&0x7f800000)>>23)-127-23;
 	frac = (j>>8)|frac;
 	if(power>=-16)
-		return q<<(power+16);
-	return q>>(-16-power);
+		return frac<<(power+16);
+	return frac>>(-16-power);
 }
 
 FLOAT Fabs(FLOAT a) {

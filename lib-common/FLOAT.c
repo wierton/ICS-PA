@@ -1,7 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	int frac = 0xffff&((a*b)>>16);
+	int frac = 0xffff&(((a&0xffff)*(b&0xffff))>>16);
 	int num = (((a>>16)*(b>>16))<<16)&0xffff0000;
 	return frac|num;
 }

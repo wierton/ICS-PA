@@ -19,9 +19,9 @@ FLOAT f2F(float a) {
 	int q=(uf&0x807fffff)|((j>>8)|0x800000);
 	int power=((uf&0x7f800000)>>23)-127-23;
 	frac = (j>>8)|frac;
-	if(power>=16)
-		return q<<(power-16);
-	return q>>(16-power);
+	if(power>=-16)
+		return q<<(power+16);
+	return q>>(-16-power);
 }
 
 FLOAT Fabs(FLOAT a) {

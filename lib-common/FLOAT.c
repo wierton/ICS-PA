@@ -1,11 +1,22 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	long long t = a*b;
-	int *p = (int*)&t;
-	int x=*p;
-	int y=*(p+1);
-	return (x<<16)|((y>>16)&0xffff);
+	int abs_a=a,abs_b=b;
+	int sa = (!!(a&0x80000000));
+	int sb = (!!(a&0x80000000));
+	if(sa)
+		abs_a=~a+1;
+	if(sb)
+		abs_b=~b+1;
+	int frac_a = abs_a & 0xffff;
+	int frac_b = abs_b & 0xffff;
+	int n_a = abs_a>>16;
+	int n_b = abs_b>>16;
+	int frac = (n_a*frac_b + n_b*frac_a) + (((frac_a*frac_b+0x8000)/65536)&0xffff);
+	int num = (n_a*n_b)<<16;
+	if(sa^sb)
+		return ~(frac+num)+1;
+	return frac+num;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {

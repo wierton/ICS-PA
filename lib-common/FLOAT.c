@@ -1,14 +1,69 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	long long t = a*b;
-    return t/65536;
+	int abs_a=a,abs_b=b;
+	int sa = (!!(a&0x80000000));
+	int sb = (!!(a&0x80000000));
+	if(sa)
+		abs_a=~a+1;
+	if(sb)
+		abs_b=~b+1;
+	int frac_a = abs_a & 0xffff;
+	int frac_b = abs_b & 0xffff;
+	int n_a = abs_a>>16;
+	int n_b = abs_b>>16;
+	int frac = (n_a*frac_b + n_b*frac_a) + (((frac_a*frac_b+0x8000)/65536)&0xffff);
+	int num = (n_a*n_b)<<16;
+	if(sa^sb)
+		return ~(frac+num)+1;
+	return frac+num;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	long long t = a*2147483648;
-	return t/b;
-
+	int abs_a=a,abs_b=b;
+	int sa = (!!(a&0x80000000));
+	int sb = (!!(b&0x80000000));
+	if(sa)
+		abs_a=~a+1;
+	if(sb)
+		abs_b=~b+1;
+	int frac_a = abs_a & 0xffff;
+	int frac_b = abs_b & 0xffff;
+	int n_a = abs_a>>16;
+	int n_b = abs_b>>16;
+	int frac,num;
+	if(n_a == 0)
+	{
+		if(sa^sb)
+			return ~((frac_a<<16)/abs_b)+1;
+		return (frac_a<<16)/abs_b;
+	}
+	if(n_b && frac_b)
+	{
+		int t=(n_a*65536/n_b)*frac_b;
+		if(t>0)
+			frac = (frac_a*65536/abs_b-(n_a*65536/n_b)*frac_b/abs_b);
+		else
+		{
+			return (abs_a*4096/(abs_b>>4));
+		}
+		num = (n_a*65536/n_b);
+	}
+	else if(frac_b)
+	{
+		if(sa^sb)
+			return ~((abs_a/frac_b)<<16)+1;
+		return (abs_a/frac_b)<<16;
+	}
+	else if(n_b)
+	{
+		if(sa^sb)
+			return ~(abs_a/n_b)+1;
+		return abs_a/n_b;
+	}
+	if(sa^sb)
+		return ~(frac+num)+1;
+	return frac+num;
 }
 
 FLOAT f2F(float a) {

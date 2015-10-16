@@ -97,9 +97,9 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	y[0]=L(b);y[1]=H(b);
 	mul(x,y,z);
 	if(neg)
-		return B(z[2],z[1]);
-	else
 		return ~B(z[2],z[1])+1;
+	else
+		return B(z[2],z[1]);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
@@ -111,9 +111,9 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	y[0]=L(b);y[1]=H(b);y[2]=0;
 	div(x,y,z);
 	if(neg)
-		return B(z[1],z[0]);
-	else
 		return ~B(z[1],z[0])+1;
+	else
+		return B(z[1],z[0]);
 }
 
 FLOAT f2F(float a) {

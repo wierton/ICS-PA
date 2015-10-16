@@ -94,7 +94,6 @@ FLOAT sqrt(FLOAT x) {
 	nemu_assert(t==0x20000);
 	do {
 		dt = F_div_int((F_div_F(x, t) - t), 2);
-		nemu_assert(F_div_F(x, t)==x>>1);
 		t += dt;
 	} while(Fabs(dt) > f2F(1e-4));
 

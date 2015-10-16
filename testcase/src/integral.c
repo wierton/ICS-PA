@@ -22,7 +22,7 @@ int main() {
 	FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
 //	FLOAT ans = f2F(0.551222);
 
-	nemu_assert(Fabs(a - 0.551222) < f2F(1e-4));
+	nemu_assert(Fabs(a - f2F(0.551222)) < f2F(1e-4));
 //	nemu_assert(Fabs(a - ans) < f2F(1e-4));
 	HIT_GOOD_TRAP;
 	return 0;

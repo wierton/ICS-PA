@@ -1,69 +1,105 @@
 #include "FLOAT.h"
 
+#define MSB(a) (((a)>>31)&0x1)
+#define H(a) (((a)>>16)&0xffff)
+#define L(a) ((a)&0xffff)
+#define B(a,b) ((((a)&0xffff)<<16)|((b)&0xffff))
+
+unsigned cmp(unsigned a[],unsigned b[])
+{
+	if(a[2]<b[2])
+		return 0;
+	if(a[2]==b[2] && a[1]<b[1])
+		return 0;
+	if(a[2]==b[2] && a[1]==b[1] && a[0]<b[0])
+		return 0;
+	return 1;
+}
+
+unsigned sub(unsigned a[],unsigned b[])
+{
+	if(!cmp(a,b))
+		return 0;
+	unsigned CF=0,i;
+	for(i=0;i<3;i++)
+	{
+		if(a[i]>=b[i]+CF)
+		{
+			a[i]=a[i]-b[i]-CF;
+			CF=0;
+		}
+		else
+		{
+			a[i]=65536+a[i]-(b[i]+CF);
+			CF=1;
+		}
+	}
+	return 1;
+}
+
+unsigned mul(unsigned a[],unsigned b[],unsigned c[])
+{
+	unsigned CF,t;
+	t=a[0]*b[0];
+	CF=H(t);
+	c[0]=L(t);
+
+	t=L(a[0]*b[1])+L(a[1]*b[0])+CF;
+	CF=H(t);
+	c[1]=L(t);
+
+	t=H(a[0]*b[1])+H(a[1]*b[0])+L(a[1]*b[1])+CF;
+	CF=H(t);
+	c[2]=L(t);
+
+	t=H(a[1]*b[1])+CF;
+	c[3]=L(t);
+
+	return 1;
+}
+
+unsigned div(unsigned a[],unsigned b[],unsigned c[])
+{
+	unsigned x=B(a[2],a[1]);
+	unsigned y=B(b[1],b[0]);
+	if(b[1] != 0)
+	{
+		unsigned CF=x%y,t=x/y;
+		c[1]=L(t);
+		a[2]=H(CF);
+		a[1]=L(CF);
+		c[0]=0;
+		while(sub(a,b)) c[0]++;
+	}
+	else
+	{
+		unsigned CF=x%y,t=x/y;
+		c[2]=H(t);
+		c[1]=L(t);
+		a[2]=H(CF);
+		a[1]=L(CF);
+		c[0]=0;
+		while(sub(a,b)) c[0]++;
+	}
+	return 1;
+}
+
+
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	int abs_a=a,abs_b=b;
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(a&0x80000000));
-	if(sa)
-		abs_a=~a+1;
-	if(sb)
-		abs_b=~b+1;
-	int frac_a = abs_a & 0xffff;
-	int frac_b = abs_b & 0xffff;
-	int n_a = abs_a>>16;
-	int n_b = abs_b>>16;
-	int frac = (n_a*frac_b + n_b*frac_a) + (((frac_a*frac_b+0x8000)/65536)&0xffff);
-	int num = (n_a*n_b)<<16;
-	if(sa^sb)
-		return ~(frac+num)+1;
-	return frac+num;
+
+	unsigned x[4],y[4],z[4];
+	x[0]=L(a);x[1]=H(a);
+	y[0]=L(b);y[1]=H(b);
+	mul(x,y,z);
+	return B(z[2],z[1]);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	int abs_a=a,abs_b=b;
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(b&0x80000000));
-	if(sa)
-		abs_a=~a+1;
-	if(sb)
-		abs_b=~b+1;
-	int frac_a = abs_a & 0xffff;
-	int frac_b = abs_b & 0xffff;
-	int n_a = abs_a>>16;
-	int n_b = abs_b>>16;
-	int frac,num;
-	if(n_a == 0)
-	{
-		if(sa^sb)
-			return ~((frac_a<<16)/abs_b)+1;
-		return (frac_a<<16)/abs_b;
-	}
-	if(n_b && frac_b)
-	{
-//		int t=(n_a*65536/n_b)*frac_b;
-//		if(t>0)
-			frac = (frac_a*65536/abs_b-(n_a*65536/n_b)*frac_b/abs_b);
-/*		else
-		{
-			return (abs_a*1024/(abs_b))<<6;
-		}
-*/		num = (n_a*65536/n_b);
-	}
-	else if(frac_b)
-	{
-		if(sa^sb)
-			return ~((abs_a/frac_b)<<16)+1;
-		return (abs_a/frac_b)<<16;
-	}
-	else if(n_b)
-	{
-		if(sa^sb)
-			return ~(abs_a/n_b)+1;
-		return abs_a/n_b;
-	}
-	if(sa^sb)
-		return ~(frac+num)+1;
-	return frac+num;
+	unsigned x[4],y[4],z[4];
+	x[0]=0;   x[1]=L(a);x[2]=H(a);
+	y[0]=L(b);y[1]=H(b);y[2]=0;
+	div(x,y,z);
+	return B(z[1],z[0]);
 }
 
 FLOAT f2F(float a) {
@@ -71,7 +107,6 @@ FLOAT f2F(float a) {
 	int uf = *((int*)(&a));
 	int sign=(!!(uf&0x80000000));
 	int frac=((uf&0x7fffff)|0x800000);
-//	int q=(uf&0x807fffff)|((j>>8)|0x800000);
 	int power=((uf&0x7f800000)>>23)-127-23;
 	if(power>=-16)
 	{

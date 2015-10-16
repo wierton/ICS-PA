@@ -5,7 +5,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int *p = (int*)&t;
 	int x=*p;
 	int y=*(p+1);
-	return (x<<16)|((y>>16)&0xffff);
+	return (y<<16)|((x>>16)&0xffff);
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {

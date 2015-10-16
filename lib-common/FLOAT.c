@@ -12,12 +12,11 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int frac_b = abs_b & 0xffff;
 	int n_a = abs_a>>16;
 	int n_b = abs_b>>16;
-	int frac_num = (n_a*frac_b + n_b*frac_a + ((frac_a*frac_b+0x8000)>>16));
-	int frac = frac_num&0xffff;
-	int num = (n_a*n_b+(frac_num>>16))<<16;
+	int frac = (n_a*frac_b + n_b*frac_a) + ((frac_a*frac_b+0x8000)/65536);
+	int num = (n_a*n_b)<<16;
 	if(sa^sb)
-        return ~(frac|num)+1;
-    return frac|num;
+        return ~(frac+num)+1;
+    return frac+num;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {

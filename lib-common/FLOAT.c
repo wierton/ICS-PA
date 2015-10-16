@@ -14,7 +14,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int n_b = abs_b>>16;
 	int frac_num = (n_a*frac_b + n_b*frac_a + ((frac_a*frac_b+0x8000)>>16));
 	int frac = frac_num&0xffff;
-	int num = (n_a*n_b+(frac_num>>16))&0xffff0000;
+	int num = (n_a*n_b+(frac_num>>16))<<16;
 	if(sa^sb)
         return ~(frac|num)+1;
     return frac|num;

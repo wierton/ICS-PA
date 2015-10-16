@@ -91,7 +91,6 @@ FLOAT Fabs(FLOAT a) {
 
 FLOAT sqrt(FLOAT x) {
 	FLOAT dt, t = int2F(2);
-	nemu_assert(t==0x20000);
 	do {
 		dt = F_div_int((F_div_F(x, t) - t), 2);
 		t += dt;

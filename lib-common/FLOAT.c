@@ -45,7 +45,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 			frac = (frac_a*65536/abs_b-(n_a*65536/n_b)*frac_b/abs_b);
 		else
 		{
-			return (abs_a*1024/(abs_b>>6));
+			return (abs_a*1024/(abs_b))<<6;
 		}
 		num = (n_a*65536/n_b);
 	}

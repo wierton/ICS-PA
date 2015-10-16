@@ -33,6 +33,12 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int n_a = abs_a>>16;
 	int n_b = abs_b>>16;
 	int frac_num,num;
+	if(n_a == 0)
+	{
+		if(sa^sb)
+			return ~((frac_a<<16)/abs_b)+1;
+		return (frac_a<<16)/abs_b;
+	}
 	if(n_b && frac_b)
 	{
 		frac_num = (frac_a-n_a*frac_b/n_b)*65536/(abs_b);

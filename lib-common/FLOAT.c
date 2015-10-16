@@ -87,19 +87,33 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
 
+	int sa=MSB(a);
+	int sb=MSB(b);
+	int neg=sa^sb;
 	unsigned x[4],y[4],z[4];
+	if(sa) a=~a+1;
+	if(sb) b=~b+1;
 	x[0]=L(a);x[1]=H(a);
 	y[0]=L(b);y[1]=H(b);
 	mul(x,y,z);
-	return B(z[2],z[1]);
+	if(neg)
+		return B(z[2],z[1]);
+	else
+		return ~B(z[2],z[1])+1;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
+	int sa=MSB(a);
+	int sb=MSB(b);
+	int neg=sa^sb;
 	unsigned x[4],y[4],z[4];
 	x[0]=0;   x[1]=L(a);x[2]=H(a);
 	y[0]=L(b);y[1]=H(b);y[2]=0;
 	div(x,y,z);
-	return B(z[1],z[0]);
+	if(neg)
+		return B(z[1],z[0]);
+	else
+		return ~B(z[2],z[1])+1;
 }
 
 FLOAT f2F(float a) {

@@ -107,6 +107,8 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int sb=MSB(b);
 	int neg=sa^sb;
 	unsigned x[4],y[4],z[4];
+	if(sa) a=~a+1;
+	if(sb) b=~b+1;
 	x[0]=0;   x[1]=L(a);x[2]=H(a);
 	y[0]=L(b);y[1]=H(b);y[2]=0;
 	div(x,y,z);

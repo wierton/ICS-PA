@@ -42,7 +42,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	if(n_b && frac_b)
 	{
 		frac_num = (frac_a-n_a*frac_b/n_b)*65536/(abs_b);
-		num = ((n_a/n_b)+(frac_num>>16))<<16;
+		num = (n_a*65536/n_b)+((frac_num>>16)<<16);
 	}
 	else if(frac_b)
 	{
@@ -57,8 +57,8 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	}
 	int frac = frac_num&0xffff;
 	if(sa^sb)
-		return ~(frac|num)+1;
-	return frac|num;
+		return ~(frac+num)+1;
+	return frac+num;
 
 }
 

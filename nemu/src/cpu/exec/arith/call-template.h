@@ -19,7 +19,7 @@ make_helper(call_rm_l)
 	int len = concat(decode_rm_, SUFFIX)(eip+1);
 	cpu.esp -= DATA_BYTE;
 	MEM_W(cpu.esp, cpu.eip+len);
-	cpu.eip = op_src->val;
+	cpu.eip = op_src->val - (len+1);
 	print_asm("call $0x%x",cpu.eip+len+1);
 	return len+1;
 }

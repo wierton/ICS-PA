@@ -23,7 +23,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int abs_a=a,abs_b=b;
 	int sa = (!!(a&0x80000000));
-	int sb = (!!(a&0x80000000));
+	int sb = (!!(b&0x80000000));
 	if(sa)
 		abs_a=~a+1;
 	if(sb)

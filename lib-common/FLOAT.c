@@ -15,11 +15,43 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int frac_num = (n_a*frac_b + n_b*frac_a + ((frac_a*frac_b+0x8000)>>16));
 	int frac = frac_num&0xffff;
 	int num = (n_a*n_b+(frac_num>>16))&0xffff0000;
-	return frac|num;
+	if(sa^sb)
+        return ~(frac|num)+1;
+    return frac|num;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	return ((a/b)<<16);
+	int abs_a=a,abs_b=b;
+	int sa = (!!(a&0x80000000));
+	int sb = (!!(a&0x80000000));
+	if(sa)
+		abs_a=~a+1;
+	if(sb)
+		abs_b=~b+1;
+	int frac_a = abs_a & 0xffff;
+	int frac_b = abs_b & 0xffff;
+	int n_a = abs_a>>16;
+	int n_b = abs_b>>16;
+	int frac_num,num;
+	if(n_b && frac_b)
+	{
+		frac_num = (frac_a-n_a*frac_b/n_b)*65536/(abs_b);
+		num = ((n_a/n_b)+(frac_num>>16))<<16;
+	}
+	else if(frac_b)
+	{
+		frac_num = frac_a/frac_b;
+		num = (n_a+(frac_num>>16))<<16;
+	}
+	else if(n_b)
+	{
+		return abs_a/n_b;
+	}
+	int frac = frac_num&0xffff;
+	if(sa^sb)
+		return ~(frac|num)+1;
+	return frac|num;
+
 }
 
 FLOAT f2F(float a) {

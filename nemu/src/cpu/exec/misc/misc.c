@@ -27,9 +27,10 @@ make_helper(lea) {
 make_helper(cdq)
 {
 	if(cpu.eax < 0)
-		cpu.edx = 0xffffff;
+		cpu.edx = 0xffffffff;
 	else
 		cpu.edx = 0x0;
+	print_asm("cltd");
 	return 1;
 }
 

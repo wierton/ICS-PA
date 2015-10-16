@@ -40,14 +40,14 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	}
 	if(n_b && frac_b)
 	{
-		int t=(n_a*65536/n_b)*frac_b;
-		if(t>0)
+//		int t=(n_a*65536/n_b)*frac_b;
+//		if(t>0)
 			frac = (frac_a*65536/abs_b-(n_a*65536/n_b)*frac_b/abs_b);
-		else
+/*		else
 		{
 			return (abs_a*1024/(abs_b))<<6;
 		}
-		num = (n_a*65536/n_b);
+*/		num = (n_a*65536/n_b);
 	}
 	else if(frac_b)
 	{

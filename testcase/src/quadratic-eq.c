@@ -14,6 +14,8 @@ int main() {
 	nemu_assert(F_mul_int(a, 4) == 0x00020000);
 	nemu_assert(F_mul_F(F_mul_int(a, 4), c) == ~0x00010000+1);
 	FLOAT dt = F_mul_F(b, b) - F_mul_F(F_mul_int(a, 4), c);
+
+	nemu_assert((F_div_F(f2F(0.7),f2F(1.000)),f2F(0.7))<f2F(1e-4));
 	FLOAT sqrt_dt = sqrt(dt);
 
 	nemu_assert((F_div_F(f2F(0.7),f2F(1.000)),f2F(0.7))<f2F(1e-4));

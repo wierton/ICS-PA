@@ -113,7 +113,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	if(neg)
 		return B(z[1],z[0]);
 	else
-		return ~B(z[2],z[1])+1;
+		return ~B(z[1],z[0])+1;
 }
 
 FLOAT f2F(float a) {

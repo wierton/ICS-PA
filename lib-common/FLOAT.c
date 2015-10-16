@@ -1,63 +1,13 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	int abs_a=a,abs_b=b;
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(a&0x80000000));
-	if(sa)
-		abs_a=~a+1;
-	if(sb)
-		abs_b=~b+1;
-	int frac_a = abs_a & 0xffff;
-	int frac_b = abs_b & 0xffff;
-	int n_a = abs_a>>16;
-	int n_b = abs_b>>16;
-	int frac = (n_a*frac_b + n_b*frac_a) + ((frac_a*frac_b+0x8000)/65536);
-	int num = (n_a*n_b)<<16;
-	if(sa^sb)
-        return ~(frac+num)+1;
-    return frac+num;
+	long long t = a*b;
+    return t/65536;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	int abs_a=a,abs_b=b;
-	int sa = (!!(a&0x80000000));
-	int sb = (!!(b&0x80000000));
-	if(sa)
-		abs_a=~a+1;
-	if(sb)
-		abs_b=~b+1;
-	int frac_a = abs_a & 0xffff;
-	int frac_b = abs_b & 0xffff;
-	int n_a = abs_a>>16;
-	int n_b = abs_b>>16;
-	int frac_num,num;
-	if(n_a == 0)
-	{
-		if(sa^sb)
-			return ~((frac_a<<16)/abs_b)+1;
-		return (frac_a<<16)/abs_b;
-	}
-	if(n_b && frac_b)
-	{
-		frac_num = (frac_a-n_a*frac_b/n_b)*65536/(abs_b);
-		num = (n_a*65536/n_b)+((frac_num>>16)<<16);
-	}
-	else if(frac_b)
-	{
-		frac_num = frac_a/frac_b;
-		num = (n_a+(frac_num>>16))<<16;
-	}
-	else if(n_b)
-	{
-        if(sa^sb)
-            return ~(abs_a/n_b)+1;
-		return abs_a/n_b;
-	}
-	int frac = frac_num&0xffff;
-	if(sa^sb)
-		return ~(frac+num)+1;
-	return frac+num;
+	long long t = a*2147483648;
+	return t/b;
 
 }
 

@@ -27,7 +27,7 @@ int main() {
 
 	nemu_assert(Fabs(sqrt_dt-f2F(1.118)) < f2F(1e-4));
 	nemu_assert(Fabs(-b + sqrt_dt-f2F(0.618)) < f2F(1e-4));
-	nemu_assert(Fabs(-b - sqrt_dt+f2F(1.618)) < f2F(1e-4));
+	nemu_assert(Fabs(-b - sqrt_dt-f2F(-1.618)) < f2F(1e-4));
 
 	FLOAT x1_ans = f2F(0.618);
 	FLOAT x2_ans = f2F(-1.618);

@@ -26,7 +26,8 @@ make_helper(lea) {
 
 make_helper(cdq)
 {
-	if(cpu.eax < 0)
+	int32_t s = cpu.eax>>31;
+	if(s)
 		cpu.edx = 0xffffffff;
 	else
 		cpu.edx = 0x0;

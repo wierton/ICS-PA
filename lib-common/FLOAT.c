@@ -45,6 +45,8 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	}
 	else if(n_b)
 	{
+        if(sa^sb)
+            return ~(abs_a/n_b)+1;
 		return abs_a/n_b;
 	}
 	int frac = frac_num&0xffff;

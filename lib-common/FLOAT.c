@@ -16,6 +16,27 @@ unsigned cmp(unsigned a[],unsigned b[])
 	return 1;
 }
 
+int add(unsigned a[],unsigned b[])
+{
+	if(!cmp(a,b))
+		return 0;
+	unsigned CF=0,i;
+	for(i=0;i<3;i++)
+	{
+		if(65536>a[i]+b[i]+CF)
+		{
+			a[i]=a[i]+b[i]+CF;
+			CF=0;
+		}
+		else
+		{
+			a[i]=a[i]+b[i]+CF-65536;
+			CF=1;
+		}
+	}
+	return 1;
+}
+
 unsigned sub(unsigned a[],unsigned b[])
 {
 	if(!cmp(a,b))
@@ -64,7 +85,7 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 	unsigned y=B(b[1],b[0]);
 	if(b[1] != 0)
 	{
-		unsigned CF=x%y,t=x/y;
+		unsigned CF=x-y*(x/y),t=x/y;
 		c[1]=L(t);
 		a[2]=H(CF);
 		a[1]=L(CF);
@@ -73,7 +94,7 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 	}
 	else
 	{
-		unsigned CF=x%y,t=x/y;
+		unsigned CF=x-y*(x/y),t=x/y;
 		c[2]=H(t);
 		c[1]=L(t);
 		a[2]=H(CF);

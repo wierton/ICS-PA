@@ -91,7 +91,7 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 		c[1]=L(t);
 		a[2]=H(CF);
 		a[1]=L(CF);
-		z[0]=L(((a[2]<<16)/b[1])+((a[1]*b[1]-a[2]*b[0])<<16)/(b[1]*B(b[1],b[0])));;
+		z[0]=B(a[2],a[1])/b[1];
 		mul(b,z,m);
 		if(cmp(a,m))
 		{

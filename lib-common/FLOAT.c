@@ -83,7 +83,7 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 {
 	unsigned x=B(a[2],a[1]);
 	unsigned y=B(b[1],b[0]);
-	unsigned m[4];
+	unsigned m[4],z[4]={0};
 	c[2]=0;
 	if(b[1] != 0)
 	{
@@ -91,17 +91,17 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 		c[1]=L(t);
 		a[2]=H(CF);
 		a[1]=L(CF);
-		c[0]=L(((a[2]<<16)/b[1])+((a[1]*b[1]-a[2]*b[0])<<16)/(b[1]*B(b[1],b[0])));
-		mul(b,c,m);
+		z[0]=L(((a[2]<<16)/b[1])+((a[1]*b[1]-a[2]*b[0])<<16)/(b[1]*B(b[1],b[0])));;
+		mul(b,z,m);
 		if(cmp(a,m))
 		{
 			sub(a,m);
-			while(sub(a,b)) c[0]++;
+			while(sub(a,b)) z[0]++;
 		}
 		else
 		{
 			sub(m,a);
-			while(sub(m,b)) c[0]--;
+			while(sub(m,b)) z[0]--;
 		}
 	}
 	else
@@ -111,19 +111,20 @@ unsigned div(unsigned a[],unsigned b[],unsigned c[])
 		c[1]=L(t);
 		a[2]=H(CF);
 		a[1]=L(CF);
-		c[0]=(a[0]<<16)/b[0];
-		mul(b,c,m);
+		z[0]=B(a[1],a[0])/b[0];
+		mul(b,z,m);
 		if(cmp(a,m))
 		{
 			sub(a,m);
-			while(sub(a,b)) c[0]++;
+			while(sub(a,b)) z[0]++;
 		}
 		else
 		{
 			sub(m,a);
-			while(sub(m,b)) c[0]--;
+			while(sub(m,b)) z[0]--;
 		}
 	}
+	c[0]=z[0];
 	return 1;
 }
 

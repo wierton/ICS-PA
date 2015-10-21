@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <regex.h>
 
+#include "monitor/readelf.h"
+
 enum {
 	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR, GEQ, LEQ
 

@@ -51,6 +51,8 @@ static int cmd_w(char *args);
 
 static int cmd_d(char *args);
 
+static int cmd_bt(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -66,7 +68,8 @@ static struct {
 	{ "x", "Read memory from given address",cmd_x},
 	{ "p", "Calculate the expression",cmd_p},
 	{ "w", "Add a watchpoint",cmd_w},
-	{ "d", "Delete a watchpoint",cmd_d}
+	{ "d", "Delete a watchpoint",cmd_d},
+	{ "bt", "Print the stack frame chain",cmd_bt}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -232,6 +235,27 @@ static int cmd_d(char *args)
 	no = eval(args,&is_valid);
 	if(is_valid)
 		free_wp(find_wp(no));
+	return 0;
+}
+
+static int cmd_bt(char *args)
+{
+	int no = 0;
+	swaddr_t now_ebp, prev_ebp, ret_addr;
+	char func_name[20];
+	if(strlen(args) != 0)
+	{
+		printf("Invalid usage!\n");
+		return 0;
+	}
+	prev_ebp = cpu.ebp;
+	do
+	{
+		now_ebp = prev_ebp;
+		prev_ebp = swaddr_read(now_ebp, 4);
+		ret_addr = swaddr_read(now_ebp + 4, 4);
+		printf("#%d\t0x%08x in %s\n", no++, now_ebp, func_name);
+	} while(find_func(ret_addr, func_name));
 	return 0;
 }
 

@@ -258,7 +258,7 @@ static int cmd_bt(char *args)
 			printf("No stack!\n");
 			return 0;
 		}
-		printf("#%d\t0x%08x in %s\n", no++, ret_addr + 1, func_name);
+		printf("#%d\t0x%08x in %s\n", no++, ret_addr, func_name);
 		prev_ebp = swaddr_read(now_ebp, 4);
 		ret_addr = swaddr_read(now_ebp + 4, 4);
 	}

@@ -85,16 +85,17 @@ void load_elf_tables(int argc, char *argv[]) {
 void show_symtab()
 {
 	int i;
-	printf(".symtab\n");
-	printf("name\t");
-	printf("value\t\t");
-	printf("size\t");
-	printf("info\t");
-	printf("other\t");
-	printf("shndx\n");
+//Num:    Value  Size Type    Bind   Vis      Ndx Name
+	printf(".symtab\n\n");
+	printf("Value\t\t");
+	printf("Size\t");
+	printf("Type\t");
+	printf("Bind\t");
+	printf("Vis\t");
+	printf("Ndx\t");
+	printf("NAME\n");
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
-		printf("%u\t",symtab[i].st_name);
 		printf("$0x%08x\t",symtab[i].st_value);
 		printf("%u\t",symtab[i].st_size);
 		switch(symtab[i].st_info)
@@ -106,11 +107,15 @@ void show_symtab()
 			case STT_FILE	:printf("FILE\t");		break;
 			case STT_LOPROC	:printf("LOPROC\t");	break;
 			case STT_HIPROC	:printf("HIPROC\t");	break;
-			//case STB_LOCAL	:printf("LOCAL\t");		break;
-			//case STB_GLOBAL	:printf("GLOBAL\t");	break;
-			//case STB_WEAK	:printf("WEAK\t");		break;
-			//case STB_LOPROC	:printf("LOPROC\t");	break;
-			//case STB_HIPROC :printf("STB_HIPROC\t");break;
+			default			:printf("UNKNOWN\t");	break;
+		}
+		switch(symtab[i].st_info)
+		{
+			case STB_LOCAL	:printf("LOCAL\t");		break;
+			case STB_GLOBAL	:printf("GLOBAL\t");	break;
+			case STB_WEAK	:printf("WEAK\t");		break;
+			case STB_LOPROC	:printf("LOPROC\t");	break;
+			case STB_HIPROC	:printf("HIPROC\t");break;
 			default			:printf("UNKNOWN\t");	break;
 		}
 		switch(symtab[i].st_other)
@@ -122,5 +127,6 @@ void show_symtab()
 			default				:printf("UNKNOWN\t");	break;
 		}
 		printf("%hu\n",symtab[i].st_shndx);
+		printf("%u\t",symtab[i].st_name);
 	}
 }

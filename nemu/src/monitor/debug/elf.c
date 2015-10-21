@@ -157,7 +157,6 @@ int find_func(swaddr_t func_addr, char *func_name)
 		{
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 			{
-				printf("%d:%s\n",symtab[i].st_name, strtab + symtab[i].st_name);
 				strcpy(func_name, strtab + symtab[i].st_name);
 				return 1;
 			}

@@ -249,7 +249,8 @@ static int cmd_bt(char *args)
 		return 0;
 	}
 	prev_ebp = cpu.ebp;
-	do
+	ret_addr = cpu.eip;
+	while(find_func(ret_addr, func_name))
 	{
 		now_ebp = prev_ebp;
 		if(prev_ebp >= (1 << (10 + 10 + 3 +(27 - 10 - 10 - 3))))
@@ -260,7 +261,7 @@ static int cmd_bt(char *args)
 		prev_ebp = swaddr_read(now_ebp, 4);
 		ret_addr = swaddr_read(now_ebp + 4, 4);
 		printf("#%d\t0x%08x in %s\n", no++, ret_addr, func_name);
-	} while(find_func(ret_addr, func_name));
+	}
 	return 0;
 }
 

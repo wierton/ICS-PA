@@ -1,6 +1,7 @@
 #include "monitor/monitor.h"
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
+#include "monitor/readelf.h"
 #include "nemu.h"
 
 #include <stdlib.h>
@@ -133,6 +134,10 @@ static int cmd_info(char *args)
 	{
 		printf("OF SF ZF PF CF\n");
 		printf("%d  %d  %d  %d  %d\n", cpu.OF, cpu.SF, cpu.ZF, cpu.PF, cpu.CF);
+	}
+	else if(strcmp(args, "symtab") == 0)
+	{
+		show_symtab();
 	}
 	else
 		printf("Unknown parameter:%s\n",args);

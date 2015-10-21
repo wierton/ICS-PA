@@ -143,8 +143,7 @@ swaddr_t find_var(char symbol[])
 			printf("%d:'%s'\t'%s'\n",i,symbol,strtab + i);
 			for(j = 0;j < nr_symtab_entry;j++)
 				if(symtab[j].st_name == i)
-					if(ELF32_ST_TYPE(symtab[i].st_info) == STT_OBJECT)
-						return symtab[j].st_value;
+					return symtab[j].st_value;
 		}
 	}	
 	return 0;

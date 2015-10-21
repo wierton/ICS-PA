@@ -16,6 +16,8 @@ void load_elf_tables(int argc, char *argv[]) {
 	FILE *fp = fopen(exec_file, "rb");
 	Assert(fp, "Can not open '%s'", exec_file);
 
+	printf("**********************************************************\n");
+
 	uint8_t buf[sizeof(Elf32_Ehdr)];
 	ret = fread(buf, sizeof(Elf32_Ehdr), 1, fp);
 	assert(ret == 1);

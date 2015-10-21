@@ -148,7 +148,7 @@ swaddr_t find_var(char symbol[])
 	return 0;
 }
 
-int find_func(swaddr_t func_addr, char *str)
+int find_func(swaddr_t func_addr, char *func_name)
 {
 	int i;
 	for(i = 0;i < nr_symtab_entry;i++)
@@ -157,7 +157,7 @@ int find_func(swaddr_t func_addr, char *str)
 		{
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 			{
-				strcpy(str, strtab + symtab[i].st_name);
+				strcpy(func_name, strtab + symtab[i].st_name);
 				return 1;
 			}
 			else

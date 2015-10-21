@@ -98,7 +98,7 @@ void show_symtab()
 	{
 		printf("$0x%08x\t",symtab[i].st_value);
 		printf("%u\t",symtab[i].st_size);
-		switch(symtab[i].st_info & 0xf)
+		switch(ELF32_ST_TYPE(symtab[i].st_info))
 		{
 			case STT_NOTYPE	:printf("NOTYPE\t");	break;
 			case STT_OBJECT	:printf("OBJECT\t");	break;
@@ -109,7 +109,7 @@ void show_symtab()
 			case STT_HIPROC	:printf("HIPROC\t");	break;
 			default			:printf("UNKNOWN\t");	break;
 		}
-		switch((((symtab[i].st_info & 0xf0)>>4)&0xf))
+		switch(ELF32_ST_BIND(symtab[i].st_info))
 		{
 			case STB_LOCAL	:printf("LOCAL\t");		break;
 			case STB_GLOBAL	:printf("GLOBAL\t");	break;

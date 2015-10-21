@@ -148,11 +148,21 @@ swaddr_t find_var(char symbol[])
 	return 0;
 }
 
-void find_func(char *str)
+int find_func(swaddr_t func_addr, char *str)
 {
-	int i,j;
-	for(i = 0;i < nr_strtab;i++)
+	int i;
+	for(i = 0;i < nr_symtab_entry;i++)
 	{
-		if(symtab[j].st_name == i);
+		if(symtab[i].st_value <= func_addr && func_addr <= symtab[i].st_value + symtab[i].st_size)
+		{
+			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
+			{
+				strcpy(str, strtab + symtab[i].st_name);
+				return 1;
+			}
+			else
+				return 0;
+		}
 	}
+	return 0;
 }

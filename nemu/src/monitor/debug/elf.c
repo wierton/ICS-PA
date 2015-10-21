@@ -87,8 +87,8 @@ void show_symtab()
 	int i;
 //Num:    Value  Size Type    Bind   Vis      Ndx Name
 	printf(".symtab\n\n");
-	printf("Value\t");
-	printf("Size\t\t");
+	printf("Value\t\t");
+	printf("Size\t");
 	printf("Type\t");
 	printf("Bind\t");
 	printf("Vis\t");

@@ -243,7 +243,7 @@ static int cmd_bt(char *args)
 	int no = 0;
 	swaddr_t now_ebp, prev_ebp, ret_addr;
 	char func_name[20];
-	if(strlen(args) != 0)
+	if(args[0] != 0)
 	{
 		printf("Invalid usage!\n");
 		return 0;

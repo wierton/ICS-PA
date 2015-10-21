@@ -284,7 +284,6 @@ static bool make_token(char *e) {
 					case VAR:
 						unit[pUnit]._operator = '\0';
 						unit[pUnit++].operand = find_var(substr_start);
-						printf("%x\n",find_var(substr_start));
 						break;
 					default: panic("please implement me");
 				}

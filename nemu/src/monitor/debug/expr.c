@@ -282,7 +282,9 @@ static bool make_token(char *e) {
 						//printf("%s:%d\n",reg,unit[pUnit].operand);
 						break;
 					case VAR:
-						printf("%s\n", substr_start);
+						unit[pUnit]._operator = '\0';
+						unit[pUnit++].operand = find_var(substr_start);
+						printf("%x\n",find_var(substr_start));
 						break;
 					default: panic("please implement me");
 				}

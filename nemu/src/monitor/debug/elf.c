@@ -8,6 +8,7 @@ char *exec_file = NULL;
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
+static int nr_strtab = 0;
 
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
@@ -67,6 +68,7 @@ void load_elf_tables(int argc, char *argv[]) {
 		else if(sh[i].sh_type == SHT_STRTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".strtab") == 0) {
 			/* Load string table from exec_file */
+			nr_strtab = sh[i].sh_size;
 			strtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			ret = fread(strtab, sh[i].sh_size, 1, fp);
@@ -85,7 +87,7 @@ void load_elf_tables(int argc, char *argv[]) {
 void show_symtab()
 {
 	int i;
-	printf(".symtab\n\n");
+	printf(".symtab\n");
 	printf("Value\t\t");
 	printf("Size\t");
 	printf("Type\t");
@@ -130,7 +132,16 @@ void show_symtab()
 	}
 }
 
-swaddr_t find_var(char symbol)
+swaddr_t find_var(char symbol[])
 {
+	int i;
+	for(i = 0;i < nr_strtab;i++)
+	{
+		if(strcmp(symbol,strtab + i) == 0)
+		{
+			printf("oo");
+		}
+	}
+	
 	return 0;
 }

@@ -129,3 +129,8 @@ void show_symtab()
 		printf("%s\n",strtab + symtab[i].st_name);
 	}
 }
+
+swaddr_t find_var(char symbol)
+{
+	return 0;
+}

@@ -249,6 +249,7 @@ static int cmd_bt(char *args)
 		return 0;
 	}
 	prev_ebp = cpu.ebp;
+	printf("[][][]");
 	do
 	{
 		now_ebp = prev_ebp;

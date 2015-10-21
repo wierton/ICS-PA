@@ -118,7 +118,7 @@ void show_symtab()
 			case STB_HIPROC	:printf("HIPROC\t");break;
 			default			:printf("UNKNOWN\t");	break;
 		}
-		switch(symtab[i].st_other)
+		switch(ELF32_ST_VISIBILITY(symtab[i].st_other))
 		{
 			case STV_DEFAULT	:printf("DEFAULT\t");	break;
 			case STV_INTERNAL	:printf("INTERNAL\t");	break;

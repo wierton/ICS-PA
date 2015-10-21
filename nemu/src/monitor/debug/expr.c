@@ -9,7 +9,7 @@
 #include "monitor/readelf.h"
 
 enum {
-	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR, GEQ, LEQ
+	NOTYPE = 256, REG, NUM, HEX, EQ, NEQ, AND, OR, NOR, GEQ, LEQ, VAR
 
 	/* TODO: Add more token types */
 
@@ -102,7 +102,8 @@ static struct rule {
 	{"!=", NEQ},
 	{"&&", AND},
 	{"\\|\\|",OR},
-	{"\\!", NOR}
+	{"\\!", NOR},
+	{"[\\_a-zA-Z^0-9][\\_a-zA-Z0-9]+", VAR}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -279,6 +280,9 @@ static bool make_token(char *e) {
 						else
 							printf("Warning:%s,no such reg!\n",reg);
 						//printf("%s:%d\n",reg,unit[pUnit].operand);
+						break;
+					case VAR:
+						printf("%s\n", substr_start);
 						break;
 					default: panic("please implement me");
 				}

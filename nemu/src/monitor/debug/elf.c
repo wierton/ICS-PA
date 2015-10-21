@@ -87,8 +87,8 @@ void show_symtab()
 	int i;
 //Num:    Value  Size Type    Bind   Vis      Ndx Name
 	printf(".symtab\n\n");
-	printf("Value\t\t");
-	printf("Size\t");
+	printf("Value\t");
+	printf("Size\t\t");
 	printf("Type\t");
 	printf("Bind\t");
 	printf("Vis\t");
@@ -126,7 +126,7 @@ void show_symtab()
 			case STV_PROTECTED	:printf("PROTECTED\t");	break;
 			default				:printf("UNKNOWN\t");	break;
 		}
-		printf("%hu\n",symtab[i].st_shndx);
-		printf("%u\t",symtab[i].st_name);
+		printf("%hu\t",symtab[i].st_shndx);
+		printf("%u\n",symtab[i].st_name);
 	}
 }

@@ -252,6 +252,7 @@ static int cmd_bt(char *args)
 	do
 	{
 		now_ebp = prev_ebp;
+		printf("%x\n", now_ebp);
 		prev_ebp = swaddr_read(now_ebp, 4);
 		ret_addr = swaddr_read(now_ebp + 4, 4);
 		printf("#%d\t0x%08x in %s\n", no++, ret_addr, func_name);

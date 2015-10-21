@@ -85,7 +85,6 @@ void load_elf_tables(int argc, char *argv[]) {
 void show_symtab()
 {
 	int i;
-//Num:    Value  Size Type    Bind   Vis      Ndx Name
 	printf(".symtab\n\n");
 	printf("Value\t\t");
 	printf("Size\t");
@@ -94,6 +93,7 @@ void show_symtab()
 	printf("Vis\t");
 	printf("Ndx\t");
 	printf("NAME\n");
+	printf("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",STT_NOTYPE,STT_OBJECT,STT_FUNC,STT_SECTION,STT_FILE,STT_LOPROC,STT_HIPROC,STB_LOCAL,STB_GLOBAL,STB_WEAK,STB_LOPROC,STB_HIPROC);
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
 		printf("$0x%08x\t",symtab[i].st_value);

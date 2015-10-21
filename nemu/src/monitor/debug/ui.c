@@ -253,7 +253,7 @@ static int cmd_bt(char *args)
 	while(find_func(ret_addr, func_name))
 	{
 		now_ebp = prev_ebp;
-		if(prev_ebp >= (1 << (10 + 10 + 3 +(27 - 10 - 10 - 3))))
+		if(now_ebp >= (1 << (10 + 10 + 3 +(27 - 10 - 10 - 3))))
 		{
 			printf("No stack!\n");
 			return 0;

@@ -11,7 +11,7 @@ static void do_execute () {
 	cpu.SF = MSB(result);
 	cpu.ZF = (result == 0);
 	cpu.PF = anyEvenBit(result);
-	cpu.CF = (op_dest->val < op_src->val);
+	cpu.CF = (op_src->val < 1);
 
 	print_asm_template1();
 }

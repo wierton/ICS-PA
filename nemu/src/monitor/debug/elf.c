@@ -134,14 +134,16 @@ void show_symtab()
 
 swaddr_t find_var(char symbol[])
 {
-	int i;
+	int i,j;
 	for(i = 0;i < nr_strtab;i++)
 	{
 		if(strcmp(symbol,strtab + i) == 0)
 		{
-			printf("oo");
+			for(j = 0;j < nr_symtab_entry;j++)
+				if(symtab[j].st_name == i)
+					if(ELF32_ST_TYPE(symtab[i].st_info) == STT_OBJECT)
+						return symtab[j].st_value;
 		}
-	}
-	
+	}	
 	return 0;
 }

@@ -137,6 +137,7 @@ swaddr_t find_var(char symbol[])
 	int i,j;
 	for(i = 0;i < nr_strtab;i++)
 	{
+		printf("'%s'\t'%s'\n",symbol,strtab + i);
 		if(strcmp(symbol,strtab + i) == 0)
 		{
 			for(j = 0;j < nr_symtab_entry;j++)

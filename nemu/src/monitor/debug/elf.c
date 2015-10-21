@@ -1,12 +1,9 @@
 #include "common.h"
 #include <stdlib.h>
 #include <elf.h>
+#include "monitor/readelf.h"
 
 char *exec_file = NULL;
-
-static char *strtab = NULL;
-static Elf32_Sym *symtab = NULL;
-static int nr_symtab_entry;
 
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
@@ -84,6 +81,13 @@ void load_elf_tables(int argc, char *argv[]) {
 void show_symtab()
 {
 	int i;
+	printf(".symtab\n");
+	printf("name\t");
+	printf("value\t");
+	printf("size\t");
+	printf("info\t");
+	printf("other\t");
+	printf("shndx\n");
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
 		printf("%u\t",symtab[i].st_name);

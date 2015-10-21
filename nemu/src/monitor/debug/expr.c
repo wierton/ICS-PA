@@ -278,12 +278,13 @@ static bool make_token(char *e) {
 						else if(strcmp(reg,"EIP") == 0)
 							unit[pUnit++].operand = cpu.eip;
 						else
-							printf("Warning:%s,no such reg!\n",reg);
-						//printf("%s:%d\n",reg,unit[pUnit].operand);
+							printf("Warning:'%s',no such reg!\n",reg);
 						break;
 					case VAR:
 						unit[pUnit]._operator = '\0';
 						unit[pUnit++].operand = find_var(substr_start);
+						if(unit[pUnit - 1].operand == 0)
+							printf("no match at position %d\n%s\n%*.s^\n", position, substr_start, position, "");
 						break;
 					default: panic("please implement me");
 				}

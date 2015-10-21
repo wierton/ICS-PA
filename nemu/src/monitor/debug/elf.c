@@ -128,7 +128,7 @@ void show_symtab()
 			default				:printf("UNKNOWN\t");	break;
 		}
 		printf("%hu\t",symtab[i].st_shndx);
-		printf("%s\n",strtab + symtab[i].st_name);
+		printf("%d:%s\n",symtab[i].st_name,strtab + symtab[i].st_name);
 	}
 }
 

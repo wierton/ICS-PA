@@ -16,8 +16,6 @@ void load_elf_tables(int argc, char *argv[]) {
 	FILE *fp = fopen(exec_file, "rb");
 	Assert(fp, "Can not open '%s'", exec_file);
 
-	printf("**********************************************************\n");
-
 	uint8_t buf[sizeof(Elf32_Ehdr)];
 	ret = fread(buf, sizeof(Elf32_Ehdr), 1, fp);
 	assert(ret == 1);
@@ -83,3 +81,16 @@ void load_elf_tables(int argc, char *argv[]) {
 	fclose(fp);
 }
 
+void show_symtab()
+{
+	int i;
+	for(i = 0;i < nr_symtab_entry;i++)
+	{
+		printf("%u\t",symtab[i].st_name);
+		printf("$0x%08x\t",symtab[i].st_value);
+		printf("%u\t",symtab[i].st_size);
+		printf("%hu\t",symtab[i].st_info);
+		printf("%hu\t",symtab[i].st_other);
+		printf("%hu\n",symtab[i].st_shndx);
+	}
+}

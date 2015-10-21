@@ -147,3 +147,12 @@ swaddr_t find_var(char symbol[])
 	}	
 	return 0;
 }
+
+void find_func(char *str)
+{
+	int i,j;
+	for(i = 0;i < nr_strtab;i++)
+	{
+		if(symtab[j].st_name == i);
+	}
+}

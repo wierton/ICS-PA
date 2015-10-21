@@ -249,10 +249,14 @@ static int cmd_bt(char *args)
 		return 0;
 	}
 	prev_ebp = cpu.ebp;
+	if(prev_ebp >= (1 << (10 + 10 + 3 +(27 - 10 - 10 - 3))))
+	{
+		printf("No stack!\n");
+		return 0;
+	}
 	do
 	{
 		now_ebp = prev_ebp;
-		printf("%x\n", now_ebp);
 		prev_ebp = swaddr_read(now_ebp, 4);
 		ret_addr = swaddr_read(now_ebp + 4, 4);
 		printf("#%d\t0x%08x in %s\n", no++, ret_addr, func_name);

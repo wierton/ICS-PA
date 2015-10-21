@@ -26,6 +26,11 @@ make_helper(rep) {
 				);
 
 			/* TODO: Jump out of the while loop if necessary. */
+			if(count > 100000)
+			{
+				printf("Loop times is too much!\n");
+				break;
+			}
 
 		}
 		len = 1;

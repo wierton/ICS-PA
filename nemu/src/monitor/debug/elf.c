@@ -87,7 +87,7 @@ void show_symtab()
 	int i;
 	printf(".symtab\n");
 	printf("name\t");
-	printf("value\t");
+	printf("value\t\t");
 	printf("size\t");
 	printf("info\t");
 	printf("other\t");
@@ -97,8 +97,30 @@ void show_symtab()
 		printf("%u\t",symtab[i].st_name);
 		printf("$0x%08x\t",symtab[i].st_value);
 		printf("%u\t",symtab[i].st_size);
-		printf("%hu\t",symtab[i].st_info);
-		printf("%hu\t",symtab[i].st_other);
+		switch(symtab[i].st_info)
+		{
+			case STT_NOTYPE	:printf("NOTYPE\t");	break;
+			case STT_OBJECT	:printf("OBJECT\t");	break;
+			case STT_FUNC	:printf("FUNC\t");		break;
+			case STT_SECTION:printf("SECTION\t");	break;
+			case STT_FILE	:printf("FILE\t");		break;
+			case STT_LOPROC	:printf("LOPROC\t");	break;
+			case STT_HIPROC	:printf("HIPROC\t");	break;
+			//case STB_LOCAL	:printf("LOCAL\t");		break;
+			//case STB_GLOBAL	:printf("GLOBAL\t");	break;
+			//case STB_WEAK	:printf("WEAK\t");		break;
+			//case STB_LOPROC	:printf("LOPROC\t");	break;
+			//case STB_HIPROC :printf("STB_HIPROC\t");break;
+			default			:printf("UNKNOWN\t");	break;
+		}
+		switch(symtab[i].st_other)
+		{
+			case STV_DEFAULT	:printf("DEFAULT\t");	break;
+			case STV_INTERNAL	:printf("INTERNAL\t");	break;
+			case STV_HIDDEN		:printf("HIDDEN\t");	break;
+			case STV_PROTECTED	:printf("PROTECTED\t");	break;
+			default				:printf("UNKNOWN\t");	break;
+		}
 		printf("%hu\n",symtab[i].st_shndx);
 	}
 }

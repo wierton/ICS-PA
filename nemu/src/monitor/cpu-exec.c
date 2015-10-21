@@ -74,8 +74,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-		if(!check_wp())
-			nemu_state = STOP;
+		if(!check_wp()) {nemu_state = STOP;}
 
 		if(nemu_state != RUNNING) { return; }
 	}

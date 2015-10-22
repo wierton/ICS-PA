@@ -52,8 +52,9 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/add
+# USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/leap-year
+USERPROG := obj/testcase/hello-str
 
 ### ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)

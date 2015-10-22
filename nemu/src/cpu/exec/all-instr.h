@@ -6,6 +6,7 @@
 #include "data-mov/movsx.h"
 #include "data-mov/set.h"
 #include "data-mov/pop.h"
+#include "data-mov/cmovcc.h"
 
 #include "arith/add.h"
 #include "arith/adc.h"

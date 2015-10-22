@@ -4,13 +4,11 @@
 
 static void do_eflags_execute(bool flag,int diplacement,char cmovcc_flagstr[])
 {
-	DATA_TYPE_S eip_dis = op_src->val;
-	int eip_pos = cpu.eip;
 	if(flag)
 	{
-		cpu.eip = cpu.eip + eip_dis;
+		OPERAND_W(op_dest, op_src->val);
 	}
-	print_asm("%s $0x%x",cmovcc_flagstr,eip_pos+eip_dis+diplacement);
+	print_asm_template2();
 }
 
 

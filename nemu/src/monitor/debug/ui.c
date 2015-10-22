@@ -189,7 +189,7 @@ static int cmd_x(char *args)
 	for(i=0;i<len;i++)
 	{
 		uint32_t value = swaddr_read(read_addr+4*i,4);
-		printf("0x%0x\t0x%0x\t%u\n",read_addr+4*i,value,value);
+		printf("$0x%0x:\t0x%0x\t%u\n",read_addr+4*i,value,value);
 	}
 		
 	return 0;

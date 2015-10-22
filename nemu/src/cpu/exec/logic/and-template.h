@@ -13,8 +13,6 @@ static void do_execute () {
 	cpu.PF = anyEvenBit(result);
 	cpu.CF = 0;
 
-	printf("pause here!\n");
-
 	print_asm_template2();
 }
 

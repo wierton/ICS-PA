@@ -39,6 +39,7 @@ make_helper(rep) {
 #ifdef DEBUG
 	char temp[80];
 	sprintf(temp, "rep %s", assembly);
+	printf("opcode:%d\n", ops_decoded.opcode);
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
 	

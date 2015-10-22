@@ -284,7 +284,7 @@ static bool make_token(char *e) {
 						unit[pUnit++].operand = find_var(substr_start);
 						if(unit[pUnit - 1].operand == 0)
 						{
-							printf("'%s'\n", substr_start);
+							printf("'%.*s'\n",substr_len, substr_start);
 							printf("no match at position %d\n%s\n%*.s^\n", position - substr_len, e, position - substr_len, "");
 							return false;
 						}

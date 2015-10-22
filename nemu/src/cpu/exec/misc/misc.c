@@ -40,3 +40,13 @@ make_helper(cld)
 	cpu.DF = 0;
 	return 1;
 }
+
+make_helper(fldz)
+{
+	return 2;
+}
+
+make_helper(fstpl)
+{
+	return 5;
+}

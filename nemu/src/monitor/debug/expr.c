@@ -216,7 +216,6 @@ static bool make_token(char *e) {
 				 * types of tokens, some extra actions should be performed.
 				 */
 
-				//printf("%s\n",substr_start);
 				char reg[4];
 				reg[3] = 0;
 
@@ -285,6 +284,7 @@ static bool make_token(char *e) {
 						unit[pUnit++].operand = find_var(substr_start);
 						if(unit[pUnit - 1].operand == 0)
 						{
+							printf("!!!!!!!1\n");
 							printf("no match at position %d\n%s\n%*.s^\n", position - substr_len, e, position - substr_len, "");
 							return false;
 						}

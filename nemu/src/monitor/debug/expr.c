@@ -216,7 +216,7 @@ static bool make_token(char *e) {
 				 * types of tokens, some extra actions should be performed.
 				 */
 
-				char reg[4];
+				char reg[4], var_str[20];
 				reg[3] = 0;
 
 				if(pUnit > UnitNum)
@@ -280,8 +280,9 @@ static bool make_token(char *e) {
 							printf("Warning:'%s',no such reg!\n",reg);
 						break;
 					case VAR:
+						strncpy(var_str,substr_start, 20);
 						unit[pUnit]._operator = '\0';
-						unit[pUnit++].operand = find_var(substr_start);
+						unit[pUnit++].operand = find_var(var_str);
 						if(unit[pUnit - 1].operand == 0)
 						{
 							printf("'%.*s'\n",substr_len, substr_start);

@@ -9,7 +9,7 @@ make_helper(concat(movs_,SUFFIX))
 	cpu.edi += DATA_BYTE;
 	cpu.esi += DATA_BYTE;
 
-	print_asm("movs $es:($esi),$ds:($edi)");
+	print_asm("movs"str(SUFFIX)" $es:($esi),$ds:($edi)");
 	return 1;
 }
 

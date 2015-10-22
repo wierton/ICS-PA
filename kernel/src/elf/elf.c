@@ -38,8 +38,6 @@ uint32_t loader() {
 	Elf32_Ehdr *p_ehdr = (void *)buf;
 	/* Load each program segment */
 	for(i = 0;i < p_ehdr -> e_phnum;i++) {
-		nemu_assert(p_ehdr->e_phentsize == 32);
-		nemu_assert(p_ehdr->e_phoff == 52);
 		ph = (void*)p_magic + i * p_ehdr->e_phentsize + p_ehdr->e_phoff;
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
@@ -48,11 +46,10 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 			ramdisk_read((uint8_t *)ph->p_vaddr, ph->p_offset, ph->p_filesz);			 
-			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			
+			memset((uint8_t *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */

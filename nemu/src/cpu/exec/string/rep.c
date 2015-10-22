@@ -24,7 +24,7 @@ make_helper(rep) {
 				|| ops_decoded.opcode == 0xae	// scasb
 				|| ops_decoded.opcode == 0xaf	// scasw
 				);
-			printf("opcode:%x\n", ops_decoded.opcode);
+
 			/* TODO: Jump out of the while loop if necessary. */
 			if(count > 100000)
 			{
@@ -39,7 +39,6 @@ make_helper(rep) {
 #ifdef DEBUG
 	char temp[80];
 	sprintf(temp, "rep %s", assembly);
-	printf("opcode:%x\n", ops_decoded.opcode);
 	sprintf(assembly, "%s[cnt = %d]", temp, count);
 #endif
 	

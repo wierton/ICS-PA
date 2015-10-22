@@ -280,7 +280,8 @@ static bool make_token(char *e) {
 							printf("Warning:'%s',no such reg!\n",reg);
 						break;
 					case VAR:
-						strncpy(var_str,substr_start, 20);
+						assert(substr_len < 20);
+						strncpy(var_str,substr_start, substr_len);
 						unit[pUnit]._operator = '\0';
 						unit[pUnit++].operand = find_var(var_str);
 						if(unit[pUnit - 1].operand == 0)

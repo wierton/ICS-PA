@@ -88,6 +88,7 @@ void show_symtab()
 {
 	int i;
 	printf(".symtab\n");
+	printf("Num:\t");
 	printf("Value\t\t");
 	printf("Size\t");
 	printf("Type\t");
@@ -97,6 +98,7 @@ void show_symtab()
 	printf("NAME\n");
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
+		printf("%d\t", i);
 		printf("$0x%08x\t",symtab[i].st_value);
 		printf("%u\t",symtab[i].st_size);
 		switch(ELF32_ST_TYPE(symtab[i].st_info))

@@ -210,13 +210,14 @@ static int cmd_p(char *args)
 static int cmd_w(char *args)
 {
 	int value;
-	size_t len = strlen(args);
+	size_t len;
 	WP *wp;
 	bool is_valid;
 	value = eval(args, &is_valid);
 	if(is_valid)
 	{
 		wp = new_wp();
+		len = strlen(args);
 		if(len <= WP_EXPR-1)
 		{
 			strncpy(wp->expr, args, len);

@@ -48,5 +48,5 @@ make_helper(fldz)
 
 make_helper(fstpl)
 {
-	return 5;
+	return 6;
 }

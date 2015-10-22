@@ -30,21 +30,24 @@ uint32_t loader() {
 
 	elf = (void*)buf;
 
+	int i;
 	/* TODO: fix the magic number with the correct one */
 	const uint32_t elf_magic = 0x464c457f;
 	uint32_t *p_magic = (void *)buf;
 	nemu_assert(*p_magic == elf_magic);
-
+	Elf32_Ehdr *p_ehdr = (void *)buf;
 	/* Load each program segment */
-	for(; true; ) {
-		nemu_assert(0);
+	for(i = 0;i < p_ehdr -> e_phnum;i++) {
+		nemu_assert(p_ehdr->e_phentsize == 32);
+		nemu_assert(p_ehdr->e_phoff == 52);
+		ph = (void*)p_magic + i * p_ehdr->e_phentsize + p_ehdr->e_phoff;
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
 
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			//ramdisk_read((uint8_t *)ph->p_vaddr, ph->p_offset, ph->p_filesz);			 
+			ramdisk_read((uint8_t *)ph->p_vaddr, ph->p_offset, ph->p_filesz);			 
 			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)

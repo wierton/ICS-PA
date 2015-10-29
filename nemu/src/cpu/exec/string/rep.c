@@ -26,11 +26,17 @@ make_helper(rep) {
 				);
 
 			/* TODO: Jump out of the while loop if necessary. */
-			if(count > 100000)
+			if(ops_decoded.opcode == 0xa6
+			|| ops_decoded.opcode == 0xa7
+			|| ops_decoded.opcode == 0xae
+			|| ops_decoded.opcode == 0xaf)
 			{
-				printf("Loop times is too much!\n");
-				break;
+				if(instr_fetch(eip, 1) == 0xf3 && cpu.ZF == 1)
+					break;
+				else if(instr_fetch(eip, 1) == 0xf2 && cpu.ZF == 0)
+					break;
 			}
+
 
 		}
 		len = 1;

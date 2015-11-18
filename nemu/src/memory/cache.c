@@ -1,4 +1,7 @@
 #include "common.h"
+#include "burst.h"
+#include "misc.h"
+
 
 #define NR_BLOCK 64
 #define NR_RANK 128

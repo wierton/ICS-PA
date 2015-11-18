@@ -23,7 +23,6 @@ void init_cache() {
 	}
 }
 
-
 uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint16_t mark = ((addr>>15)&0x0001ffff);
 	uint8_t rank = ((addr>>8)&0x7f);

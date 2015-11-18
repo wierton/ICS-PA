@@ -9,7 +9,7 @@
 
 typedef struct {
 	bool valid;
-	uint16_t mark;
+	uint32_t mark;
 	uint8_t buf[NR_BLOCK];
 } CCL;
 
@@ -24,10 +24,22 @@ void init_cache() {
 	}
 }
 
-/*
-static void cache_read(hwaddr_t addr, void *data) {
+
+uint32_t cache_read(hwaddr_t addr, size_t len) {
+	uint16_t mark = ((addr>>15)&0x0001ffff);
+	uint8_t rank = ((addr>>8)&0x7f);
+	uint8_t inaddr = (addr&0xff);
+
+	int i;
+	for(i = 0; i < NR_BANK; i ++)
+	{
+		if(cachebufs[rank][i].mark == mark)
+			return cachebufs[rank][i].buf[inaddr];
+	}
+	return 0;
 }
 
-static void cache_write(hwaddr_t addr, void *data) {
+void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
+
 }
-*/
+

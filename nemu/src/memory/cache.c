@@ -6,6 +6,7 @@
 
 typedef struct {
 	bool valid;
+	uint16_t mark;
 	uint8_t buf[NR_BLOCK];
 } CCL;
 

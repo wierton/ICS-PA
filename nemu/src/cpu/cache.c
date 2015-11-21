@@ -44,11 +44,11 @@ void init_cache() {
 }
 
 static void cpu_cache_read(hwaddr_t addr, void *data) {
-	
 	cache_addr temp;
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
+	printf("cache:%x\t%x\t%x\n", addr, memmark, setnum);
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, valid_inset = -1, reading_i = -1;
@@ -107,7 +107,6 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 }
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
-	assert(CACHE_MASK == 0x3f);
 	uint32_t offset = addr & CACHE_MASK;
 	uint8_t temp[2 * NR_BLOCKSIZE];
 

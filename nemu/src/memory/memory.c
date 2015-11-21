@@ -14,7 +14,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	printf("write indeed!\n");
+	printf("write indeed!\n\n");
 	cache_write(addr, len, data);
 }
 

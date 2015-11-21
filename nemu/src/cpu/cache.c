@@ -102,7 +102,21 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 		{
 			for(j = 0; j < NR_BLOCKSIZE; j ++)
 				if(mask[j])
+				{
+#ifdef DEBUG_CACHE_WRITE
+					uint32_t debug_addr = (memmark << (INADDR_WIDTH + SETNUM_WIDTH)) | (setnum << INADDR_WIDTH) | (j);
+					if(debug_addr != addr
+					  && debug_addr != addr + 1
+					  && debug_addr != addr + 2
+					  && debug_addr != addr + 3)
+					{
+						printf("write address error at 0x%x:", addr);
+						printf("(cache)0x%x\t", debug_addr);
+						printf("(real)0x%x\t", addr);
+					}
+#endif
 					cachebufs[setnum][i].buf[j] = data[j];
+				}
 		}
 	}
 

@@ -5,7 +5,7 @@
 
 /* define if necessary */
 /* #define DEBUG_CACHE_READ */
-//#define DEBUG_CACHE_WRITE
+#define DEBUG_CACHE_WRITE
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
@@ -22,7 +22,7 @@ typedef union {
 
 #define NR_BLOCKSIZE (1 << INADDR_WIDTH)
 #define NR_SETNUM (1 << SETNUM_WIDTH)
-#define NRdebug_iNSETNUM 8
+#define NR_INSETNUM 8
 
 #define CACHE_MASK (NR_BLOCKSIZE - 1)
 
@@ -32,7 +32,7 @@ typedef struct {
 	uint8_t buf[NR_BLOCKSIZE];
 } CCL;
 
-CCL cachebufs[NR_SETNUM][NRdebug_iNSETNUM];
+CCL cachebufs[NR_SETNUM][NR_INSETNUM];
 
 /* declaration of dram_read and dram_write */
 uint32_t dram_read(hwaddr_t, size_t);
@@ -41,7 +41,7 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 void init_cache() {
 	int i, j;
 	for(i = 0; i < NR_SETNUM; i ++) {
-		for(j = 0; j < NRdebug_iNSETNUM; j++) {
+		for(j = 0; j < NR_INSETNUM; j++) {
 			cachebufs[i][j].valid = false;
 		}
 	}
@@ -55,7 +55,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, validdebug_inset = -1, readingdebug_i = -1;
-	for(i = 0; i < NRdebug_iNSETNUM; i ++)
+	for(i = 0; i < NR_INSETNUM; i ++)
 	{
 		if(cachebufs[setnum][i].valid)
 		{
@@ -96,20 +96,20 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, j;
-	for(i = 0; i < NRdebug_iNSETNUM; i ++)
+	for(i = 0; i < NR_INSETNUM; i ++)
 	{
 		if(cachebufs[setnum][i].valid && cachebufs[setnum][i].memmark == memmark)
 		{
 			for(j = 0; j < NR_BLOCKSIZE; j ++)
-			{
 				if(mask[j])
-				{
 					cachebufs[setnum][i].buf[j] = data[j];
-					dram_write(addr, data[j], 1);
-				}
-			}
 		}
-	}	
+	}
+
+	/* update th dram */
+	for(j = 0; j < NR_BLOCKSIZE; j ++)
+		if(mask[j])
+			dram_write(addr, data[j], 1);
 }
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {

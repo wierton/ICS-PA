@@ -166,8 +166,8 @@ void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	memset(mask + offset, 1, len);
 
 	printf("%x %x ", data, *(uint8_t *)(temp + offset));
-	printf("%x", *(uint8_t *)(temp + offset + 1));
-	printf("%x\n", *(uint8_t *)(temp + offset + 2));
+	printf("%x ", *(uint8_t *)(temp + offset + 1));
+	printf("%x ", *(uint8_t *)(temp + offset + 2));
 	printf("%x\n", *(uint8_t *)(temp + offset + 3));
 
 	cpu_cache_write(addr, temp, mask);

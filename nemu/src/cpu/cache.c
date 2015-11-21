@@ -121,10 +121,11 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	}
 
 #ifdef DEBUG_CACHE
-	int _i;
-	printf("addr 0x%x:", addr&~CACHE_MASK);
+	int _i, _addr = addr&~CACHE_MASK;
+	printf("addr 0x%x:", _addr);
 	for(_i = 0; _i < 2*NR_BLOCKSIZE; _i ++)
-		printf("%02x ", temp[_i]);
+		if(temp[_i] != dram_read(_addr + _i, 1))
+			printf("debug cache error:(cache)%x\t(dram)%x\n", temp[_i], dram_read(_addr + _i, 1));
 	printf("\n");
 #endif
 

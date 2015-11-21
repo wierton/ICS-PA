@@ -122,6 +122,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 }
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
+	assert(CACHE_MASK == 0x3f);
 	uint32_t offset = addr & CACHE_MASK;
 	uint8_t temp[2 * NR_BLOCKSIZE];
 	uint8_t mask[2 * NR_BLOCKSIZE];

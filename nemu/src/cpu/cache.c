@@ -121,7 +121,8 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	}
 
 #ifdef DEBUG_CACHE
-	int _i, _addr = addr&~CACHE_MASK;
+	int _i;
+	uint32_t _addr = addr&~CACHE_MASK;
 	int _len = ((offset + len > NR_BLOCKSIZE) + 1) * NR_BLOCKSIZE;
 	for(_i = 0; _i < _len; _i ++)
 		if(temp[_i] != dram_read(_addr + _i, 1))

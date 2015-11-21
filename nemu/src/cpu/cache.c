@@ -48,7 +48,6 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
-	printf("cache:%x\t%x\t%x\n", addr, memmark, setnum);
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, valid_inset = -1, reading_i = -1;

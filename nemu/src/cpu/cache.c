@@ -4,8 +4,8 @@
 #include "memory/memory.h"
 
 /* define if necessary */
-#define DEBUG_CACHE_READ
-#define DEBUG_CACHE_WRITE
+/* #define DEBUG_CACHE_READ */
+/* #define DEBUG_CACHE_WRITE */
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
@@ -54,37 +54,37 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	uint32_t setnum = temp.setnum;
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
-	int i, validdebug_inset = -1, readingdebug_i = -1;
+	int i, valid_inset = -1, reading_i = -1;
 	for(i = 0; i < NR_INSETNUM; i ++)
 	{
 		if(cachebufs[setnum][i].valid)
 		{
 			if(cachebufs[setnum][i].memmark == memmark)
 			{
-				readingdebug_i = i; /* the position of data found in cache */
+				reading_i = i; /* the position of data found in cache */
 			}
 		}
 		else
 		{
-			validdebug_inset = i; /* the unused cache block */
+			valid_inset = i; /* the unused cache block */
 		}
 	}
 
 	/* target data not found in cache.*/
-	if(readingdebug_i == -1)
+	if(reading_i == -1)
 	{
 		/* no empty block found in target set */
-		if(validdebug_inset == -1)
-			validdebug_inset = 0;
-		cachebufs[setnum][validdebug_inset].memmark = memmark;
-		readingdebug_i = validdebug_inset;
+		if(valid_inset == -1)
+			valid_inset = 0;
+		cachebufs[setnum][valid_inset].memmark = memmark;
+		reading_i = valid_inset;
 		for(i = 0; i < NR_BLOCKSIZE; i ++)
 		{
-			cachebufs[setnum][validdebug_inset].buf[i] = dram_read((addr&~CACHE_MASK) + i, 1);
+			cachebufs[setnum][valid_inset].buf[i] = dram_read((addr&~CACHE_MASK) + i, 1);
 		}
 	}
 	
-	memcpy(data, cachebufs[setnum][readingdebug_i].buf, NR_BLOCKSIZE);
+	memcpy(data, cachebufs[setnum][reading_i].buf, NR_BLOCKSIZE);
 }
 
 static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)

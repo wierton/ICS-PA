@@ -3,7 +3,7 @@
 
 #include "memory/memory.h"
 
-#define DEBUG_CACHE
+//#define DEBUG_CACHE
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
@@ -126,7 +126,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	int _len = ((offset + len > NR_BLOCKSIZE) + 1) * NR_BLOCKSIZE;
 	for(_i = 0; _i < _len; _i ++)
 		if(temp[_i] != dram_read(_addr + _i, 1))
-		printf("debug cache error at 0x%x:(cache)0x%x\t(dram)0x%x\n", _addr + _i, temp[_i], dram_read(_addr + _i, 1));
+		printf("debug cache read error at 0x%x:(cache)0x%x\t(dram)0x%x\n", _addr + _i, temp[_i], dram_read(_addr + _i, 1));
 	printf("\n");
 #endif
 

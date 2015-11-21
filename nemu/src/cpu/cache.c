@@ -4,7 +4,7 @@
 #include "memory/memory.h"
 
 /* define if necessary */
-//#define DEBUG_CACHE_READ
+#define DEBUG_CACHE_READ
 //#define DEBUG_CACHE_WRITE
 
 #define INADDR_WIDTH 6

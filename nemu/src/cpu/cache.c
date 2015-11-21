@@ -104,6 +104,7 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 				if(mask[j])
 				{
 #ifdef DEBUG_CACHE_WRITE
+					printf("123");
 					uint32_t debug_addr = (memmark << (INADDR_WIDTH + SETNUM_WIDTH)) | (setnum << INADDR_WIDTH) | (j);
 					if(debug_addr != addr
 					  && debug_addr != addr + 1

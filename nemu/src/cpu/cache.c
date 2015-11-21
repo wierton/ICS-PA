@@ -121,14 +121,11 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 	}
 
 	/* update th dram */
-	printf("update th dram :");
 	for(j = 0; j < NR_BLOCKSIZE; j ++)
 		if(mask[j])
 		{
-			dram_write(addr, 1, data[j]);
-			printf("%x ", data[j]);
+			dram_write((addr&~CACHE_MASK) + i, 1, data[j]);
 		}
-	printf("\n");
 }
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
@@ -169,11 +166,6 @@ void cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 	*(uint32_t *)(temp + offset) = data;
 	memset(mask + offset, 1, len);
-
-	printf("%x %x ", data, *(uint8_t *)(temp + offset));
-	printf("%x ", *(uint8_t *)(temp + offset + 1));
-	printf("%x ", *(uint8_t *)(temp + offset + 2));
-	printf("%x\n", *(uint8_t *)(temp + offset + 3));
 
 	cpu_cache_write(addr, temp, mask);
 	if(offset + len > NR_BLOCKSIZE)

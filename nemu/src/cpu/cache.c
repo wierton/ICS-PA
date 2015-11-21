@@ -3,7 +3,9 @@
 
 #include "memory/memory.h"
 
-#define DEBUG_CACHE
+/* define if necessary */
+#define DEBUG_CACHE_READ
+//#define DEBUG_CACHE_WRITE
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
@@ -122,7 +124,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 		cpu_cache_read(addr + NR_BLOCKSIZE, temp + NR_BLOCKSIZE);
 	}
 
-#ifdef DEBUG_CACHE
+#ifdef DEBUG_CACHE_READ
 	int debug_i;
 	uint32_t debug_addr = addr&~CACHE_MASK;
 	int debug_len = ((offset + len > NR_BLOCKSIZE) + 1) * NR_BLOCKSIZE;

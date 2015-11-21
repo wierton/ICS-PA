@@ -1,8 +1,8 @@
 #include "common.h"
 
 /* Define if necessary */
-/* #define DEBUG_MEMORY_CACHE_READ */
-#define DEBUG_MEMORY_CACHE_WRITE
+#define DEBUG_CACHE_READ
+#define DEBUG_CACHE_WRITE
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -13,7 +13,7 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-#ifdef DEBUG_MEMORY_CACHE
+#ifdef DEBUG_CACHE_READ
 	uint32_t cache_data = cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	if(cache_data != dram_data)

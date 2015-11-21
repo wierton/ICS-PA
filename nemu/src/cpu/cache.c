@@ -3,6 +3,8 @@
 
 #include "memory/memory.h"
 
+#define DEBUG_CACHE
+
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
 #define MEMMARK_WIDTH (32 - SETNUM_WIDTH - INADDR_WIDTH)
@@ -69,6 +71,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	/* target data not found in cache.*/
 	if(reading_i == -1)
 	{
+		/* no empty block found in target set */
 		if(valid_inset == -1)
 			valid_inset = 0;
 		cachebufs[setnum][valid_inset].memmark = memmark;
@@ -116,6 +119,14 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 		/* data cross the burst boundary */
 		cpu_cache_read(addr + NR_BLOCKSIZE, temp + NR_BLOCKSIZE);
 	}
+
+#ifdef DEBUG_CACHE
+	int _i;
+	printf("addr 0x%x:", addr&~CACHE_MASK);
+	for(_i = 0; _i < 2*NR_BLOCKSIZE; _i ++)
+		printf("%08x ", temp[_i]);
+	printf("\n");
+#endif
 
 	return unalign_rw(temp + offset, 4);
 }

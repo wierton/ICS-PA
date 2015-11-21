@@ -5,7 +5,7 @@
 
 /* define if necessary */
 /* #define DEBUG_CACHE_READ */
-#define DEBUG_CACHE_WRITE
+//#define DEBUG_CACHE_WRITE
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
@@ -18,7 +18,7 @@ typedef union {
 		uint32_t memmark	: MEMMARK_WIDTH;
 	};
 	uint32_t addr;
-} cachedebug_addr;
+} cache_addr;
 
 #define NR_BLOCKSIZE (1 << INADDR_WIDTH)
 #define NR_SETNUM (1 << SETNUM_WIDTH)
@@ -48,7 +48,7 @@ void init_cache() {
 }
 
 static void cpu_cache_read(hwaddr_t addr, void *data) {
-	cachedebug_addr temp;
+	cache_addr temp;
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
@@ -89,7 +89,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 
 static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 {
-	cachedebug_addr temp;
+	cache_addr temp;
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;

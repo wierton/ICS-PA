@@ -121,6 +121,7 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 	}
 
 	/* update th dram */
+	printf("update th dram :");
 	for(j = 0; j < NR_BLOCKSIZE; j ++)
 		if(mask[j])
 		{

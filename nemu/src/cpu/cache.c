@@ -122,7 +122,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 		cpu_cache_read(addr + NR_BLOCKSIZE, temp + NR_BLOCKSIZE);
 	}
 
-#ifdef DEBUG_CACHE_READ
+#ifdef DEBUG_CACHE
 	int debug_i;
 	uint32_t debug_addr = addr&~CACHE_MASK;
 	int debug_len = ((offset + len > NR_BLOCKSIZE) + 1) * NR_BLOCKSIZE;

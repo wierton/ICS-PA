@@ -3,7 +3,7 @@
 
 #include "memory/memory.h"
 
-#define DEBUG_CACHE
+//#define DEBUG_CACHE
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7

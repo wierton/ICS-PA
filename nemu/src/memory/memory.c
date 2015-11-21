@@ -9,7 +9,7 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-#ifdef DEBUG
+#ifdef DEBUG_CACHE
 	uint32_t cache_data = cache_read(addr, len);
 	uint32_t dram_data = dram_read(addr, len);
 	if(cache_data != dram_data)

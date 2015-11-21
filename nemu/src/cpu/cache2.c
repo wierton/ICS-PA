@@ -8,7 +8,7 @@
 /* #define DEBUG_CACHE2_WRITE */
 
 #define INADDR2_WIDTH 6
-#define SETNUM2_WIDTH 7
+#define SETNUM2_WIDTH 12
 #define MEMMARK2_WIDTH (32 - SETNUM2_WIDTH - INADDR2_WIDTH)
 
 typedef union {
@@ -22,12 +22,12 @@ typedef union {
 
 #define NR2_BLOCKSIZE (1 << INADDR2_WIDTH)
 #define NR2_SETNUM (1 << SETNUM2_WIDTH)
-#define NR2_INSETNUM 8
+#define NR2_INSETNUM 16
 
 #define CACHE2_MASK (NR2_BLOCKSIZE - 1)
 
 typedef struct {
-	bool valid;
+	bool valid, dirty;
 	uint32_t memmark;
 	uint8_t buf[NR2_BLOCKSIZE];
 } CCL;
@@ -103,18 +103,6 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 			for(j = 0; j < NR2_BLOCKSIZE; j ++)
 				if(mask[j])
 				{
-#ifdef DEBUG_CACHE2_WRITE
-					uint32_t debug_addr = (memmark << (INADDR2_WIDTH + SETNUM2_WIDTH)) | (setnum << INADDR2_WIDTH) | (j);
-					if(debug_addr != addr
-					  && debug_addr != addr + 1
-					  && debug_addr != addr + 2
-					  && debug_addr != addr + 3)
-					{
-						printf("write address error at 0x%x:", addr);
-						printf("(cache2)0x%x\t", debug_addr);
-						printf("(real)0x%x\t", addr);
-					}
-#endif
 					cache2bufs[setnum][i].buf[j] = data[j];
 				}
 		}

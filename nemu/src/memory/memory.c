@@ -9,7 +9,7 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	printf("addr:%u, %x	%x\n", addr, cache_read(addr, len), dram_read(addr, len));
+	printf("addr:%x, %x	%x\n", addr, cache_read(addr, len), dram_read(addr, len));
 	return cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 

@@ -135,7 +135,6 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 			printf("(cache)0x%x\t(dram)0x%x\n", temp[debug_i], debug_data);
 		}
 	}
-	printf("\n");
 #endif
 
 	return unalign_rw(temp + offset, 4);

@@ -75,7 +75,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 		cachebufs[setnum][valid_inset].memmark = memmark;
 		reading_i = valid_inset;
 		for(i = 0; i < NR_BLOCKSIZE; i ++)
-			cachebufs[setnum][valid_inset].buf[i] = dram_read(addr, 1);
+			cachebufs[setnum][valid_inset].buf[i] = dram_read((addr&~CACHE_MASK) + i, 1);
 	}
 	
 	memcpy(data, cachebufs[setnum][reading_i].buf, NR_BLOCKSIZE);

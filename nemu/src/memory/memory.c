@@ -10,6 +10,7 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 #ifdef DEBUG_CACHE_READ
+	assert(0);
 	uint32_t cache_data = cache_read(addr, len);
 	uint32_t dram_data = dram_read(addr, len);
 	if(cache_data != dram_data)

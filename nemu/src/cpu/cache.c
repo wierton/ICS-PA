@@ -124,7 +124,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	int _i;
 	printf("addr 0x%x:", addr&~CACHE_MASK);
 	for(_i = 0; _i < 2*NR_BLOCKSIZE; _i ++)
-		printf("%08x ", temp[_i]);
+		printf("%02x ", temp[_i]);
 	printf("\n");
 #endif
 

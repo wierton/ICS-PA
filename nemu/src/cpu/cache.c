@@ -35,8 +35,10 @@ typedef struct {
 CCL cachebufs[NR_SETNUM][NR_INSETNUM];
 
 /* declaration of dram_read and dram_write */
+#if defined(DEBUG_CACHE_READ) || defined(DEBUG_CACHE_WRITE)
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
+#endif
 uint32_t cache2_read(hwaddr_t, size_t);
 void cache2_write(hwaddr_t, size_t, uint32_t);
 

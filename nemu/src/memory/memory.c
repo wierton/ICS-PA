@@ -13,7 +13,12 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-#ifdef DEBUG_CACHE_READ
+#if defined(DEBUG_CACHE_READ)
+	uint32_t cache_data = cache_read(addr, len) & (~0u >> ((4 - len) << 3));
+	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	if(cache_data != dram_data)
+		printf("data read error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache_data, dram_data);
+#elif defined(DEBUG_CACHE2_READ)
 	uint32_t cache_data = cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	if(cache_data != dram_data)

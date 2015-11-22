@@ -5,6 +5,9 @@
 /* #define DEBUG_CACHE_WRITE */
 /* #define DEBUG_CACHE2_READ */
 /* #define DEBUG_CACHE2_WRITE */
+#ifdef DEBUG_CACHE_TIME_CALC
+extern long long memory_access_time;
+#endif
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -28,6 +31,10 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	if(cache2_data != dram_data)
 		printf("data read error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
+#endif
+
+#ifdef DEBUG_CACHE_TIME_CALC
+	memory_access_time += 100;
 #endif
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }

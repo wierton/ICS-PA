@@ -130,7 +130,7 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 		}
 #ifdef DEBUG_CACHE2_WRITE
 		loop_times ++;
-		if(loop_times > 2)
+		if(loop_times > 2 || loop_times <= 0)
 		{
 			printf("cache2 write error, loop times exceed limit : %d\n", loop_times);
 			break;

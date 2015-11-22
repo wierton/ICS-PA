@@ -125,7 +125,7 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 					}
 			}
 		}
-
+		printf("*");
 		/* if not found, read from dram */
 		if(!found_in_cache2)
 			cpu_cache2_read(addr, read_data);

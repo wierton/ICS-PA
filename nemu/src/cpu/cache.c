@@ -37,6 +37,9 @@ CCL cachebufs[NR_SETNUM][NR_INSETNUM];
 /* declaration of dram_read and dram_write */
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
+uint32_t cache2_read(hwaddr_t, size_t);
+void cache2_write(hwaddr_t, size_t, uint32_t);
+
 
 void init_cache() {
 	int i, j;
@@ -83,7 +86,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 			cachebufs[setnum][valid_inset].buf[i] = dram_read((addr&~CACHE_MASK) + i, 1);
 		}
 	}
-	
+	cachebufs[setnum][reading_i].valid = true;	
 	memcpy(data, cachebufs[setnum][reading_i].buf, NR_BLOCKSIZE);
 }
 

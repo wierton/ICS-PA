@@ -4,14 +4,15 @@
 #include "memory/memory.h"
 
 /* define if necessary */
-#define DEBUG_CACHE_READ
-#define DEBUG_CACHE_WRITE
+/* #define DEBUG_CACHE_READ */
+/* #define DEBUG_CACHE_WRITE */
+#define DEBUG_CACHE_TIME_CALC
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
 #define MEMMARK_WIDTH (32 - SETNUM_WIDTH - INADDR_WIDTH)
 
-#ifdef DEBUG_CACHE_READ
+#ifdef DEBUG_CACHE_TIME_CALC
 long long memory_access_time;
 #endif
 
@@ -49,7 +50,7 @@ void cache2_write(hwaddr_t, size_t, uint32_t);
 
 void init_cache() {
 	int i, j;
-#ifdef DEBUG_CACHE_READ
+#ifdef DEBUG_CACHE_TIME_CALC
 	memory_access_time = 0;
 #endif
 	for(i = 0; i < NR_SETNUM; i ++) {
@@ -108,7 +109,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	/* target data not found in cache.*/
 	if(reading_i == -1)
 	{
-#ifdef DEBUG_CACHE_READ
+#ifdef DEBUG_CACHE_TIME_CALC
 		memory_access_time += 100;
 #endif
 		/* no empty block found in target set */
@@ -121,7 +122,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 			cachebufs[setnum][valid_inset].buf[i] = cache2_read((addr&~CACHE_MASK) + i, 1);
 		}
 	}
-#ifdef DEBUG_CACHE_READ
+#ifdef DEBUG_CACHE_TIME_CALC
 	memory_access_time += 2;
 #endif
 	cachebufs[setnum][reading_i].valid = true;	

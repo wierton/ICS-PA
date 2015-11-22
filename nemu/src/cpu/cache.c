@@ -4,12 +4,16 @@
 #include "memory/memory.h"
 
 /* define if necessary */
-/* #define DEBUG_CACHE_READ */
+#define DEBUG_CACHE_READ
 /* #define DEBUG_CACHE_WRITE */
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7
 #define MEMMARK_WIDTH (32 - SETNUM_WIDTH - INADDR_WIDTH)
+
+#ifdef DEBUG_CACHE_READ
+long long memory_access_time;
+#endif
 
 typedef union {
 	struct {
@@ -45,6 +49,9 @@ void cache2_write(hwaddr_t, size_t, uint32_t);
 
 void init_cache() {
 	int i, j;
+#ifdef DEBUG_CACHE_READ
+	memory_access_time = 0;
+#endif
 	for(i = 0; i < NR_SETNUM; i ++) {
 		for(j = 0; j < NR_INSETNUM; j++) {
 			cachebufs[i][j].valid = false;
@@ -101,6 +108,9 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	/* target data not found in cache.*/
 	if(reading_i == -1)
 	{
+#ifdef DEBUG_CACHE_READ
+		memory_access_time += 100;
+#endif
 		/* no empty block found in target set */
 		if(valid_inset == -1)
 			valid_inset = 0;
@@ -111,6 +121,9 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 			cachebufs[setnum][valid_inset].buf[i] = cache2_read((addr&~CACHE_MASK) + i, 1);
 		}
 	}
+#ifdef DEBUG_CACHE_READ
+	memory_access_time += 2;
+#endif
 	cachebufs[setnum][reading_i].valid = true;	
 	memcpy(data, cachebufs[setnum][reading_i].buf, NR_BLOCKSIZE);
 }

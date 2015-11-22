@@ -3,7 +3,10 @@ void reg_test();
 void restart();
 void ui_mainloop();
 
+#define DEBUG_CACHE_TIME_CALC
+
 #ifdef DEBUG_CACHE_TIME_CALC
+#include <stdio.h>
 extern long long memory_access_time;
 #endif
 
@@ -23,7 +26,7 @@ int main(int argc, char *argv[]) {
 	ui_mainloop();
 
 #ifdef DEBUG_CACHE_TIME_CALC
-	printf("Total memory access time:%d\n", memory_access_time);
+	printf("Total memory access time:%lld\n", memory_access_time);
 #endif
 
 	return 0;

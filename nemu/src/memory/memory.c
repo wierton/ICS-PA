@@ -44,6 +44,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	dram_write(addr, len, data);
 	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	cache2_write(addr, len, data);
+	printf("*");
 	uint32_t cache2_data = dram_read(addr, len) & (~0u >> ((4 - len)<< 3));
 	if(cache2_data != dram_data)
 		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);

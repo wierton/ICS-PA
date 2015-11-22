@@ -3,8 +3,8 @@
 /* Define if necessary */
 /* #define DEBUG_CACHE_READ */
 /* #define DEBUG_CACHE_WRITE */
-#define DEBUG_CACHE2_READ
-#define DEBUG_CACHE2_WRITE
+/* #define DEBUG_CACHE2_READ */
+/* #define DEBUG_CACHE2_WRITE */
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);

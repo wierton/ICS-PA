@@ -85,8 +85,12 @@ static void cpu_cache2_read(hwaddr_t addr, void *data) {
 				dram_write((addr&~CACHE2_MASK) + i, 1, cache2bufs[setnum][valid_inset].buf[i]);
 			}
 		}
+		/* clean the dirty bit */
+		cache2bufs[setnum][valid_inset].dirty = false;
+		/* update the memmark */
 		cache2bufs[setnum][valid_inset].memmark = memmark;
 		reading_i = valid_inset;
+		/* read from dram */
 		for(i = 0; i < NR2_BLOCKSIZE; i ++)
 		{
 			cache2bufs[setnum][valid_inset].buf[i] = dram_read((addr&~CACHE2_MASK) + i, 1);

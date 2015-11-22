@@ -4,7 +4,7 @@
 /* #define DEBUG_CACHE_READ */
 /* #define DEBUG_CACHE_WRITE */
 #define DEBUG_CACHE2_READ
-/* #define DEBUG_CACHE2_WRITE */
+#define DEBUG_CACHE2_WRITE
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -33,13 +33,20 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-#ifdef DEBUG_CACHE_WRITE
+#if defined(DEBUG_CACHE_WRITE)
 	dram_write(addr, len, data);
 	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	cache_write(addr, len, data);
 	uint32_t cache_data = dram_read(addr, len) & (~0u >> ((4 - len)<< 3));
 	if(cache_data != dram_data)
 		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache_data, dram_data);
+#elif defined(DEBUG_CACHE2_WRITE)
+	dram_write(addr, len, data);
+	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	cache2_write(addr, len, data);
+	uint32_t cache2_data = dram_read(addr, len) & (~0u >> ((4 - len)<< 3));
+	if(cache2_data != dram_data)
+		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
 #endif
 	cache_write(addr, len, data);
 }

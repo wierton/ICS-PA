@@ -96,7 +96,7 @@ static void cpu_cache2_read(hwaddr_t addr, void *data) {
 			cache2bufs[setnum][valid_inset].buf[i] = dram_read((addr&~CACHE2_MASK) + i, 1);
 		}
 	}
-	
+	cache2bufs[setnum][reading_i].valid = true;	
 	memcpy(data, cache2bufs[setnum][reading_i].buf, NR2_BLOCKSIZE);
 }
 

@@ -5,6 +5,8 @@
 /* #define DEBUG_CACHE_WRITE */
 /* #define DEBUG_CACHE2_READ */
 /* #define DEBUG_CACHE2_WRITE */
+#define DEBUG_CACHE_TIME_CALC
+
 #ifdef DEBUG_CACHE_TIME_CALC
 extern long long memory_access_time;
 #endif

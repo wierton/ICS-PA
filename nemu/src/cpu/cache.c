@@ -52,6 +52,29 @@ void init_cache() {
 	}
 }
 
+void print_cache_info_by_addr(swaddr_t addr)
+{
+	cache_addr temp;
+	temp.addr = addr;
+	uint32_t memmark = temp.memmark;
+	uint32_t setnum = temp.setnum;
+	uint32_t inaddr = temp.inaddr;
+	
+	int i;
+	for(i = 0; i < NR_INSETNUM; i ++)
+	{
+		if(cachebufs[setnum][i].valid && cachebufs[setnum][i].memmark == memmark)
+		{
+			printf("found in 0x%xth block in 0x%xth set.\n", i, setnum);
+			printf("memmark:0x%x\t", memmark);
+			printf("setnum:0x%x\t", setnum);
+			printf("inaddr:0x%x\n", inaddr);
+			return;
+		}
+	}
+	printf("not found in cache!\n");
+}
+
 static void cpu_cache_read(hwaddr_t addr, void *data) {
 	cache_addr temp;
 	temp.addr = addr;

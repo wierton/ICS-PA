@@ -110,6 +110,9 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, j;
+#ifdef DEBUG_CACHE2_WRITE
+	int loop_times = 0;
+#endif
 	bool found_in_cache2 = false;
 	do {
 		for(i = 0; i < NR2_INSETNUM; i ++)
@@ -125,7 +128,14 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 					}
 			}
 		}
-		printf("*");
+#ifdef DEBUG_CACHE2_WRITE
+		loop_times ++;
+		if(loop_times > 2)
+		{
+			printf("cache2 write error, loop times exceed limit : %d\n", loop_times);
+			break;
+		}
+#endif
 		/* if not found, read from dram */
 		if(!found_in_cache2)
 			cpu_cache2_read(addr, read_data);

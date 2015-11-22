@@ -10,6 +10,8 @@
 
 void cpu_exec(uint32_t);
 
+void print_cache_info_by_addr(swaddr_t addr);
+
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -53,6 +55,8 @@ static int cmd_d(char *args);
 
 static int cmd_bt(char *args);
 
+static int cmd_cache(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -69,7 +73,8 @@ static struct {
 	{ "p", "Calculate the expression",cmd_p},
 	{ "w", "Add a watchpoint",cmd_w},
 	{ "d", "Delete a watchpoint",cmd_d},
-	{ "bt", "Print the stack frame chain",cmd_bt}
+	{ "bt", "Print the stack frame chain",cmd_bt},
+	{ "cache", "printf cache info by address", cmd_cache}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -263,6 +268,15 @@ static int cmd_bt(char *args)
 		prev_ebp = swaddr_read(now_ebp, 4);
 		ret_addr = swaddr_read(now_ebp + 4, 4);
 	}
+	return 0;
+}
+
+static int cmd_cache(char *args)
+{
+	swaddr_t addr;
+	bool is_sucess = false;
+	addr = eval(args, &is_sucess);
+	print_cache_info_by_addr(addr);
 	return 0;
 }
 

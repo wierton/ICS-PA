@@ -6,7 +6,7 @@
 /* define if necessary */
 /* #define DEBUG_CACHE_READ */
 /* #define DEBUG_CACHE_WRITE */
-#define DEBUG_CACHE_TIME_CALC
+/* #define DEBUG_CACHE_TIME_CALC */
 
 #define INADDR_WIDTH 6
 #define SETNUM_WIDTH 7

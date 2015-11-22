@@ -3,7 +3,8 @@ void reg_test();
 void restart();
 void ui_mainloop();
 
-#define DEBUG_CACHE_TIME_CALC
+/* define if necessary */
+/* #define DEBUG_CACHE_TIME_CALC */
 
 #ifdef DEBUG_CACHE_TIME_CALC
 #include <stdio.h>

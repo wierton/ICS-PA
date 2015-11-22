@@ -43,6 +43,7 @@ void init_cache2() {
 	for(i = 0; i < NR2_SETNUM; i ++) {
 		for(j = 0; j < NR2_INSETNUM; j++) {
 			cache2bufs[i][j].valid = false;
+			cache2bufs[i][j].dirty = false;
 		}
 	}
 }
@@ -75,7 +76,15 @@ static void cpu_cache2_read(hwaddr_t addr, void *data) {
 	{
 		/* no empty block found in target set */
 		if(valid_inset == -1)
-			valid_inset = 0;
+			valid_inset = 0;/* need to be random */
+		/* if dirty , write back*/
+		if(cache2bufs[setnum][valid_inset].valid && cache2bufs[setnum][valid_inset].dirty)
+		{
+			for(i = 0; i < NR2_BLOCKSIZE; i ++)
+			{
+				dram_write((addr&~CACHE2_MASK) + i, 1, cache2bufs[setnum][valid_inset].buf[i]);
+			}
+		}
 		cache2bufs[setnum][valid_inset].memmark = memmark;
 		reading_i = valid_inset;
 		for(i = 0; i < NR2_BLOCKSIZE; i ++)
@@ -93,27 +102,30 @@ static void cpu_cache2_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
+	uint8_t read_data[2 * NR2_BLOCKSIZE];
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, j;
-	for(i = 0; i < NR2_INSETNUM; i ++)
-	{
-		if(cache2bufs[setnum][i].valid && cache2bufs[setnum][i].memmark == memmark)
+	bool found_in_cache2 = false;
+	do {
+		for(i = 0; i < NR2_INSETNUM; i ++)
 		{
-			for(j = 0; j < NR2_BLOCKSIZE; j ++)
-				if(mask[j])
-				{
-					cache2bufs[setnum][i].buf[j] = data[j];
-				}
+			if(cache2bufs[setnum][i].valid && cache2bufs[setnum][i].memmark == memmark)
+			{
+				found_in_cache2 = true;
+				cache2bufs[setnum][i].dirty = true;
+				for(j = 0; j < NR2_BLOCKSIZE; j ++)
+					if(mask[j])
+					{
+						cache2bufs[setnum][i].buf[j] = data[j];
+					}
+			}
 		}
-	}
 
-	/* update th dram */
-	for(j = 0; j < NR2_BLOCKSIZE; j ++)
-		if(mask[j])
-		{
-			dram_write((addr&~CACHE2_MASK) + j, 1, data[j]);
-		}
+		/* if not found, read from dram */
+		if(!found_in_cache2)
+			cpu_cache2_read(addr, read_data);
+	} while(!found_in_cache2);
 }
 
 uint32_t cache2_read(hwaddr_t addr, size_t len) {

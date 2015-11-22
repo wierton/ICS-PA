@@ -273,10 +273,11 @@ static int cmd_bt(char *args)
 
 static int cmd_cache(char *args)
 {
-	swaddr_t addr;
+	swaddr_t addr = 0xffffffff;
 	bool is_sucess = false;
 	addr = eval(args, &is_sucess);
-	print_cache_info_by_addr(addr);
+	if(is_sucess)
+		print_cache_info_by_addr(addr);
 	return 0;
 }
 

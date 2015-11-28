@@ -92,6 +92,9 @@ void restart() {
 	/* Set the initial EFALGS*/
 	cpu.EFLAGS = 0x00000002;
 
+	/* Set the initial CR0*/
+	cpu.CR0.val = 0x00000000;
+
 	/* Initialize DRAM. */
 	init_ddr3();
 

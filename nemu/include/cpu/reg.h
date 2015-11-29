@@ -76,11 +76,19 @@ typedef struct {
 		uint32_t val;
 	} CR0;
 
-	struct {
-		uint32_t RPL	: 2;
-		uint32_t TI		: 1;
-		uint32_t INDEX	:13;
+	union {
+		struct {
+			uint32_t RPL	: 2;
+			uint32_t TI		: 1;
+			uint32_t INDEX	:13;
+		};
+		uint16_t val;
 	} CS,DS,ES,SS;
+
+	struct {
+		uint16_t limit;
+		uint32_t base_addr;
+	} GDTR;
 
 } CPU_state;
 

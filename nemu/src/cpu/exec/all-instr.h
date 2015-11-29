@@ -43,5 +43,6 @@
 #include "misc/jmp.h"
 #include "misc/leave.h"
 #include "misc/ret.h"
+#include "misc/ldt.h"
 
 #include "special/special.h"

@@ -133,11 +133,11 @@ static int cmd_info(char *args)
 		printf("esi\t$0x%08x\t%d\n",cpu.esi,cpu.esi);
 		printf("edi\t$0x%08x\t%d\n",cpu.edi,cpu.edi);
 		printf("eip\t$0x%08x\t$0x%08x\n",cpu.eip,cpu.eip);
-		printf("CS\t$0x%08x\n",cpu.CS.val);
-		printf("SS\t$0x%08x\n",cpu.SS.val);
-		printf("DS\t$0x%08x\n",cpu.DS.val);
-		printf("ES\t$0x%08x\n",cpu.ES.val);
-		printf("CR0\t$0x%016x\n",cpu.CR0.val);
+		printf("CS\t$0x%04x\n",cpu.CS.val);
+		printf("SS\t$0x%04x\n",cpu.SS.val);
+		printf("DS\t$0x%04x\n",cpu.DS.val);
+		printf("ES\t$0x%04x\n",cpu.ES.val);
+		printf("CR0\t$0x%08x\n",cpu.CR0.val);
 	}
 	else if(strcmp(args,"w")==0)
 	{

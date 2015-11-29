@@ -87,8 +87,8 @@ typedef struct {
 
 	struct {
 		uint16_t limit;
-		uint32_t base_addr;
-	} GDTR;
+		uint32_t base;
+	} GDTR,LDTR;
 
 } CPU_state;
 

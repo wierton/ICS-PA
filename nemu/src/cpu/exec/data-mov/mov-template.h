@@ -59,6 +59,14 @@ make_helper(mov_r2cr_l)
 	return 2;
 }
 
+make_helper(mov_r2sreg)
+{
+	ModR_M m;
+	m.val = instr_fetch(eip + 1, 1);
+	cpu.gsreg[m.reg].val = reg_l(m.R_M);
+	return 2;
+}
+
 #endif
 
 #include "cpu/exec/template-end.h"

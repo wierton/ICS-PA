@@ -41,7 +41,7 @@ make_helper(mov_cr2r_l)
 		case 3:reg_l(m.R_M) = cpu.CR3.val;
 	}
 	
-	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
+	print_asm("mov %%cr%d,%%%s", m.reg, regsl[m.R_M]);
 	return 2;
 }
 
@@ -55,7 +55,7 @@ make_helper(mov_r2cr_l)
 		case 3:cpu.CR3.val = reg_l(m.R_M);
 	}
 
-	print_asm("mov %%cr%d,%%%s", m.reg, regsl[m.R_M]);
+	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
 	return 2;
 }
 

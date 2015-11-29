@@ -99,7 +99,7 @@ typedef struct {
 	} CR3;
 	
 	union {
-		R_SREG gsreg[8];
+		R_SREG gsreg[6];
 		struct {R_SREG CS,SS,DS,ES,FS,GS;};
 	};
 

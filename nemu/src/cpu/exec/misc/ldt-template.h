@@ -7,6 +7,7 @@
 make_helper(lgdt_l)
 {
 	int len = decode_rm_l(eip + 1);
+	printf("%x\n", op_src->val);
 	cpu.GDTR.limit = swaddr_read(op_src->val, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(op_src->val + 2, 4, R_DS);
 	print_asm_template1();

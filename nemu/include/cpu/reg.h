@@ -6,6 +6,7 @@
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
+enum { R_CS, R_SS, R_DS, R_ES, R_FS, R_GS};
 
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
@@ -13,6 +14,15 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  * cpu.gpr[1]._8[1], we will get the 'ch' register. Hint: Use `union'.
  * For more details about the register encoding scheme, see i386 manual.
  */
+
+typedef union {
+	struct {
+		uint32_t RPL    : 2;
+		uint32_t TI     : 1;
+		uint32_t INDEX  :13;
+	};
+	uint16_t val;
+} R_SREG;
 
 typedef struct {
 
@@ -28,7 +38,8 @@ typedef struct {
 	/* Do NOT change the order of the GPRs' definitions. */
 
 		struct {uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};
-		};
+	};
+
 	union{
 		struct{
 			unsigned CF:1;
@@ -86,15 +97,11 @@ typedef struct {
 		};
 		uint32_t val;
 	} CR3;
-
+	
 	union {
-		struct {
-			uint32_t RPL	: 2;
-			uint32_t TI		: 1;
-			uint32_t INDEX	:13;
-		};
-		uint16_t val;
-	} CS,DS,ES,SS;
+		R_SREG gsreg[8];
+		struct {R_SREG CS,SS,DS,ES,FS,GS;};
+	};
 
 	struct {
 		uint16_t limit;

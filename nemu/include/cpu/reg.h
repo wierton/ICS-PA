@@ -15,6 +15,7 @@ enum { R_CS, R_SS, R_DS, R_ES, R_FS, R_GS};
  * For more details about the register encoding scheme, see i386 manual.
  */
 
+/* segment selector*/
 typedef union {
 	struct {
 		uint32_t RPL    : 2;
@@ -24,8 +25,25 @@ typedef union {
 	uint16_t val;
 } R_SREG;
 
-typedef struct {
+/* segment descriptor */
+typedef struct SegmentDescriptor {
+	uint32_t limit_15_0          : 16;
+	uint32_t base_15_0           : 16;
+	uint32_t base_23_16          : 8;
+	uint32_t type                : 4;
+	uint32_t segment_type        : 1;
+	uint32_t privilege_level     : 2;
+	uint32_t present             : 1;
+	uint32_t limit_19_16         : 4;
+	uint32_t soft_use            : 1;
+	uint32_t operation_size      : 1;
+	uint32_t pad0                : 1;
+	uint32_t granularity         : 1;
+	uint32_t base_31_24          : 8;
+} SegDesc;
 
+/* register */
+typedef struct {
 	union {
 		struct {
 			union {

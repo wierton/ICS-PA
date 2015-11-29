@@ -9,7 +9,7 @@ static void do_execute() {
 	cpu.ZF = (dst == 0);
 	cpu.PF = anyEvenBit(dst);
 	cpu.CF = (op_dest->val < op_src->val);
-	OPERAND_W(op_dest, op_dest->val-op_src->val);
+	OPERAND_W(op_dest, op_dest->val-op_src->val, R_DS);
 	print_asm_template2();
 }
 

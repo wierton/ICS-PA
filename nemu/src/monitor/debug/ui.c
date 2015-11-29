@@ -180,7 +180,7 @@ static int cmd_x(char *args)
 		printf("0x%x:",read_addr);
 		do
 		{
-			ch = swaddr_read(read_addr+i,1);
+			ch = swaddr_read(read_addr+i,1,R_DS);
 			printf("%c",ch);
 			i++;
 		}while(ch != 0);
@@ -193,7 +193,7 @@ static int cmd_x(char *args)
 
 	for(i=0;i<len;i++)
 	{
-		uint32_t value = swaddr_read(read_addr+4*i,4);
+		uint32_t value = swaddr_read(read_addr+4*i,4, R_DS);
 		printf("$0x%0x:\t0x%0x\t%u\n",read_addr+4*i,value,value);
 	}
 		
@@ -265,8 +265,8 @@ static int cmd_bt(char *args)
 			return 0;
 		}
 		printf("#%d\t0x%08x in %s\n", no++, ret_addr, func_name);
-		prev_ebp = swaddr_read(now_ebp, 4);
-		ret_addr = swaddr_read(now_ebp + 4, 4);
+		prev_ebp = swaddr_read(now_ebp, 4, R_SS);
+		ret_addr = swaddr_read(now_ebp + 4, 4, R_SS);
 	}
 	return 0;
 }

@@ -420,7 +420,7 @@ uint32_t eval(char *e, bool *success) {
 			break;
 		case '@':
 			//printf("%u\n",(uint32_t)(operand_2->operand));
-			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4);
+			operand_2->operand = swaddr_read(((uint32_t)(operand_2->operand)),4, R_DS);
 			operand_2->next = pOperator->next;
 			break;
 		case '+':

@@ -50,8 +50,8 @@ make_helper(decode_rm_imm_b);
 make_helper(decode_rm_imm_w);
 make_helper(decode_rm_imm_l);
 
-void write_operand_b(Operand *, uint8_t);
-void write_operand_w(Operand *, uint16_t);
-void write_operand_l(Operand *, uint32_t);
+void write_operand_b(Operand *, uint8_t, uint8_t);
+void write_operand_w(Operand *, uint16_t, uint8_t);
+void write_operand_l(Operand *, uint32_t, uint8_t);
 
 #endif

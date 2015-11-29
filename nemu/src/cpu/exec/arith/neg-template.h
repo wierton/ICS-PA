@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	DATA_TYPE result = -op_src->val;
-	OPERAND_W(op_src, result);
+	OPERAND_W(op_src, result, R_DS);
 
 	/* There is no need to update EFLAGS, since no other instructions 
 	 * in PA will test the flags updated by this instruction.

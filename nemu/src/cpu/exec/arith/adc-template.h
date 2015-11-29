@@ -5,7 +5,7 @@
 static void do_execute() {
 	DATA_TYPE dst_2 = op_dest->val + op_src->val;
 	DATA_TYPE dst_3 = op_dest->val + op_src->val + cpu.CF;
-	OPERAND_W(op_dest, op_dest->val + op_src->val +cpu.CF);
+	OPERAND_W(op_dest, op_dest->val + op_src->val +cpu.CF, R_DS);
 	int o2f = !addOK(op_dest->val, op_src->val);
 	if (o2f || (dst_3 < dst_2))
 		cpu.OF = 1;

@@ -4,8 +4,8 @@
 
 make_helper(concat(movs_,SUFFIX))
 {
-	DATA_TYPE src = MEM_R(cpu.esi);
-	MEM_W(cpu.edi,src);
+	DATA_TYPE src = MEM_R(cpu.esi, R_ES);
+	MEM_W(cpu.edi, src, R_ES);
 	cpu.edi += DATA_BYTE;
 	cpu.esi += DATA_BYTE;
 

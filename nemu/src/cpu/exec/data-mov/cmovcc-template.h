@@ -6,7 +6,7 @@ static void do_eflags_execute(bool flag,int diplacement,char cmovcc_flagstr[])
 {
 	if(flag)
 	{
-		OPERAND_W(op_dest, op_src->val);
+		OPERAND_W(op_dest, op_src->val, R_DS);
 	}
 	print_asm_template2();
 }

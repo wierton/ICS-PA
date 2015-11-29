@@ -4,8 +4,8 @@
 
 make_helper(concat(cmps_,SUFFIX))
 {
-	DATA_TYPE dst = MEM_R(cpu.edi);
-	DATA_TYPE src = MEM_R(cpu.esi);
+	DATA_TYPE dst = MEM_R(cpu.edi, R_ES);
+	DATA_TYPE src = MEM_R(cpu.esi, R_ES);
 	int32_t result = dst - src;
 	cpu.OF = !subOK(dst, src);
 	cpu.SF = MSB(result);

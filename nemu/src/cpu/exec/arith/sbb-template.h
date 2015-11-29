@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	int dst = op_dest->val - op_src->val;
-	OPERAND_W(op_dest, op_dest->val-op_src->val-cpu.CF);
+	OPERAND_W(op_dest, op_dest->val-op_src->val-cpu.CF, R_DS);
 	cpu.OF = !subOK(op_dest->val, op_src->val);
 	cpu.SF = (dst)>>31;
 	cpu.ZF = (dst == 0);

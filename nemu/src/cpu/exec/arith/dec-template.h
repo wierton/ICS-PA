@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	DATA_TYPE result = op_src->val - 1;
-	OPERAND_W(op_src, result);
+	OPERAND_W(op_src, result, R_DS);
 
 	/* TODO: Update EFLAGS. */
 	cpu.OF = !subOK(op_src->val, 1);

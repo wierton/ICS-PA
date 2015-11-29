@@ -8,7 +8,7 @@ make_helper(concat(movsb_,SUFFIX))
 	int len = concat(decode_rm2r_,SUFFIX)(eip+1);
 	int8_t result_t = op_src->val;
 	int32_t result = result_t;
-	OPERAND_W(op_dest,result);
+	OPERAND_W(op_dest,result,R_DS);
 	print_asm_template2();
 	return len + 1;
 }
@@ -18,7 +18,7 @@ make_helper(concat(movsw_,SUFFIX))
 	int len = concat(decode_rm2r_,SUFFIX)(eip+1);
 	int16_t result_t = op_src->val;
 	int32_t result = result_t;
-	OPERAND_W(op_dest,result);
+	OPERAND_W(op_dest,result,R_DS);
 	print_asm_template2();
 	return len + 1;
 }

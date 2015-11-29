@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	DATA_TYPE result = ~op_src->val;
-	OPERAND_W(op_src, result);
+	OPERAND_W(op_src, result, R_DS);
 	print_asm_template1();
 }
 

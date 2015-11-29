@@ -20,6 +20,9 @@ void cache_write(hwaddr_t, size_t, uint32_t);
 uint32_t cache2_read(hwaddr_t, size_t);
 void cache2_write(hwaddr_t, size_t, uint32_t);
 
+/* segment translate declration*/
+lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
+
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
@@ -68,13 +71,15 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	return lnaddr_read(addr, len);
+	lnaddr_t lnaddr = seg_translate(addr, len, 0);
+	return lnaddr_read(lnaddr, len);
 }
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	lnaddr_write(addr, len, data);
+	lnaddr_t lnaddr = seg_translate(addr, len, 0);
+	lnaddr_write(lnaddr, len, data);
 }
 

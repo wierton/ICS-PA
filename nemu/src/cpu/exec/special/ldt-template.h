@@ -9,11 +9,12 @@ make_helper(lgdt_l)
 {
 	int len;
 	swaddr_t addr;
-	len = decode_rm_imm_l(eip + 1);
+	len = decode_rm_1_l(eip + 1);
 	addr = op_src->val;
 	printf("%x %x", op_src->val, op_dest->val);
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
+	print_asm_template1();
 	return len + 1;
 }
 

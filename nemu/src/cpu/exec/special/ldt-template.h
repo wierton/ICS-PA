@@ -7,26 +7,14 @@
 
 make_helper(lgdt_l)
 {
-	ModR_M m;
-	int ret;
+	int len;
 	swaddr_t addr;
-	m.val = instr_fetch(eip + 1, 1);
-	if(m.mod == 3)
-	{
-		addr = reg_l(m.R_M);
-		ret = 2;
-		print_asm("lgdtl %%%s", regsb[m.R_M]);
-	}
-	else
-	{
-		addr = swaddr_read(eip + 2, 4, R_DS);
-		ret = 6;
-		print_asm("lgdtl 0x%x", addr);
-	}
-	
+	len = decode_rm_imm_l(eip + 1);
+	addr = op_src->val;
+	printf("%x %x", op_src->val, op_dest->val);
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
-	return ret;
+	return len + 1;
 }
 
 #undef instr

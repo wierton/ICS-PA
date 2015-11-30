@@ -30,6 +30,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;
 	uint32_t base_31_24 = TargetSegDesc.base_31_24;
 
+	printf("base:%x\n",base);
 	/* Is the operation legal? */
 	assert(cpu.gsreg[sreg].RPL <= TargetSegDesc.privilege_level);
 

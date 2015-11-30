@@ -9,7 +9,7 @@ make_helper(lgdt_l)
 {
 	int len;
 	swaddr_t addr;
-	len = decode_rm_1_l(eip + 1);
+	len = decode_i_rm2r_l(eip + 1);
 	addr = op_src->val;
 	printf("%x %x", op_src->val, op_dest->val);
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);

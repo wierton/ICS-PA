@@ -23,8 +23,8 @@ make_instr_helper(i)
 #if DATA_BYTE == 4
 make_helper(jmp_ptr_l)
 {
-	cpu.CS.val = instr_fetch(eip + 1, 2);
-	cpu.eip = instr_fetch(eip + 3, 4);
+	cpu.eip = instr_fetch(eip + 1, 4);
+	cpu.CS.val = instr_fetch(eip + 3, 2);
 	print_asm("jmp $0x%x,$0x%x", cpu.CS.val, cpu.eip);
 	return 7;
 }

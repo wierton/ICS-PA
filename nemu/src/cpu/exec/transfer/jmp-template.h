@@ -20,4 +20,14 @@ make_helper(concat(jmp_rm_, SUFFIX))
 #endif
 make_instr_helper(i)
 
+#if DATA_BYTE == 4
+make_helper(jmp_ptr_l)
+{
+	cpu.CS.val = swaddr_read(eip + 1, 2, R_DS);
+	cpu.eip = swaddr_read(eip + 3, 4, R_DS);
+	print_asm("jmp $0x%x,$0x%x", cpu.CS.val, cpu.eip);
+	return 7;
+}
+#endif
+
 #include "cpu/exec/template-end.h"

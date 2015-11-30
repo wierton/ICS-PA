@@ -11,7 +11,7 @@ make_helper(lgdt_l)
 	swaddr_t addr;
 	len = decode_i_rm2r_l(eip + 1);
 	addr = op_src->val;
-	printf("%x %x", op_src->val, op_dest->val);
+	printf("%x %x %x\n", op_src->val, op_dest->val,op_src2->val);
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
 	print_asm_template1();

@@ -24,6 +24,7 @@ make_instr_helper(i)
 make_helper(jmp_ptr_l)
 {
 	cpu.eip = instr_fetch(eip, 4);
+	printf("eip:%x\n", eip);
 	cpu.CS.val = instr_fetch(eip + 4, 2);
 	print_asm("jmp $0x%x,$0x%x", cpu.CS.val, cpu.eip);
 	return 7;

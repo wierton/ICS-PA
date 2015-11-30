@@ -39,10 +39,12 @@
 #include "string/movs.h"
 
 #include "misc/misc.h"
-#include "misc/jcc.h"
-#include "misc/jmp.h"
-#include "misc/leave.h"
-#include "misc/ret.h"
-#include "misc/ldt.h"
 
+#include "transfer/jcc.h"
+#include "transfer/jmp.h"
+#include "transfer/leave.h"
+#include "transfer/ret.h"
+
+
+#include "special/ldt.h"
 #include "special/special.h"

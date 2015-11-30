@@ -13,7 +13,6 @@
 #include "arith/sub.h"
 #include "arith/sbb.h"
 #include "arith/cmp.h"
-#include "arith/call.h"
 #include "arith/push.h"
 #include "arith/test.h"
 #include "arith/dec.h"
@@ -44,7 +43,7 @@
 #include "transfer/jmp.h"
 #include "transfer/leave.h"
 #include "transfer/ret.h"
-
+#include "transfer/call.h"
 
 #include "special/ldt.h"
 #include "special/special.h"

@@ -25,6 +25,8 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	uint32_t sel = cpu.gsreg[sreg].INDEX;
 	uint32_t *p = (uint32_t *)&TargetSegDesc;
 
+	printf("sel:0x%x lim:0x%x\n", sel, cpu.GDTR.limit);
+
 	assert(sel <= cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit);
 	*p = lnaddr_read(base + 8*sel, 4);
 	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);

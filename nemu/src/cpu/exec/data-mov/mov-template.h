@@ -54,7 +54,7 @@ make_helper(mov_r2cr_l)
 		case 0:cpu.CR0.val = reg_l(m.R_M);
 		case 3:cpu.CR3.val = reg_l(m.R_M);
 	}
-	printf("3:%x\n", cpu.CR0.val);
+
 	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
 	return 2;
 }

@@ -24,7 +24,6 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	uint32_t sel = cpu.gsreg[sreg].INDEX;
 	uint32_t *p = (uint32_t *)&TargetSegDesc;
 
-	printf("sreg:%x\n", sreg);
 	if(!cpu.CR0.protect_enable || cpu.gsreg[sreg].val == 0x0)
 		return addr;
 

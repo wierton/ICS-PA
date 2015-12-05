@@ -31,7 +31,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	*p = lnaddr_read(base + 8*sel, 4);
 	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
 
-	printf("%x,%x\n", *p, *(p+1));
+	printf("%x,%x,%x\n", base, *p, *(p+1));
 
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;

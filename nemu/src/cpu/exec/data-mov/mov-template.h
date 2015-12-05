@@ -58,6 +58,7 @@ make_helper(mov_r2cr_l)
 	}
 	printf("z\t");
 	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
+	printf("k");
 	return 2;
 }
 

@@ -26,6 +26,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	if(!cpu.CR0.protect_enable)
 		return addr;
+	printf("sreg:%d\n", sreg);
 
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
 	*p = lnaddr_read(base + 8*sel, 4);

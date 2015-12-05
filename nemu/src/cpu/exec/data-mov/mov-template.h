@@ -48,17 +48,14 @@ make_helper(mov_cr2r_l)
 make_helper(mov_r2cr_l)
 {
 	ModR_M m;
-	printf("x\t");
 	m.val = instr_fetch(eip + 1, 1);
-	printf("y\t");
 	switch(m.reg)
 	{
 		case 0:cpu.CR0.val = reg_l(m.R_M);
 		case 3:cpu.CR3.val = reg_l(m.R_M);
 	}
-	printf("z\t");
+
 	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
-	printf("k");
 	return 2;
 }
 

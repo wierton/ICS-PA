@@ -34,13 +34,15 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 make_helper(mov_cr2r_l)
 {
 	ModR_M m;
+	printf("x\n");
 	m.val = instr_fetch(eip + 1, 1);
+	printf("y\n");
 	switch(m.reg)
 	{
 		case 0:reg_l(m.R_M) = cpu.CR0.val;
 		case 3:reg_l(m.R_M) = cpu.CR3.val;
 	}
-	
+	printf("z\n");
 	print_asm("mov %%cr%d,%%%s", m.reg, regsl[m.R_M]);
 	return 2;
 }

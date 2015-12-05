@@ -26,16 +26,18 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	if(!cpu.CR0.protect_enable)
 		return addr;
-	printf("sreg:%d\n", sreg);
 
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
 	*p = lnaddr_read(base + 8*sel, 4);
 	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
 
+	printf("%x,%x\n", *p, *(p+1));
+
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;
 	uint32_t base_31_24 = TargetSegDesc.base_31_24;
 
+	printf("sreg:%d\n", sreg);
 	/* judge if has been load in sreg*/
 	assert(TargetSegDesc.present);
 

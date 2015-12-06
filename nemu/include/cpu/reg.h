@@ -42,6 +42,21 @@ typedef struct SegmentDescriptor {
 	uint32_t base_31_24          : 8;
 } SegDesc;
 
+/* page descriptor */
+typedef struct PageDescriptor {
+	uint32_t present		:1;
+	uint32_t readwrite		:1;
+	uint32_t privilege_level:1;
+	uint32_t pwt			:1;
+	uint32_t pcd			:1;
+	uint32_t accessed		:1;
+	uint32_t dirtybit		:1;
+	uint32_t				:1;
+	uint32_t                :1;
+	uint32_t avl			:3;
+	uint32_t base			:16;
+} PageDesc;
+
 /* register */
 typedef struct {
 	union {

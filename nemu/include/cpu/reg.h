@@ -43,19 +43,32 @@ typedef struct SegmentDescriptor {
 } SegDesc;
 
 /* page descriptor */
-typedef struct PageDescriptor {
-	uint32_t present		:1;
-	uint32_t readwrite		:1;
-	uint32_t privilege_level:1;
-	uint32_t pwt			:1;
-	uint32_t pcd			:1;
-	uint32_t accessed		:1;
-	uint32_t dirtybit		:1;
-	uint32_t				:1;
-	uint32_t                :1;
-	uint32_t avl			:3;
-	uint32_t base			:16;
+typedef union {
+	struct {
+		uint32_t present		:1;
+		uint32_t readwrite		:1;
+		uint32_t privilege_level:1;
+		uint32_t pwt			:1;
+		uint32_t pcd			:1;
+		uint32_t accessed		:1;
+		uint32_t dirtybit		:1;
+		uint32_t				:1;
+		uint32_t                :1;
+		uint32_t avl			:3;
+		uint32_t base			:20;
+	};
+	uint32_t val;
 } PageDesc;
+
+/* to describe linear addr */
+typedef union {
+	struct {
+		uint32_t pagedir	:10;
+		uint32_t pagetab	:10;
+		uint32_t off		:12;
+	};
+	uint32_t val;
+} PageAddr;
 
 /* register */
 typedef struct {

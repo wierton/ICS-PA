@@ -48,3 +48,26 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	return addr + sreg_base;
 }
+
+hwaddr_t page_translate(lnaddr_t addr)
+{
+	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
+		return addr;
+	PageAddr pageaddr;
+	pageaddr.val = addr;
+
+	/* read page dir */
+	PageDesc pagedir;
+	pagedir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
+	assert(pagedir.present);
+
+	/* read page table */
+	PageDesc pagetab;
+	pagetab.val = hwaddr_read((pagedir.base << 12) + pageaddr.pagetab * 4, 4);
+	assert(pagetab.present);
+
+	/* calc physic address */
+	return (pagetab.base << 20) + pageaddr.off;
+}
+
+

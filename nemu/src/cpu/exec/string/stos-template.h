@@ -14,7 +14,6 @@ make_helper(concat(stos_,SUFFIX))
 	print_asm("stos $ax,$es:($edi)");
 #endif
 #if DATA_BYTE == 4
-	printf("%d\n", IncDec);
 	print_asm("stos $eax,$es:($edi)");
 #endif
 	cpu.edi += IncDec;

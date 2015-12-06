@@ -95,6 +95,9 @@ void restart() {
 	/* Set the initial CR0*/
 	cpu.CR0.val = 0x00000000;
 
+	/* Set the initial CR3*/
+	cpu.CR3.val = 0x00000000;
+
 	/* Initialize DRAM. */
 	init_ddr3();
 

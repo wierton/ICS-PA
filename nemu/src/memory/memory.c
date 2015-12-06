@@ -77,7 +77,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 	uint32_t addr_0_11 = addr & 0xfff;
-	if(addr_0_11 + len >= 0x1000)
+	if(addr_0_11 + len > 0x1000)
 	{
 		/* data cross the page boundary */
 #ifdef DEBUG

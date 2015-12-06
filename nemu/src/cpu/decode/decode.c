@@ -67,7 +67,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	assert(pagetab.present);
 
 	/* calc physic address */
-	return (pagetab.base << 20) + pageaddr.off;
+	return (pagetab.base << 12) + pageaddr.off;
 }
 
 

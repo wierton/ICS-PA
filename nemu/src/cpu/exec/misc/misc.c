@@ -35,12 +35,6 @@ make_helper(cdq)
 	return 1;
 }
 
-make_helper(cld)
-{
-	cpu.DF = 0;
-	return 1;
-}
-
 make_helper(fldz)
 {
 	return 2;

@@ -80,6 +80,9 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	if(addr_0_11 + len >= 0x1000)
 	{
 		/* data cross the page boundary */
+#ifdef DEBUG
+		printf("address 0x%x with length %d cross the boundary!\n", addr, len);
+#endif
 		assert(0);
 	}
 	hwaddr_t hwaddr = page_translate(addr);

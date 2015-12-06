@@ -4,6 +4,7 @@
 
 make_helper(concat(stos_,SUFFIX))
 {
+	int IncDec = cpu.DF?-DATA_BYTE:DATA_BYTE;
 	DATA_TYPE result = cpu.eax;
 	MEM_W(cpu.edi,result, R_ES);
 #if DATA_BYTE == 1
@@ -15,7 +16,7 @@ make_helper(concat(stos_,SUFFIX))
 #if DATA_BYTE == 4
 	print_asm("stos $eax,$es:($edi)");
 #endif
-	cpu.edi += DATA_BYTE;
+	cpu.edi += IncDec;
 	return 1;
 }
 

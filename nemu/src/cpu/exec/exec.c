@@ -230,14 +230,15 @@ helper_fun _2byte_opcode_table [256] = {
 };
 
 make_helper(exec) {
-	pre_eip = eip;
+	swaddr_t tmp;
 	ops_decoded.opcode = instr_fetch(eip, 1);
-	return opcode_table[ ops_decoded.opcode ](eip);
+	tmp = opcode_table[ ops_decoded.opcode ](eip);
+	pre_eip = eip;
+	return tmp;
 }
 
 static make_helper(_2byte_esc) {
 	eip ++;
-//	pre_eip = eip;
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;
 	return _2byte_opcode_table[opcode](eip) + 1; 

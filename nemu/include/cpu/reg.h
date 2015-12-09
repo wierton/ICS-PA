@@ -42,23 +42,38 @@ typedef struct SegmentDescriptor {
 	uint32_t base_31_24          : 8;
 } SegDesc;
 
-/* page descriptor */
-typedef union {
+/* the 32bit Page Directory(first level page table) data structure */
+typedef union PageDirectoryEntry {
 	struct {
-		uint32_t present		:1;
-		uint32_t readwrite		:1;
-		uint32_t privilege_level:1;
-		uint32_t pwt			:1;
-		uint32_t pcd			:1;
-		uint32_t accessed		:1;
-		uint32_t dirtybit		:1;
-		uint32_t				:1;
-		uint32_t                :1;
-		uint32_t avl			:3;
-		uint32_t base			:20;
+		uint32_t present             : 1;
+		uint32_t read_write          : 1; 
+		uint32_t user_supervisor     : 1;
+		uint32_t page_write_through  : 1;
+		uint32_t page_cache_disable  : 1;
+		uint32_t accessed            : 1;
+		uint32_t pad0                : 6;
+		uint32_t page_frame          : 20;
 	};
 	uint32_t val;
-} PageDesc;
+} PDE;
+
+/* the 32bit Page Table Entry(second level page table) data structure */
+typedef union PageTableEntry {
+	struct {
+		uint32_t present             : 1;
+		uint32_t read_write          : 1;
+		uint32_t user_supervisor     : 1;
+		uint32_t page_write_through  : 1;
+		uint32_t page_cache_disable  : 1;
+		uint32_t accessed            : 1;
+		uint32_t dirty               : 1;
+		uint32_t pad0                : 1;
+		uint32_t global              : 1;
+		uint32_t pad1                : 3;
+		uint32_t page_frame          : 20;
+	};
+	uint32_t val;
+} PTE;
 
 /* to describe linear addr */
 typedef union {

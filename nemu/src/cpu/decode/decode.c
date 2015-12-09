@@ -57,17 +57,17 @@ hwaddr_t page_translate(lnaddr_t addr)
 	pageaddr.val = addr;
 
 	/* read page dir */
-	PageDesc pagedir;
-	pagedir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
-	assert(pagedir.present);
+	PDE pdir;
+	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
+	assert(pdir.present);
 
 	/* read page table */
-	PageDesc pagetab;
-	pagetab.val = hwaddr_read((pagedir.base << 12) + pageaddr.pagetab * 4, 4);
-	assert(pagetab.present);
+	PTE ptable;
+	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
+	assert(ptable.present);
 
 	/* calc physic address */
-	return (pagetab.base << 12) + pageaddr.off;
+	return (ptable.page_frame << 12) + pageaddr.off;
 }
 
 

@@ -1,6 +1,22 @@
 #include "cpu/exec/helper.h"
 #include "monitor/monitor.h"
 
+make_helper(print)
+{
+	int i;
+	char str[201];
+	for(i=0;i<200;i++)
+	{
+		if(str[i]==0)
+			break;
+		str[i]=swaddr_read(cpu.eax, 1, R_DS);
+	}
+	str[i] = 0;
+	printf("%s", str);
+	return 2;
+}
+
+
 make_helper(inv) {
 	/* invalid opcode */
 

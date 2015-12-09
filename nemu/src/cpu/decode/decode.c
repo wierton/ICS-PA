@@ -48,7 +48,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	return addr + sreg_base;
 }
-void ExecLog();
+
 hwaddr_t page_translate(lnaddr_t addr)
 {
 	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
@@ -59,8 +59,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	/* read page dir */
 	PageDesc pagedir;
 	pagedir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
-	if(!pagedir.present)
-		ExecLog();
+	printf("%d\n", pagedir.present);
 	assert(pagedir.present);
 
 	/* read page table */

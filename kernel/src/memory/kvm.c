@@ -2,11 +2,20 @@
 #include "x86.h"
 #include "memory.h"
 #include <string.h>
+#include <stdio.h>
 
 static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
+static char print_str[200];
+
 inline PDE* get_kpdir() { return kpdir; }
+
+/* function for print info */
+#define print(...)\
+	sprintf(print_str, __VA_ARGS__);\
+	asm volatile("mov $print_str,%eax;"\
+			"bsf %eax,%eax;");
 
 /* set up page tables for kernel */
 void init_page(void) {
@@ -15,7 +24,8 @@ void init_page(void) {
 	PDE *pdir = (PDE *)va_to_pa(kpdir);
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
-
+	
+	print("str");
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

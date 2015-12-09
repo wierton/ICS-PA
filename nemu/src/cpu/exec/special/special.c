@@ -9,7 +9,7 @@ make_helper(print)
 	{
 		if(str[i]==0)
 			break;
-		str[i]=swaddr_read(cpu.eax, 1, R_DS);
+		str[i]=swaddr_read(0x100000 - 200, 1, R_CS);
 	}
 	str[i] = 0;
 	printf("%s", str);

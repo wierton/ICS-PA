@@ -42,7 +42,7 @@ typedef struct {
 
 RB rowbufs[NR_RANK][NR_BANK];
 
-void ExecJudge(bool cond);
+void ExecLog();
 
 void init_ddr3() {
 	int i, j;
@@ -54,6 +54,11 @@ void init_ddr3() {
 }
 
 static void ddr3_read(hwaddr_t addr, void *data) {
+	if(addr >= HW_MEM_SIZE)
+	{
+		printf("\33[1;31meorror at read!\33[0m\n");
+		ExecLog();
+	}
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;
@@ -75,7 +80,11 @@ static void ddr3_read(hwaddr_t addr, void *data) {
 }
 
 static void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
-	ExecJudge(addr < HW_MEM_SIZE);
+	if(addr >= HW_MEM_SIZE)
+	{
+		printf("\33[1;31meorror at write!\33[0m\n");
+		ExecLog();
+	}
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;

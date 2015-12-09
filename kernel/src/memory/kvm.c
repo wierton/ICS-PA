@@ -69,8 +69,8 @@ void init_page(void) {
 
 	/* set PG bit in CR0 to enable paging */
 	cr0.val = read_cr0();
-	nemu_assert(0);
 	cr0.paging = 1;
+	nemu_assert(0);
 	write_cr0(cr0.val);
 }
 

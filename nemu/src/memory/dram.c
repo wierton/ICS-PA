@@ -56,7 +56,7 @@ void init_ddr3() {
 static void ddr3_read(hwaddr_t addr, void *data) {
 	if(addr >= HW_MEM_SIZE)
 	{
-		printf("\33[1;31meorror at read!\33[0m\n");
+		printf("\33[1;31merror at read!\33[0m\n");
 		ExecLog();
 	}
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
@@ -82,7 +82,7 @@ static void ddr3_read(hwaddr_t addr, void *data) {
 static void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
 	if(addr >= HW_MEM_SIZE)
 	{
-		printf("\33[1;31meorror at write!\33[0m\n");
+		printf("\33[1;31merror at write!\33[0m\n");
 		ExecLog();
 	}
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);

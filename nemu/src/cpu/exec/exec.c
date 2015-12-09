@@ -6,6 +6,8 @@
 typedef int (*helper_fun)(swaddr_t);
 static make_helper(_2byte_esc);
 
+static swaddr_t pre_eip = 0;
+
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
 	static helper_fun concat(opcode_table_, name) [8] = { \
 	/* 0x00 */	item0, item1, item2, item3, \
@@ -228,12 +230,14 @@ helper_fun _2byte_opcode_table [256] = {
 };
 
 make_helper(exec) {
+	pre_eip = eip;
 	ops_decoded.opcode = instr_fetch(eip, 1);
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
 static make_helper(_2byte_esc) {
 	eip ++;
+	pre_eip = eip;
 	uint32_t opcode = instr_fetch(eip, 1);
 	ops_decoded.opcode = opcode | 0x100;
 	return _2byte_opcode_table[opcode](eip) + 1; 
@@ -242,6 +246,7 @@ static make_helper(_2byte_esc) {
 void ExecLog()
 {
 	printf("\33[1;31m");
-	printf("exec log:eip\t0x%x\n", cpu.eip);
+	printf("exec log:\neip\t0x%x\n", cpu.eip);
+	printf("pre_eip:0x%x\n", pre_eip);
 	printf("\33[0m\n");
 }

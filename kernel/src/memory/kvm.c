@@ -70,8 +70,8 @@ void init_page(void) {
 	/* set PG bit in CR0 to enable paging */
 	cr0.val = read_cr0();
 	cr0.paging = 1;
+	nemu_assert(cr3.page_directory_base == 0xc0156);
 	write_cr0(cr0.val);
-	nemu_assert(0);
 }
 
 /* GDT in the kernel's memory, whose virtual memory is greater than 0xC0000000. */

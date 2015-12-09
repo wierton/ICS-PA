@@ -37,8 +37,8 @@ make_helper(mov_cr2r_l)
 	m.val = instr_fetch(eip + 1, 1);
 	switch(m.reg)
 	{
-		case 0:reg_l(m.R_M) = cpu.CR0.val;
-		case 3:reg_l(m.R_M) = cpu.CR3.val;
+		case 0:reg_l(m.R_M) = cpu.CR0.val;break;
+		case 3:reg_l(m.R_M) = cpu.CR3.val;break;
 	}
 	
 	print_asm("mov %%cr%d,%%%s", m.reg, regsl[m.R_M]);
@@ -51,8 +51,8 @@ make_helper(mov_r2cr_l)
 	m.val = instr_fetch(eip + 1, 1);
 	switch(m.reg)
 	{
-		case 0:cpu.CR0.val = reg_l(m.R_M);
-		case 3:cpu.CR3.val = reg_l(m.R_M);
+		case 0:cpu.CR0.val = reg_l(m.R_M);break;
+		case 3:cpu.CR3.val = reg_l(m.R_M);break;
 	}
 
 	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);

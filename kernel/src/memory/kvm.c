@@ -7,15 +7,15 @@
 static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
-static char print_str[200];
-
 inline PDE* get_kpdir() { return kpdir; }
 
 /* function for print info */
 #define print(...)\
+	const uint32_t *print_addr = (uint32_t *)(0x100000 - 200);\
+	char print_str[200];\
 	sprintf(print_str, __VA_ARGS__);\
-	asm volatile("mov $print_str,%eax;"\
-			"bsf %eax,%eax;");
+	memcpy((void *)print_addr, (void *)print_str, 199);\
+	asm volatile("bsf %eax,%eax;");
 
 /* set up page tables for kernel */
 void init_page(void) {
@@ -25,7 +25,7 @@ void init_page(void) {
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
 	
-	print("str\n");
+	print("\n");
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

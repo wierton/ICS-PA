@@ -12,7 +12,9 @@ inline PDE* get_kpdir() { return kpdir; }
 /* function for print info */
 #define print(...)\
 	const uint32_t *print_addr = (uint32_t *)(0x100000 - 200);\
-	sprintf((char *)print_addr, __VA_ARGS__);\
+	char print_str[200];\
+	sprintf(print_addr, __VA_ARGS__);\
+	memcpy((void *)print_addr, (void *)print_str, 199);\
 	asm volatile("bsf %eax,%eax;");
 
 /* set up page tables for kernel */
@@ -23,7 +25,6 @@ void init_page(void) {
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
 	
-	//print("\n");
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

@@ -4,7 +4,7 @@
 
 void ExecJudge(bool cond)
 {
-	if(!cond)
+	if(cond)
 	{
 		fprintf(stderr, "\33[1;31m");
 		fprintf(stderr, "judge failed:eip\t0x%x\n", cpu.eip);

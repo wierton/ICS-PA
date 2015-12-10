@@ -57,7 +57,7 @@ int prints(char ptr[])
 
 int printx(uint32_t addr)
 {
-	int i;
+	int i,pos = 2;
 	CR0 cr0;
 	char *pstr;
 	cr0.val = read_cr0();
@@ -74,12 +74,16 @@ int printx(uint32_t addr)
 	for(i = 7; i >= 0; i--)
 	{
 		uint8_t tmp = (addr >> (4 * i)) & 0xf;
+		if(tmp == 0)
+			continue;
 		if(tmp < 0xa)
-			pstr[9 - i] = '0' + tmp;
+			pstr[pos++] = '0' + tmp;
 		else
-			pstr[9 - i] = 'a' + tmp - 0xa;
+			pstr[pos++] = 'a' + tmp - 0xa;
 	}
-	pstr[10] = 0;
+	if(pos == 2)
+		pstr[pos++] = '0';
+	pstr[pos] = 0;
 	asm volatile("movl %0, %%eax" : : "r"(pstr));
 	asm volatile("bsf %eax,%eax;");
 	return 0;

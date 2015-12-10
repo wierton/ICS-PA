@@ -5,7 +5,7 @@ inline void stop_nemu();
 
 make_helper(print)
 {
-	printf("print:%c\n", cpu.eax);
+	printf("print:%c,%d\n", cpu.eax, cpu.eax);
 	stop_nemu();
 	return 2;
 }

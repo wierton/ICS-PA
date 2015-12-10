@@ -60,16 +60,14 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PDE pdir;
 	cpu.CR0.paging = 0;
 	swaddr_t pdirlogicaddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4;
-	lnaddr_t pdirlnaddr = seg_translate(pdirlogicaddr, 4, R_DS);
-	pdir.val = hwaddr_read(pdirlnaddr, 4);
+	pdir.val = swaddr_read(pdirlogicaddr, 4, R_DS);
 	assert(pdir.val != 0);
 	assert(pdir.present);
 
 	/* read page table */
 	PTE ptable;
 	swaddr_t ptablogicaddr = (pdir.page_frame << 12) + pageaddr.pagetab * 4;
-	lnaddr_t ptablnaddr = seg_translate(ptablogicaddr, 4, R_DS);
-	ptable.val = hwaddr_read(ptablnaddr, 4);
+	ptable.val = swaddr_read(ptablogicaddr, 4, R_DS);
 	assert(ptable.present);
 	cpu.CR0.paging = 1;
 	/* calc physic address */

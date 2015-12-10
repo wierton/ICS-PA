@@ -5,7 +5,7 @@
 make_helper(concat(movs_,SUFFIX))
 {
 	int IncDec = cpu.DF?-DATA_BYTE:DATA_BYTE;
-	DATA_TYPE src = MEM_R(cpu.esi, R_ES);
+	DATA_TYPE src = MEM_R(cpu.esi, R_DS);
 	MEM_W(cpu.edi, src, R_ES);
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;

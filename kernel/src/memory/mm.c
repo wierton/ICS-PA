@@ -29,23 +29,26 @@ int prints(char ptr[])
 	int i;
 	CR0 cr0;
 	char *pstr;
+	char *pptr;
 	cr0.val = read_cr0();
 	if(cr0.paging)
 	{
 		pstr = (char *)str;
+		pptr = (char *)ptr;
 	}
 	else
 	{
 		pstr = (char *)va_to_pa(str);
+		pptr = (char *)va_to_pa(ptr);
 	}
 
 	for(i = 0;i < 200;i ++)
 	{
-		nemu_assert(0);
-		if(ptr[i] == 0)
+	//	nemu_assert(0);
+		if(pptr[i] == 0)
 			break;
 		nemu_assert(0);
-		pstr[i] = ptr[i];
+		pstr[i] = pptr[i];
 	}
 	pstr[i] = 0;
 	asm volatile("movl %0, %%eax" : : "r"(pstr));

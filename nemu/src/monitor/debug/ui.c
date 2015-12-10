@@ -143,7 +143,7 @@ static int cmd_info(char *args)
 		printf("DS\t$0x%04x\n",cpu.DS.val);
 		printf("ES\t$0x%04x\n",cpu.ES.val);
 		printf("CR0\t$0x%08x\n",cpu.CR0.val);
-		printf("GDTR\t[$0x%04x:$0x%08x]\n",cpu.GDTR.limit, cpu.GDTR.base);
+		printf("CR3\t$0x%08x\n",cpu.CR3.val);
 	}
 	else if(strcmp(args,"w")==0)
 	{

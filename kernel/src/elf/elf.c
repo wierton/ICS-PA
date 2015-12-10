@@ -16,8 +16,8 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 void create_video_mapping();
 uint32_t get_ucr3();
 
-int prints(char ptr[]);
-int printx(uint32_t addr);
+int prints(bool, char ptr[]);
+int printx(bool, uint32_t addr);
 
 uint32_t loader() {
 	Elf32_Ehdr *elf;
@@ -48,18 +48,18 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			prints("ph->p_vaddr");
-			printx((uint32_t)ph->p_vaddr);
-			printx((uint32_t)(va_to_pa(ph->p_vaddr)));
+			prints(1, "ph->p_vaddr");
+			printx(1, (uint32_t)ph->p_vaddr);
+			printx(1, (uint32_t)(va_to_pa(ph->p_vaddr)));
 			ramdisk_read((uint8_t *)(va_to_pa(ph->p_vaddr)), ph->p_offset, ph->p_filesz); 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			prints("[VirtAddr + FileSiz, VirtAddr + MemSiz)");
+			prints(1, "[VirtAddr + FileSiz, VirtAddr + MemSiz)");
 
 			memset((uint8_t *)((va_to_pa(ph->p_vaddr)) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
-			prints("memset end");
+			prints(1, "memset end");
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
 			extern uint32_t brk;

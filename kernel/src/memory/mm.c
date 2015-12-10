@@ -24,7 +24,6 @@ void mm_brk(uint32_t new_brk) {
 char strc;
 int printc(char c)
 {
-	nemu_assert(i < 100);
 	strc = c;
 	asm volatile("mov $strc,%eax;");
 	asm volatile("bsf %eax,%eax;");

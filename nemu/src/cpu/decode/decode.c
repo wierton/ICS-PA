@@ -51,11 +51,12 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 hwaddr_t page_translate(lnaddr_t addr)
 {
-	if(!cpu.CR0.protect_enable || !cpu.CR0.paging || true)
+	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
 		return addr;
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
+	printf("addr:%x\n", addr);
 	printf("%x\n", cpu.CR3.val);
 	/* read page dir */
 	PDE pdir;

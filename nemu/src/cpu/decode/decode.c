@@ -46,6 +46,11 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	uint32_t sreg_base = ((base_15_0 | (base_23_16 << 16)) | (base_31_24 << 24));
 
+	if(addr >= 0x156000 && addr <= 0x157000)
+	{
+		printf("addr:%x\n", addr);
+		printf("paddr:%x\n", addr + sreg_base);
+	}
 	return addr + sreg_base;
 }
 

@@ -52,6 +52,7 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
+			prints("asfdsafdsf");
 			memset((uint8_t *)(va_to_pa(ph->p_vaddr) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
@@ -63,7 +64,6 @@ uint32_t loader() {
 		}
 	}
 
-	prints("asfdsafdsf");
 	volatile uint32_t entry = elf->e_entry;
 
 #ifdef IA32_PAGE

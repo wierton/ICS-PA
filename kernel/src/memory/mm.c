@@ -22,7 +22,8 @@ void mm_brk(uint32_t new_brk) {
 
 /* only can be used after init page */
 char volatile str[201];
-int prints(char ptr[])
+uint32_t volatile straddr;
+int prints(bool Paging, char ptr[])
 {
 	int i;
 	for(i = 0;i < 200;i ++)
@@ -32,12 +33,16 @@ int prints(char ptr[])
 		str[i] = ptr[i];
 	}
 	str[i] = 0;
-	asm volatile("mov $str,%eax;");
+	if(!Paging)
+		straddr = (uint32_t)(va_to_pa(str));
+	else
+		straddr = (uint32_t)str;
+	asm volatile("mov $straddr,%eax;");
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }
 
-int printx(uint32_t addr)
+int printx(bool Paging, uint32_t addr)
 {
 	int i;
 	str[0] = '0';
@@ -51,6 +56,10 @@ int printx(uint32_t addr)
 			str[9 - i] = 'a' + tmp - 0xa;
 	}
 	str[10] = 0;
+	if(!Paging)
+		straddr = (uint32_t)(va_to_pa(str));
+	else
+		straddr = (uint32_t)str;
 	asm volatile("mov $str,%eax;");
 	asm volatile("bsf %eax,%eax;");
 	return 0;

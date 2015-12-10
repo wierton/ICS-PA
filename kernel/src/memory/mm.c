@@ -37,13 +37,13 @@ int prints(char ptr[])
 	{
 		pstr = (char *)va_to_pa(str);
 	}
+	nemu_assert(0);
 	for(i = 0;i < 200;i ++)
 	{
 		if(ptr[i] == 0)
 			break;
 		pstr[i] = ptr[i];
 	}
-	nemu_assert(0);
 	pstr[i] = 0;
 	asm volatile("movl %0, %%eax" : : "r"(pstr));
 	asm volatile("bsf %eax,%eax;");

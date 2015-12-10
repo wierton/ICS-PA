@@ -31,7 +31,6 @@ int print(char ptr[])
 			break;
 		str[i] = ptr[i];
 	}
-	nemu_assert(i > 4);
 	str[i] = 0;
 	asm volatile("mov $str,%eax;");
 	asm volatile("bsf %eax,%eax;");
@@ -45,9 +44,10 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
-	print("kernel print");
+	print("memcpy begin here!");
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
+	print("memcpy end here!");
 
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }

@@ -15,8 +15,7 @@ make_helper(print)
 			break;
 	}
 	str[i] = 0;
-	printf("i:%d\n", i);
-	printf("print:%s\n", str);
+	printf("%s\n", str);
 	stop_nemu();
 	return 2;
 }

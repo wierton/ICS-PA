@@ -56,22 +56,17 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
+	printf("%x\n", cpu.CR3.val);
 	/* read page dir */
 	PDE pdir;
-	cpu.CR0.paging = 0;
-	swaddr_t pdirlogicaddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4;
-	pdir.val = swaddr_read(pdirlogicaddr, 4, R_DS);
-	printf("pagedir:%x\n", pageaddr.pagedir);
-	printf("pdirlogicaddr:%x\n", pdirlogicaddr);
-	assert(pdir.val != 0);
+	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
+	printf("addr:%x\n", (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4);
 	assert(pdir.present);
-
-	/* read page table */
+	printf("pdir:%x\n", pdir.val);
 	PTE ptable;
-	swaddr_t ptablogicaddr = (pdir.page_frame << 12) + pageaddr.pagetab * 4;
-	ptable.val = swaddr_read(ptablogicaddr, 4, R_DS);
+	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
 	assert(ptable.present);
-	cpu.CR0.paging = 1;
+
 	/* calc physic address */
 	return (ptable.page_frame << 12) + pageaddr.off;
 }

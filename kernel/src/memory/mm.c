@@ -44,10 +44,8 @@ int prints(char ptr[])
 
 	for(i = 0;i < 200;i ++)
 	{
-	//	nemu_assert(0);
 		if(pptr[i] == 0)
 			break;
-		nemu_assert(0);
 		pstr[i] = pptr[i];
 	}
 	pstr[i] = 0;

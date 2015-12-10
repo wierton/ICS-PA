@@ -65,12 +65,13 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	assert(len == 1 || len == 2 || len == 4);
 	uint32_t addr_0_11 = addr & 0xfff;
+	hwaddr_t hwaddr = page_translate(addr);
 	if(addr_0_11 + len >= 0x1000)
 	{
 		/* data cross the page boundary */
-		assert(0);
+		//assert(0);
 	}
-	hwaddr_t hwaddr = page_translate(addr);
+
 	return hwaddr_read(hwaddr, len);
 }
 

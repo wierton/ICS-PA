@@ -78,9 +78,9 @@ typedef union PageTableEntry {
 /* to describe linear addr */
 typedef union {
 	struct {
-		uint32_t pagedir	:10;
-		uint32_t pagetab	:10;
 		uint32_t off		:12;
+		uint32_t pagetab    :10;
+		uint32_t pagedir    :10;
 	};
 	uint32_t val;
 } PageAddr;

@@ -30,10 +30,10 @@ void init_page(void) {
 		pdir[pdir_idx].val = make_pde(ptable);
 		pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 
-		printx(pdir_idx);
+/*		printx(pdir_idx);
 		prints("th pagedir:");
 		printx(pdir[pdir_idx].val);
-		prints("\n");
+		prints("\n");*/
 
 		ptable += NR_PTE;
 	}

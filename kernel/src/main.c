@@ -112,6 +112,8 @@ void init_cond() {
 
 	/* Here we go! */
 	prints("Here we go!\n");
+	printx(*(uint32_t *)(0x8000bc));
+	prints("\n");
 	((void(*)(void))eip)();
 
 	panic("should not reach here");

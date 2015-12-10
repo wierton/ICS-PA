@@ -16,6 +16,8 @@ Operands ops_decoded;
 #include "decode-template.h"
 #undef DATA_BYTE
 
+void ExecLog();
+
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 {
 	assert(sreg >= 0 && sreg <6);
@@ -55,6 +57,8 @@ hwaddr_t page_translate(lnaddr_t addr)
 		return addr;
 	PageAddr pageaddr;
 	pageaddr.val = addr;
+
+	ExecLog();
 
 	printf("eip:%x\n", cpu.eip);
 	printf("addr:%x\n", addr);

@@ -64,7 +64,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		cpu.eip += instr_len;
 
-		if(cpu.eip==0xc01013aa)
+		if(cpu.eip==0xc01013a2)
 			nemu_state = STOP;
 
 #ifdef DEBUG

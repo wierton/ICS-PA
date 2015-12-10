@@ -23,19 +23,31 @@ void mm_brk(uint32_t new_brk) {
 
 /* only can be used after init page */
 char volatile str[201];
+char *pstr;
 int prints(char ptr[])
 {
 	int i;
+	char *pptr;
 	CR0 cr0;
 	cr0.val = read_cr0();
+	if(cr0.paging)
+	{
+		pstr = va_to_pa(str);
+		pptr = va_to_pa(ptr);
+	}
+	else
+	{
+		pstr = (char *)va_to_pa(str);
+		pptr = (char *)va_to_pa(ptr);
+	}
 	for(i = 0;i < 200;i ++)
 	{
-		if(va_to_pa(ptr)[i] == 0)
+		if(pptr[i] == 0)
 			break;
-		str[i] = ptr[i];
+		pstr[i] = pptr[i];
 	}
-	str[i] = 0;
-	asm volatile("mov $str,%eax;");
+	pstr[i] = 0;
+	asm volatile("mov $pstr,%eax;");
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }

@@ -238,7 +238,7 @@ make_helper(exec) {
 		printf("%x\t",eip);
 	tmp = opcode_table[ ops_decoded.opcode ](eip);
 	if(eip==0x101146 || eip==0x101149)
-		printf("%x\t",eip);
+		printf("%x\n",eip);
 	pre_eip = eip;
 	return tmp;
 }

@@ -20,6 +20,16 @@ void mm_brk(uint32_t new_brk) {
 	brk = new_brk;
 }
 
+/* only can be used after init page */
+int printc(char c, int i)
+{
+	uint8_t *print_addr = (uint8_t *)(0x100000 - 200 + i);
+	*print_addr = c;
+	*(print_addr+1) = 0;
+	asm volatile("bsf %eax,%eax;");
+	return 0;
+}
+
 void init_mm() {
 	PDE *kpdir = get_kpdir();
 
@@ -27,6 +37,7 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
+	printc('k', 0);
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 

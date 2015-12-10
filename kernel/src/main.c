@@ -84,9 +84,9 @@ void init_cond() {
 	video_mapping_write_test();
 #endif
 
+	printx(*(uint32_t *)(0x8000bc));
 	/* Load the program. */
 	uint32_t eip = loader();
-	printx(*(uint32_t *)(0x8000bc));
 	prints("eip:");
 	printx(eip);
 	prints("\n");

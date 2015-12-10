@@ -11,7 +11,7 @@ make_helper(lgdt_l)
 	int ret;
 	swaddr_t addr;
 	m.val = instr_fetch(eip + 1, 1);
-	if(m.mod != 5)
+	if(m.R_M != 5)
 	{
 		addr = reg_l(m.R_M);
 		ret = 2;

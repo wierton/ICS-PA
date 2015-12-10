@@ -24,7 +24,7 @@ make_helper(lgdt_l)
 		print_asm("lgdtl 0x%x", addr);
 	}
 	decode_rm_l(eip + 1);
-	printf("%x\t%x\n", op_src->val, addr);
+	printf("%x\t%x\t%x\n", op_src->val, op_dest->val, addr);
 	
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);

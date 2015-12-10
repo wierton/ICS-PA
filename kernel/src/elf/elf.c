@@ -57,7 +57,7 @@ uint32_t loader() {
 			 */
 			prints("[VirtAddr + FileSiz, VirtAddr + MemSiz)");
 
-			memset((uint8_t *)((ph->p_vaddr) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+			memset((uint8_t *)((va_to_pa(ph->p_vaddr)) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 			prints("memset end");
 #ifdef IA32_PAGE

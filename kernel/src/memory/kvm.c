@@ -27,7 +27,7 @@ void init_page(void) {
 
 	nemu_assert(NR_PTE == 0x400);
 	nemu_assert((uint32_t)ptable == 0x136000);
-	nemu_assert(PHY_MEM / PT_SIZE >= 0x32);
+	nemu_assert(PHY_MEM / PT_SIZE >= 0x16);
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

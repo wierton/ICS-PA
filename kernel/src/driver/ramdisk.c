@@ -9,10 +9,14 @@
  * a physical one, which is necessary for a microkernel.
  */
 
+int print(char ptr[]);
+
 /* read `len` bytes starting from `offset` of ramdisk into `buf` */
 void ramdisk_read(uint8_t *buf, uint32_t offset, uint32_t len) {
 	nemu_assert(offset + len < RAMDISK_SIZE);
+	print("start here");
 	memcpy(buf, RAMDISK_START + offset, len);
+	print("end here");
 }
 
 /* write `len` bytes starting from `buf` into the `offset` of ramdisk */

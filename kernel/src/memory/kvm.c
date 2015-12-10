@@ -6,9 +6,6 @@
 static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
-int prints(bool, char[]);
-int printx(bool, uint32_t);
-
 inline PDE* get_kpdir() { return kpdir; }
 
 /* set up page tables for kernel */
@@ -19,11 +16,6 @@ void init_page(void) {
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
 
-	prints(0, "NR_PDE NR_PTE ptable PHY_MEM / PT_SIZE");
-	printx(0, NR_PDE);
-	printx(0, NR_PTE);
-	printx(0, (uint32_t)ptable);
-	printx(0, PHY_MEM / PT_SIZE == 0x20);
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

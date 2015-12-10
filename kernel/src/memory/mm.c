@@ -22,7 +22,7 @@ void mm_brk(uint32_t new_brk) {
 
 /* only can be used after init page */
 char volatile str[201];
-int print(char ptr[])
+int prints(char ptr[])
 {
 	int i;
 	for(i = 0;i < 200;i ++)
@@ -37,6 +37,25 @@ int print(char ptr[])
 	return 0;
 }
 
+int printx(uint32_t addr)
+{
+	int i;
+	str[0] = '0';
+	str[1] = 'x';
+	for(i = 7; i >= 0; i--)
+	{
+		uint8_t tmp = (addr >> (4 * i)) & 0xf;
+		if(tmp < 0xa)
+			str[9 - i] = '0' + tmp;
+		else
+			str[9 - i] = 'a' + tmp - 0xa;
+	}
+	str[10] = 0;
+	asm volatile("mov $str,%eax;");
+	asm volatile("bsf %eax,%eax;");
+	return 0;
+}
+
 void init_mm() {
 	PDE *kpdir = get_kpdir();
 
@@ -44,10 +63,8 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
-	print("memcpy begin here!");
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
-	print("memcpy end here!");
 
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }

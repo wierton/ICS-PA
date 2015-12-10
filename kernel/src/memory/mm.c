@@ -32,8 +32,8 @@ int prints(char ptr[])
 	cr0.val = read_cr0();
 	if(cr0.paging)
 	{
-		pstr = va_to_pa(str);
-		pptr = va_to_pa(ptr);
+		pstr = (char *)str;
+		pptr = (char *)ptr;
 	}
 	else
 	{

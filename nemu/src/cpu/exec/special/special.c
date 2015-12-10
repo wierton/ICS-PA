@@ -2,10 +2,12 @@
 #include "monitor/monitor.h"
 
 inline void stop_nemu();
+uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
 make_helper(print)
 {
-	printf("print:%c,%d\n", cpu.eax, cpu.eax);
+	uint32_t strc = swaddr_read(cpu.eax, 4, R_DS);
+	printf("print:%c,%d\n", strc, strc);
 	stop_nemu();
 	return 2;
 }

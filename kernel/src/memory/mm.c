@@ -41,6 +41,7 @@ int prints(char ptr[])
 
 	for(i = 0;i < 200;i ++)
 	{
+		nemu_assert(0);
 		if(ptr[i] == 0)
 			break;
 		nemu_assert(0);

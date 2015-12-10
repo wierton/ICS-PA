@@ -16,6 +16,9 @@ void video_mapping_clear();
 
 void init_cond();
 
+int prints(char []);
+int printx(uint32_t);
+
 /* Initialization phase 1
  * The assembly code in start.S will finally jump here.
  */
@@ -31,6 +34,7 @@ void init() {
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
+	printx((uint32_t)init_cond);
 	asm volatile("jmp *%0" : : "r"(init_cond));
 
 	panic("should not reach here");

@@ -58,6 +58,7 @@ int prints(char ptr[])
 int printx(uint32_t addr)
 {
 	int i,pos = 2;
+	bool IsPrefix = true;
 	CR0 cr0;
 	char *pstr;
 	cr0.val = read_cr0();
@@ -74,8 +75,9 @@ int printx(uint32_t addr)
 	for(i = 7; i >= 0; i--)
 	{
 		uint8_t tmp = (addr >> (4 * i)) & 0xf;
-		if(tmp == 0)
+		if(tmp == 0 && IsPrefix)
 			continue;
+		IsPrefix = false;
 		if(tmp < 0xa)
 			pstr[pos++] = '0' + tmp;
 		else

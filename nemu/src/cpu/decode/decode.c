@@ -66,11 +66,6 @@ hwaddr_t page_translate(lnaddr_t addr)
 	{
 		ExecLog();
 		stop_nemu();
-#ifdef DEBUG
-		return 0x200000;
-#else
-		assert(0);
-#endif
 	}
 	assert(pdir.present);
 

@@ -31,6 +31,7 @@ int print(char ptr[])
 			break;
 		str[i] = ptr[i];
 	}
+	nemu_assert(i > 4);
 	str[i] = 0;
 	asm volatile("mov $str,%eax;");
 	asm volatile("bsf %eax,%eax;");

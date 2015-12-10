@@ -61,8 +61,8 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PDE pdir;
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
 	printf("addr:%x\n", (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4);
-	assert(pdir.present);
 	printf("pdir:%x\n", pdir.val);
+	assert(pdir.present);
 
 	PTE ptable;
 	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);

@@ -57,14 +57,10 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
-/*	printf("eip:%x\n", cpu.eip);
-	printf("addr:%x\n", addr);
-	printf("%x\n", cpu.CR3.val);
-*/	/* read page dir */
+	/* read page dir */
 	PDE pdir;
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
-/*	printf("addr:%x\n", (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4);
-	printf("pdir:%x\n", pdir.val);*/
+
 	if(!pdir.present)
 	{
 		ExecLog();

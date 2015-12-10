@@ -64,6 +64,9 @@ void cpu_exec(volatile uint32_t n) {
 
 		cpu.eip += instr_len;
 
+		if(cpu.eip==0xc01013a5)
+			nemu_state = STOP;
+
 #ifdef DEBUG
 		print_bin_instr(eip_temp, instr_len);
 		strcat(asm_buf, assembly);
@@ -82,7 +85,9 @@ void cpu_exec(volatile uint32_t n) {
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
 }
 
+#ifdef DEBUG
 inline void stop_nemu()
 {
 	nemu_state = STOP;
 }
+#endif

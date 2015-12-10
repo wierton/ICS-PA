@@ -37,6 +37,7 @@ int prints(char ptr[])
 	}
 	else
 	{
+		nemu_assert(0);
 		pstr = (char *)va_to_pa(str);
 		pptr = (char *)va_to_pa(ptr);
 	}

@@ -160,15 +160,15 @@ static int cmd_info(char *args)
 	}
 	else if(strcmp(args, "gdtr") == 0)
 	{
-		printf("GDTR[base:0x%x limit:0x%x]\n", cpu.GDTR.base, cpu.GDTR.limit);
+		printf("GDTR [base:0x%x limit:0x%x]\n", cpu.GDTR.base, cpu.GDTR.limit);
 	}
 	else if(strcmp(args, "ldtr") == 0)
 	{
-		printf("LDTR[base:0x%x limit:0x%x]\n", cpu.LDTR.base, cpu.LDTR.limit);
+		printf("LDTR [base:0x%x limit:0x%x]\n", cpu.LDTR.base, cpu.LDTR.limit);
 	}
 	else if(strcmp(args, "idtr") == 0)
 	{
-		printf("IDTR[base:0x%x limit:0x%x]\n", cpu.IDTR.base, cpu.IDTR.limit);
+		printf("IDTR [base:0x%x limit:0x%x]\n", cpu.IDTR.base, cpu.IDTR.limit);
 	}
 	else
 		printf("Unknown parameter:%s\n",args);

@@ -62,6 +62,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PDE pdir;
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
 
+	printf("dir base:0x%x\t", cpu.CR3.page_directory_base);
 	if(!pdir.present)
 	{
 		ExecLog();
@@ -69,7 +70,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 		printf("dir base:0x%x\t", cpu.CR3.page_directory_base);
 		printf("%dth dir\n", pageaddr.pagedir);
 		printf("pdir:0x%x\n", pdir.val);
-		return 0x2000000;
+		return 0xffffffff;
 	}
 	assert(pdir.present);
 

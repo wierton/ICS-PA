@@ -15,7 +15,8 @@ make_helper(lgdt_l)
 	{
 		addr = reg_l(m.R_M);
 		ret = 2;
-		print_asm("lgdtl %%%s", regsb[m.R_M]);
+		print_asm("lgdtl (%%%s)", regsb[m.R_M]);
+		printf("lgdtl (%%%s)", regsb[m.R_M]);
 	}
 	else
 	{

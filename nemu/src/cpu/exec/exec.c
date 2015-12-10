@@ -244,8 +244,11 @@ static make_helper(_2byte_esc) {
 	return _2byte_opcode_table[opcode](eip) + 1; 
 }
 
+inline void stop_nemu();
+
 void ExecLog()
 {
+	stop_nemu();
 	printf("\33[1;31m");
 	printf("exec log:\neip:0x%x\n", cpu.eip);
 	printf("pre_eip:0x%x\n", pre_eip);

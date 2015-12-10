@@ -81,3 +81,8 @@ void cpu_exec(volatile uint32_t n) {
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
 }
+
+inline void stop_nemu()
+{
+	nemu_state = STOP;
+}

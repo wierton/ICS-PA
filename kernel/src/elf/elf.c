@@ -52,7 +52,8 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			printx((uint32_t)va_to_pa(ph->p_vaddr) + ph->p_filesz);
+			prints("asdsafasdf");
+			printx((uint32_t)(va_to_pa(ph->p_vaddr) + ph->p_filesz));
 
 			memset((uint8_t *)(va_to_pa(ph->p_vaddr) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 

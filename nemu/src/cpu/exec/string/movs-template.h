@@ -10,7 +10,7 @@ make_helper(concat(movs_,SUFFIX))
 	cpu.edi += IncDec;
 	cpu.esi += IncDec;
 
-	print_asm("movs"str(SUFFIX)" $es:($esi),$ds:($edi)");
+	print_asm("movs"str(SUFFIX)" $ds:($esi),$es:($edi)");
 	return 1;
 }
 

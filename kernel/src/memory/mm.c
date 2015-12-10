@@ -27,6 +27,7 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
+	nemu_assert(0);
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 

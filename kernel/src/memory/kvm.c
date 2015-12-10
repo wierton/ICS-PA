@@ -6,6 +6,9 @@
 static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
+int prints(char ptr[]);
+int printx(uint32_t addr);
+
 inline PDE* get_kpdir() { return kpdir; }
 
 /* set up page tables for kernel */
@@ -16,10 +19,11 @@ void init_page(void) {
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
 
-	nemu_assert(NR_PDE == 0x400);
-	nemu_assert(NR_PTE == 0x400);
-	nemu_assert((uint32_t)ptable == 0x136000);
-	nemu_assert(PHY_MEM / PT_SIZE == 0x20);
+	prints("NR_PDE NR_PTE ptable PHY_MEM / PT_SIZE");
+	printx(NR_PDE);
+	printx(NR_PTE);
+	printx((uint32_t)ptable);
+	printx(PHY_MEM / PT_SIZE == 0x20);
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 
@@ -65,9 +69,6 @@ void init_page(void) {
 	/* set PG bit in CR0 to enable paging */
 	cr0.val = read_cr0();
 	cr0.paging = 1;
-	nemu_assert(pdir[0].val != 0);
-	nemu_assert((uint32_t)pdir == 0x00156000);
-	nemu_assert(cr3.val == 0x00156000);
 	write_cr0(cr0.val);
 }
 

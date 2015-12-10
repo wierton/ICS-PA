@@ -52,6 +52,8 @@ uint32_t loader() {
 			printx((uint32_t)ph->p_vaddr);
 			prints("\npaddr:");
 			printx((uint32_t)(va_to_pa(ph->p_vaddr)));
+			prints("\nfilesz:");
+			printx(ph->p_filesz);
 			prints("\n");
 			
 			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz); 

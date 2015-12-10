@@ -97,7 +97,8 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 			case 3:ret = first.data_0_23 | (second.data_0_7 >> 24);break;
 			default:
 				   printf("crossaddr:0x%x,%d\n", addr_0_11, len);
-				   assert(0);break;
+				   assert(0);
+				   break;
 		}
 		return ret;
 	}

@@ -26,9 +26,10 @@ make_helper(lgdt_l)
 		print_asm("lgdtl 0x%x", addr);
 	}
 	
-	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
-	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
 	extern void ExecLog();
+	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
+	ExecLog();
+	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
 	ExecLog();
 	return ret;
 }

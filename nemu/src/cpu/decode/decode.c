@@ -17,7 +17,7 @@ Operands ops_decoded;
 #undef DATA_BYTE
 
 void ExecLog();
-inline void stop_eip();
+inline void stop_nemu();
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 {
@@ -65,7 +65,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	if(!pdir.present)
 	{
 		ExecLog();
-		stop_eip();
+		stop_nemu();
 		printf("addr:0x%x\t", addr);
 		printf("dir base:0x%x\t", cpu.CR3.page_directory_base);
 		printf("%dth dir\n", pageaddr.pagedir);

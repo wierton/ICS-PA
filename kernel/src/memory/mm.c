@@ -38,10 +38,12 @@ int prints(char ptr[])
 	{
 		pstr = (char *)va_to_pa(str);
 	}
+
 	for(i = 0;i < 200;i ++)
 	{
 		if(ptr[i] == 0)
 			break;
+		nemu_assert(0);
 		pstr[i] = ptr[i];
 	}
 	pstr[i] = 0;

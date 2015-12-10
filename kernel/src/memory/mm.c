@@ -21,11 +21,18 @@ void mm_brk(uint32_t new_brk) {
 }
 
 /* only can be used after init page */
-char volatile strc;
-int printc(char c)
+char volatile str[201];
+int print(char ptr[])
 {
-	strc = c;
-	asm volatile("mov $strc,%eax;");
+	int i;
+	for(i = 0;i < 200;i ++)
+	{
+		if(ptr[i] == 0)
+			break;
+		str[i] = ptr[i];
+	}
+	str[i] = 0;
+	asm volatile("mov $str,%eax;");
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }
@@ -37,7 +44,7 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
-	printc('k');
+	print("kernel print");
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 

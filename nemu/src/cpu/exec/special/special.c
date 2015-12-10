@@ -6,8 +6,16 @@ uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
 make_helper(print)
 {
-	uint32_t strc = swaddr_read(cpu.eax, 4, R_DS);
-	printf("print:%c,%d\n", strc, strc);
+	int i;
+	char str[201];
+	for(i=0;i<200;i++)
+	{
+		if(str[i] == 0)
+			break;
+		str[i] = swaddr_read(cpu.eax, 1, R_DS);
+	}
+	str[i] = 0;
+	printf("print:%s\n", str);
 	stop_nemu();
 	return 2;
 }

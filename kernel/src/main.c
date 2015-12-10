@@ -86,6 +86,7 @@ void init_cond() {
 
 	/* Load the program. */
 	uint32_t eip = loader();
+	printx(*(uint32_t *)(0x8000bc));
 	prints("eip:");
 	printx(eip);
 	prints("\n");
@@ -112,8 +113,7 @@ void init_cond() {
 
 	/* Here we go! */
 	prints("Here we go!\n");
-	printx(*(uint32_t *)(0x8000bc));
-	prints("\n");
+
 	((void(*)(void))eip)();
 
 	panic("should not reach here");

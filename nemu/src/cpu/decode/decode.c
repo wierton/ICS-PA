@@ -61,6 +61,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	cpu.CR0.paging = 0;
 	swaddr_t pdirlogicaddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4;
 	pdir.val = swaddr_read(pdirlogicaddr, 4, R_DS);
+	printf("pagedir:%x\n", pageaddr.pagedir);
 	printf("pdirlogicaddr:%x\n", pdirlogicaddr);
 	assert(pdir.val != 0);
 	assert(pdir.present);

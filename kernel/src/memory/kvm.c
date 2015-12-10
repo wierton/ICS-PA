@@ -69,7 +69,7 @@ void init_page(void) {
 	cr3.page_directory_base = ((uint32_t)pdir) >> 12;
 	prints("cr3 dir base:");
 	printx(cr3.page_directory_base);
-	prints("\n");
+	prints("\t");
 	write_cr3(cr3.val);
 
 	/* set PG bit in CR0 to enable paging */

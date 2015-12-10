@@ -57,6 +57,10 @@ uint32_t loader() {
 			prints("\n");
 			
 			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz); 
+			printx(*(uint32_t *)(0x800000));
+			prints("\n");
+			printx(*(uint32_t *)(0x8000bc));
+			prints("\n");
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */

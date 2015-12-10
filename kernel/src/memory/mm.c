@@ -47,7 +47,7 @@ int prints(char ptr[])
 		pstr[i] = pptr[i];
 	}
 	pstr[i] = 0;
-	asm volatile("mov $pstr,%eax;");
+	asm volatile("movl %0, %%eax" : : "r"(pstr));
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }

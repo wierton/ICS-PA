@@ -14,8 +14,6 @@ make_helper(lgdt_l)
 	if(m.R_M != 5)
 	{
 		addr = reg_l(m.R_M);
-		printf("reg:%x\n", m.R_M);
-		printf("addr:%x\n", addr);
 		ret = 2;
 		print_asm("lgdtl (%%%s)", regsl[m.R_M]);
 	}

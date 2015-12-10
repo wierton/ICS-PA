@@ -52,8 +52,8 @@ make_helper(lidt_l)
 		print_asm("lgdtl 0x%x", addr);                             
 	}
 
-	cpu.LDTR.limit = swaddr_read(addr, 2, R_DS);                   
-	cpu.LDTR.base = swaddr_read(addr + 2, 4, R_DS);                
+	cpu.IDTR.limit = swaddr_read(addr, 2, R_DS);                   
+	cpu.IDTR.base = swaddr_read(addr + 2, 4, R_DS);                
 	return ret;                                                    
 }
 

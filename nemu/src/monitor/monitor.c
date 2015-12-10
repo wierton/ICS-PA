@@ -98,6 +98,10 @@ void restart() {
 	/* Set the initial CR3*/
 	cpu.CR3.val = 0x00000000;
 
+	/*set the initial DTR reg */
+	cpu.GDTR.base = cpu.LDTR.base = cpu.IDTR.base = 0;
+	cpu.GDTR.limit = cpu.LDTR.limit = cpu.IDTR.limit = 0xffff;
+
 	/* Initialize DRAM. */
 	init_ddr3();
 

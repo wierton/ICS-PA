@@ -167,7 +167,7 @@ typedef struct {
 	struct {
 		uint16_t limit;
 		uint32_t base;
-	} GDTR,LDTR;
+	} GDTR,LDTR,IDTR;
 
 } CPU_state;
 

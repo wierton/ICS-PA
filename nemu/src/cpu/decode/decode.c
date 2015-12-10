@@ -64,13 +64,12 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	if(!pdir.present)
 	{
-		stop_eip();
-		/*
+	//	stop_eip();
 		ExecLog();
 		printf("addr:0x%x\n", addr);
 		printf("pagedir:0x%x\n", pageaddr.pagedir);
 		printf("paddr:0x%x\n", (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4);
-		printf("pdir:0x%x\n", pdir.val);*/
+		printf("pdir:0x%x\n", pdir.val);
 		return 0x2000000;
 	}
 	assert(pdir.present);

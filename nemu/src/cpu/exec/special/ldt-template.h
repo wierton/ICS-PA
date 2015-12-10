@@ -23,8 +23,6 @@ make_helper(lgdt_l)
 		ret = 6;
 		print_asm("lgdtl 0x%x", addr);
 	}
-	decode_rm_l(eip + 1);
-	printf("%x\t%x\t%x\n", op_src->val, op_dest->val, addr);
 	
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
@@ -41,7 +39,7 @@ make_helper(lidt_l)
 	int ret;                                                       
 	swaddr_t addr;                                                 
 	m.val = instr_fetch(eip + 1, 1);                               
-	if(m.mod == 3)                                                 
+	if(m.R_M != 5)                                                 
 	{                                                              
 		addr = reg_l(m.R_M);                                       
 		ret = 2;                                                   

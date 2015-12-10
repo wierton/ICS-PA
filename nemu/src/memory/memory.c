@@ -69,7 +69,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	if(addr_0_11 + len >= 0x1000)
 	{
 		/* data cross the page boundary */
-		//assert(0);
+		assert(0);
 	}
 
 	return hwaddr_read(hwaddr, len);

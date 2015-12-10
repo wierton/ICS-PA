@@ -54,13 +54,13 @@ uint32_t loader() {
 			printx((uint32_t)(va_to_pa(ph->p_vaddr)));
 			prints("\n");
 			
-			ramdisk_read((uint8_t *)(va_to_pa(ph->p_vaddr)), ph->p_offset, ph->p_filesz); 
+			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz); 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
 			prints("ZeroMemory\n");
 
-			memset((uint8_t *)((va_to_pa(ph->p_vaddr)) + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+			memset((uint8_t *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 			printx(i);
 			prints("th loop end\n");

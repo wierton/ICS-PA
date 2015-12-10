@@ -59,9 +59,10 @@ hwaddr_t page_translate(lnaddr_t addr)
 	printf("%x\n", cpu.CR3.val);
 	/* read page dir */
 	PDE pdir;
-	swaddr_t diraddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4 - 0x20000;
-	pdir.val = hwaddr_read(diraddr, 4);
-	printf("addr:%x\n", diraddr);
+	swaddr_t pdirlogicaddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4;
+	lnaddr_t pdirlnaddr = seg_translate(pdirlogicaddr, 4, R_DS);
+	pdir.val = hwaddr_read(pdirlnaddr, 4);
+	printf("addr:%x\n", pdirlnaddr);
 	printf("pageaddr.pagedir:%x\n", pageaddr.pagedir);
 	printf("pdir:%x\n", pdir.val);
 	assert(pdir.present);

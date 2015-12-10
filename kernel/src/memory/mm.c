@@ -1,4 +1,5 @@
 #include "common.h"
+#include "x86.h"
 #include "memory.h"
 #include <string.h>
 
@@ -25,9 +26,11 @@ char volatile str[201];
 int prints(char ptr[])
 {
 	int i;
+	CR0 cr0;
+	cr0.val = read_cr0();
 	for(i = 0;i < 200;i ++)
 	{
-		if(ptr[i] == 0)
+		if(va_to_pa(ptr)[i] == 0)
 			break;
 		str[i] = ptr[i];
 	}

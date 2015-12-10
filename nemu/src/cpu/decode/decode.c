@@ -28,8 +28,8 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 		return addr;
 
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
-	*p = hwaddr_read(base + 8*sel, 4);
-	*(p+1) = hwaddr_read(base + 4 + 8*sel, 4);
+	*p = lnaddr_read(base + 8*sel, 4);
+	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
 
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;
@@ -58,6 +58,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	/* read page dir */
 	PDE pdir;
+	cpu.CR0.paging = 0;
 	swaddr_t pdirlogicaddr = (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4;
 	lnaddr_t pdirlnaddr = seg_translate(pdirlogicaddr, 4, R_DS);
 	pdir.val = hwaddr_read(pdirlnaddr, 4);
@@ -66,9 +67,11 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	/* read page table */
 	PTE ptable;
-	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
+	swaddr_t ptablogicaddr = (pdir.page_frame << 12) + pageaddr.pagetab * 4;
+	lnaddr_t ptablnaddr = seg_translate(ptablogicaddr, 4, R_DS);
+	ptable.val = hwaddr_read(ptablnaddr, 4);
 	assert(ptable.present);
-
+	cpu.CR0.paging = 1;
 	/* calc physic address */
 	return (ptable.page_frame << 12) + pageaddr.off;
 }

@@ -10,9 +10,9 @@ make_helper(print)
 	char str[201];
 	for(i=0;i<200;i++)
 	{
+		str[i] = swaddr_read(cpu.eax + i, 1, R_DS);
 		if(str[i] == 0)
 			break;
-		str[i] = swaddr_read(cpu.eax + i, 1, R_DS);
 	}
 	str[i] = 0;
 	printf("i:%d\n", i);

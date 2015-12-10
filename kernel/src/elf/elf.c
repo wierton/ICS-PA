@@ -1,5 +1,6 @@
 #include "common.h"
 #include "memory.h"
+#include "x86.h"
 #include <string.h>
 #include <elf.h>
 
@@ -88,9 +89,11 @@ uint32_t loader() {
 	create_video_mapping();
 #endif
 /* can't read 0x8000bc after this */
+	printx(read_cr3());
+	prints("--");
 	printx(get_ucr3());
-	write_cr3(get_ucr3());
-	printx(get_ucr3());
+	prints("\n");
+	//write_cr3(get_ucr3());
 #endif
 
 	return entry;

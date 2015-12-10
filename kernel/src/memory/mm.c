@@ -23,11 +23,12 @@ void mm_brk(uint32_t new_brk) {
 
 /* only can be used after init page */
 char volatile str[201];
-char *pstr;
+
 int prints(char ptr[])
 {
 	int i;
 	CR0 cr0;
+	char *pstr;
 	cr0.val = read_cr0();
 	if(cr0.paging)
 	{
@@ -35,7 +36,6 @@ int prints(char ptr[])
 	}
 	else
 	{
-		nemu_assert(0);
 		pstr = (char *)va_to_pa(str);
 	}
 	nemu_assert(0);

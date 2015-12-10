@@ -56,8 +56,10 @@ uint32_t loader() {
 			prints("\nfilesz:");
 			printx(ph->p_filesz);
 			prints("\n");
+
+			uint32_t p_vaddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
 			
-			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz); 
+			ramdisk_read((uint8_t *)(p_vaddr), ph->p_offset, ph->p_filesz); 
 			printx(*(uint32_t *)(0x800000));
 			prints("\n");
 			printx(*(uint32_t *)(0x8000bc));
@@ -67,7 +69,7 @@ uint32_t loader() {
 			 */
 			prints("ZeroMemory\n");
 
-			memset((uint8_t *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+			memset((uint8_t *)(p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 			printx(i);
 			prints("th loop end\n");

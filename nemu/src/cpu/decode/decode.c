@@ -64,7 +64,6 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	if(!pdir.present)
 	{
-	//	stop_eip();
 		ExecLog();
 		printf("addr:0x%x\n", addr);
 		printf("pagedir:0x%x\n", pageaddr.pagedir);

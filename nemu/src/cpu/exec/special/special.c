@@ -15,7 +15,7 @@ make_helper(print)
 			break;
 	}
 	str[i] = 0;
-	printf("%s\n", str);
+	printf("%s", str);
 	return 2;
 }
 

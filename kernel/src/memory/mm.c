@@ -22,6 +22,7 @@ void mm_brk(uint32_t new_brk) {
 }
 
 /* only can be used after init page */
+/* have been improved so that can be used before init page */
 char volatile str[201];
 
 int prints(char ptr[])
@@ -57,18 +58,29 @@ int prints(char ptr[])
 int printx(uint32_t addr)
 {
 	int i;
-	str[0] = '0';
-	str[1] = 'x';
+	CR0 cr0;
+	char *pstr;
+	cr0.val = read_cr0();
+	if(cr0.paging)
+	{
+		pstr = (char *)str;
+	}
+	else
+	{
+		pstr = (char *)va_to_pa(str);
+	}
+	pstr[0] = '0';
+	pstr[1] = 'x';
 	for(i = 7; i >= 0; i--)
 	{
 		uint8_t tmp = (addr >> (4 * i)) & 0xf;
 		if(tmp < 0xa)
-			str[9 - i] = '0' + tmp;
+			pstr[9 - i] = '0' + tmp;
 		else
-			str[9 - i] = 'a' + tmp - 0xa;
+			pstr[9 - i] = 'a' + tmp - 0xa;
 	}
-	str[10] = 0;
-	asm volatile("mov $str,%eax;");
+	pstr[10] = 0;
+	asm volatile("movl %0, %%eax" : : "r"(pstr));
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }

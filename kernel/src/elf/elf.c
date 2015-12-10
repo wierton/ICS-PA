@@ -89,6 +89,7 @@ uint32_t loader() {
 #endif
 	printx(*(uint32_t *)(0x8000bc));
 	write_cr3(get_ucr3());
+	printx(*(uint32_t *)(0x8000bc));
 #endif
 
 	return entry;

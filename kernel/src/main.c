@@ -111,6 +111,7 @@ void init_cond() {
 	asm volatile("subl $16, %esp");
 
 	/* Here we go! */
+	prints("Here we go!\n");
 	((void(*)(void))eip)();
 
 	panic("should not reach here");

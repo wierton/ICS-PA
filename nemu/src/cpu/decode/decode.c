@@ -46,13 +46,12 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	uint32_t sreg_base = ((base_15_0 | (base_23_16 << 16)) | (base_31_24 << 24));
 
-	printf("%x ", sreg_base);
 	return addr + sreg_base;
 }
 
 hwaddr_t page_translate(lnaddr_t addr)
 {
-	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
+	if(!cpu.CR0.protect_enable || !cpu.CR0.paging || true)
 		return addr;
 	PageAddr pageaddr;
 	pageaddr.val = addr;

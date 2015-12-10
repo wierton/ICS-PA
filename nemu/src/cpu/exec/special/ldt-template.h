@@ -20,8 +20,9 @@ make_helper(lgdt_l)
 	}
 	else
 	{
-		addr = swaddr_read(eip + 2, 4, R_DS);
+		addr = swaddr_read(eip + 2, 4, R_CS);
 		ret = 6;
+		print_asm("lgdtl 0x%x", addr);
 		print_asm("lgdtl 0x%x", addr);
 	}
 	

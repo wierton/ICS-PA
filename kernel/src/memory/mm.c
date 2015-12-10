@@ -21,7 +21,7 @@ void mm_brk(uint32_t new_brk) {
 }
 
 /* only can be used after init page */
-char strc;
+char volatile strc;
 int printc(char c)
 {
 	strc = c;

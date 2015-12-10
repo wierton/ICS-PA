@@ -1,9 +1,12 @@
 #include "cpu/exec/helper.h"
 #include "monitor/monitor.h"
 
+inline void stop_nemu();
+
 make_helper(print)
 {
 	printf("print:%c\n", cpu.eax);
+	stop_nemu();
 	return 2;
 }
 

@@ -34,7 +34,9 @@ void init() {
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
+	prints("addr of init_cond:");
 	printx((uint32_t)init_cond);
+	prints("\n");
 	asm volatile("jmp *%0" : : "r"(init_cond));
 
 	panic("should not reach here");

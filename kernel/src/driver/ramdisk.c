@@ -15,10 +15,10 @@ int printx(uint32_t addr);
 /* read `len` bytes starting from `offset` of ramdisk into `buf` */
 void ramdisk_read(uint8_t *buf, uint32_t offset, uint32_t len) {
 	nemu_assert(offset + len < RAMDISK_SIZE);
-	prints("start here");
+	prints("buf addr:");
 	printx((uint32_t)buf);
+	prints("\n");
 	memcpy(buf, RAMDISK_START + offset, len);
-	prints("end here");
 }
 
 /* write `len` bytes starting from `buf` into the `offset` of ramdisk */

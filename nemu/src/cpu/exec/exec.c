@@ -231,14 +231,8 @@ helper_fun _2byte_opcode_table [256] = {
 
 make_helper(exec) {
 	swaddr_t tmp;
-	if(eip==0x101146 || eip==0x101149)
-		printf("exec:%x\t",eip);
 	ops_decoded.opcode = instr_fetch(eip, 1);
-	if(eip==0x101146 || eip==0x101149)
-		printf("%x\t",eip);
 	tmp = opcode_table[ ops_decoded.opcode ](eip);
-	if(eip==0x101146 || eip==0x101149)
-		printf("%x\n",eip);
 	pre_eip = eip;
 	return tmp;
 }

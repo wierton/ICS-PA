@@ -8,6 +8,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+extern swaddr_t stop_eip;
+
 void cpu_exec(uint32_t);
 
 void print_cache_info_by_addr(swaddr_t addr);
@@ -57,6 +59,8 @@ static int cmd_bt(char *args);
 
 static int cmd_cache(char *args);
 
+static int cmd_b(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -74,7 +78,8 @@ static struct {
 	{ "w", "Add a watchpoint",cmd_w},
 	{ "d", "Delete a watchpoint",cmd_d},
 	{ "bt", "Print the stack frame chain",cmd_bt},
-	{ "cache", "printf cache info by address", cmd_cache}
+	{ "cache", "printf cache info by address", cmd_cache},
+	{ "b", "break eip", cmd_b}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -280,10 +285,22 @@ static int cmd_bt(char *args)
 static int cmd_cache(char *args)
 {
 	swaddr_t addr = 0xffffffff;
-	bool is_sucess = false;
-	addr = eval(args, &is_sucess);
-	if(is_sucess)
+	bool is_success = false;
+	addr = eval(args, &is_success);
+	if(is_success)
 		print_cache_info_by_addr(addr);
+	return 0;
+}
+
+static int cmd_b(char *args)
+{
+	swaddr_t addr = 0xffffffff;
+	bool is_success = false;
+	addr = eval(args, &is_success);
+	if(is_success)
+	{
+		stop_eip = addr;
+	}
 	return 0;
 }
 

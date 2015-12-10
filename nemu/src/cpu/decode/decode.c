@@ -72,12 +72,13 @@ hwaddr_t page_translate(lnaddr_t addr)
 		printf("pagedir:0x%x\n", pageaddr.pagedir);
 		printf("paddr:0x%x\n", (cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4);
 		printf("pdir:0x%x\n", pdir.val);
+		return addr;
 	}
-	//assert(pdir.present);
+	assert(pdir.present);
 
 	PTE ptable;
 	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
-	//assert(ptable.present);
+	assert(ptable.present);
 
 	/* calc physic address */
 	return (ptable.page_frame << 12) + pageaddr.off;

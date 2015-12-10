@@ -20,12 +20,12 @@ void mm_brk(uint32_t new_brk) {
 	brk = new_brk;
 }
 
+char str[100];
 /* only can be used after init page */
 int printc(char c, int i)
 {
-	uint8_t *print_addr = (uint8_t *)(0x100000 - 200 + i);
-	*print_addr = c;
-	*(print_addr+1) = 0;
+	nemu_assert(i < 100);
+	str[i] = c;
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }

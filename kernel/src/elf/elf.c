@@ -93,7 +93,7 @@ uint32_t loader() {
 	prints("--");
 	printx(get_ucr3());
 	prints("\n");
-	//write_cr3(get_ucr3());
+	write_cr3(get_ucr3());
 #endif
 
 	return entry;

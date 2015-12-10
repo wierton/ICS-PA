@@ -22,7 +22,7 @@ make_helper(lgdt_l)
 	{
 		addr = swaddr_read(eip + 2, 4, R_CS);
 		ret = 6;
-		print_asm("lgdtl 0x%x", addr);
+		printf("lgdtl 0x%x", addr);
 		print_asm("lgdtl 0x%x", addr);
 	}
 	

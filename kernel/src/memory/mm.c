@@ -20,12 +20,13 @@ void mm_brk(uint32_t new_brk) {
 	brk = new_brk;
 }
 
-char str[100];
 /* only can be used after init page */
-int printc(char c, int i)
+char strc;
+int printc(char c)
 {
 	nemu_assert(i < 100);
-	str[i] = c;
+	strc = c;
+	asm volatile("mov $strc,%eax;");
 	asm volatile("bsf %eax,%eax;");
 	return 0;
 }
@@ -37,7 +38,7 @@ void init_mm() {
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
-	printc('k', 0);
+	printc('k');
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 

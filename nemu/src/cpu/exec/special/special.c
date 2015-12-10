@@ -12,7 +12,7 @@ make_helper(print)
 	{
 		if(str[i] == 0)
 			break;
-		str[i] = swaddr_read(cpu.eax, 1, R_DS);
+		str[i] = swaddr_read(cpu.eax + i, 1, R_DS);
 	}
 	str[i] = 0;
 	printf("str addr:0x%x\n", cpu.eax);

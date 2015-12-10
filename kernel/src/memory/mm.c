@@ -24,7 +24,6 @@ void mm_brk(uint32_t new_brk) {
 char volatile str[201];
 int print(char ptr[])
 {
-	nemu_assert(0xc0159000 == (uint32_t)str);
 	int i;
 	for(i = 0;i < 200;i ++)
 	{

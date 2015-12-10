@@ -15,7 +15,6 @@ make_helper(int3) {
 }
 
 make_helper(lea) {
-	printf("lea:%x\n", eip);
 	ModR_M m;
 	m.val = instr_fetch(eip + 1, 1);
 	int len = load_addr(eip + 1, &m, op_src);

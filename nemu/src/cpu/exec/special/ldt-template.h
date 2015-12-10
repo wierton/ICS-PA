@@ -15,16 +15,16 @@ make_helper(lgdt_l)
 	{
 		addr = reg_l(m.R_M);
 		ret = 2;
-		printf("lgdtl %%%s", regsb[m.R_M]);
 		print_asm("lgdtl %%%s", regsb[m.R_M]);
 	}
 	else
 	{
 		addr = swaddr_read(eip + 2, 4, R_CS);
 		ret = 6;
-		printf("lgdtl 0x%x", addr);
 		print_asm("lgdtl 0x%x", addr);
 	}
+	decode_rm_l(eip + 1);
+	printf("%x\t%x\n", op_src->val, addr);
 	
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);

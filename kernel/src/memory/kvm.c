@@ -24,7 +24,8 @@ void init_page(void) {
 	PDE *pdir = (PDE *)va_to_pa(kpdir);
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
-	
+
+	nemu_assert(NR_PDE == 0x20);	
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 

@@ -66,11 +66,11 @@ hwaddr_t page_translate(lnaddr_t addr)
 	{
 		ExecLog();
 		stop_nemu();
-		printf("addr:0x%x\t", addr);
-		printf("dir base:0x%x\t", cpu.CR3.page_directory_base);
-		printf("%dth dir\n", pageaddr.pagedir);
-		printf("pdir:0x%x\n", pdir.val);
+#ifdef DEBUG
 		return 0x200000;
+#else
+		assert(0);
+#endif
 	}
 	assert(pdir.present);
 
@@ -81,5 +81,4 @@ hwaddr_t page_translate(lnaddr_t addr)
 	/* calc physic address */
 	return (ptable.page_frame << 12) + pageaddr.off;
 }
-
 

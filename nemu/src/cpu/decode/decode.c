@@ -57,8 +57,6 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
-	ExecLog();
-
 /*	printf("eip:%x\n", cpu.eip);
 	printf("addr:%x\n", addr);
 	printf("%x\n", cpu.CR3.val);

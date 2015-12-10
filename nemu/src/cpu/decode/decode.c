@@ -65,6 +65,9 @@ hwaddr_t page_translate(lnaddr_t addr)
 	if(!pdir.present)
 	{
 		ExecLog();
+		printf("addr:0x%x\t", addr);
+		printf("dir base:0x%x\t", cpu.CR3.page_directory_base);
+		printf("%dth dir\n", pageaddr.pagedir);
 		printf("pdir:0x%x\n", pdir.val);
 		return 0x2000000;
 	}

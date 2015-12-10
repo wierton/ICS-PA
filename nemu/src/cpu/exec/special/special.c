@@ -15,6 +15,7 @@ make_helper(print)
 		str[i] = swaddr_read(cpu.eax, 1, R_DS);
 	}
 	str[i] = 0;
+	printf("str addr:0x%x\n", cpu.eax);
 	printf("print:%s\n", str);
 	stop_nemu();
 	return 2;

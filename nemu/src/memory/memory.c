@@ -21,6 +21,12 @@ typedef union {
 		uint32_t data_0_23 :24;
 		uint32_t data_24_31:8;
 	};
+	struct {
+		uint32_t val_0_7   :8;
+		uint32_t val_8_15  :8;
+		uint32_t val_16_23 :8;
+		uint32_t val_24_31 :8;
+	};
 	uint32_t val;
 } CrossData;
 
@@ -109,15 +115,36 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 	uint32_t addr_0_11 = addr & 0xfff;
-	if(addr_0_11 + len >= 0x1000)
+	hwaddr_t hwaddr = page_translate(addr);
+	if(addr_0_11 + len > 0x1000)
 	{
 		/* data cross the page boundary */
-#ifdef DEBUG
-		printf("address 0x%x with length %d cross the boundary!\n", addr, len);
-#endif
-		assert(0);
+		CrossData cross;
+		cross.val = data;
+		hwaddr_t upaddr = ((hwaddr + 0xfff)& ~0xfff);
+		switch(0x1000 - addr_0_11)
+		{
+			case 1:
+				hwaddr_write(hwaddr, 1, cross.data_0_7);
+				hwaddr_write(upaddr, 1, cross.val_8_15);
+				hwaddr_write(upaddr, 2, cross.data_16_31);
+				break;
+			case 2:
+				hwaddr_write(hwaddr, 2, cross.data_0_15);
+				hwaddr_write(upaddr, 2, cross.data_16_31);
+				break;
+			case 3:
+				hwaddr_write(hwaddr, 2, cross.data_0_15);
+				hwaddr_write(hwaddr, 1, cross.val_16_23);
+				hwaddr_write(upaddr, 1, cross.data_24_31);
+				break;
+			default:
+				   printf("crossaddr:0x%x,%d\n", addr_0_11, len);
+				   assert(0);
+				   break;
+		}
 	}
-	hwaddr_t hwaddr = page_translate(addr);
+	
 	hwaddr_write(hwaddr, len, data);
 }
 

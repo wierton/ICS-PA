@@ -16,6 +16,9 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 void create_video_mapping();
 uint32_t get_ucr3();
 
+int prints(char ptr[]);
+int printx(uint32_t addr);
+
 uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
@@ -60,6 +63,7 @@ uint32_t loader() {
 		}
 	}
 
+	prints("asfdsafdsf");
 	volatile uint32_t entry = elf->e_entry;
 
 #ifdef IA32_PAGE

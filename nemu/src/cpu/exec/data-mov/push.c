@@ -25,6 +25,8 @@ make_helper(pusha)
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.edx, R_SS);
 	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.ebx, R_SS);
+	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, temp, R_SS);
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.ebp, R_SS);

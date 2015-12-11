@@ -106,19 +106,16 @@ init_segment(void) {
 	memset(gdt, 0, sizeof(gdt));
 	prints("\n\nsizeof(gdt):");
 	printx(sizeof(gdt));
-	prints("\nold gdt:");
+	prints("\ngdt:");
 	printx((uint32_t)gdt);
 	prints("\nSEG_KERNEL_CODE:");
 	printx(SEG_KERNEL_CODE);
 	prints("\nSEG_KERNEL_DATA:");
 	printx(SEG_KERNEL_DATA);
 	prints("\n");
-	set_segment(&gdt[SEG_KERNEL_CODE], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
-	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, SEG_WRITABLE );
+	set_segment(&gdt[SEG_KERNEL_CODE << 3], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
+	set_segment(&gdt[SEG_KERNEL_DATA << 3], DPL_KERNEL, SEG_WRITABLE );
 
-	prints("new gdt:");
-	printx((uint32_t)gdt);
-	prints("\n");
 	write_gdtr(gdt, sizeof(gdt));
 }
 

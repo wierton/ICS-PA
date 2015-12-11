@@ -113,8 +113,8 @@ init_segment(void) {
 	prints("\nSEG_KERNEL_DATA:");
 	printx(SEG_KERNEL_DATA);
 	prints("\n");
-	set_segment(&gdt[SEG_KERNEL_CODE << 3], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
-	set_segment(&gdt[SEG_KERNEL_DATA << 3], DPL_KERNEL, SEG_WRITABLE );
+	set_segment(&gdt[SEG_KERNEL_CODE], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
+	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, SEG_WRITABLE );
 
 	write_gdtr(gdt, sizeof(gdt));
 }

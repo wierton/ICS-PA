@@ -1,4 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+#include <sys/syscall.h>
+#include <sys/stat.h>
+
 #include "trap.h"
+
+int __attribute__((__noinline__))
+	syscall(int id, ...) {
+		int ret;
+		int *args = &id;
+		asm volatile("int $0x80": "=a"(ret) : "a"(args[0]), "b"(args[1]), "c"(args[2]), "d"(args[3]));
+		return ret;
+	}
+
+int read(int fd, char *buf, int len) {
+	nemu_assert(0);
+	return 0;
+}
+
+int write(int fd, char *buf, int len) {
+	return syscall(__NR_write, fd, buf, len); 
+}
+
+off_t lseek(int fd, off_t offset, int whence) {
+	nemu_assert(0);
+	return 0;
+}
+
+void *sbrk(int incr) {
+	extern char end;		/* Defined by the linker */
+	static char *heap_end;
+	char *prev_heap_end;
+
+	if (heap_end == 0) {
+		heap_end = &end;
+	}
+	prev_heap_end = heap_end;
+
+	if( syscall(SYS_brk, heap_end + incr) == 0) {
+		heap_end += incr;
+	}
+
+	return prev_heap_end;
+}
+
+int close(int fd) {
+	nemu_assert(0);
+	return 0;
+}
+
+int fstat(int fd, struct stat *buf) {
+//	buf->st_mode = S_IFCHR;
+	return 0;
+}
+
+int isatty(int fd) {
+	nemu_assert(0);
+	return 0;
+}
 
 #define N 100
 int a[N][N] = {{31, -73, -67, -28, 87, -17, -15, -35, -53, -54, 72, -33, -99, 12, -33, 32, 17, 80, 71, 21, -21, 47, 98, 44, -87, 78, -93, -56, 62, 3, -79, -72, 46, 93, -86, 80, -29, 61, -8, -82, -5, 94, 93, 66, -2, 38, 5, 62, -21, -74, -78, -10, -14, -34, 8, -64, 85, -91, 73, -62, 98, 43, -5, -41, 65, 72, -56, 84, -34, -39, -62, 30, -19, 6, -81, -70, -27, -27, 83, -6, 22, -13, -19, -100, -27, -27, 12, -61, -5, 51, -58, -16, 8, -65, 45, -60, 0, -11, 99, -20},
@@ -306,6 +365,7 @@ int ans[N][N] = {{27825, 6208, 14855, -76487, -23589, 13948, 60449, 9292, 5604, 
 };
 
 int c[N][N];
+char volatile str[201];
 
 int main() {
 	int i, j, k;
@@ -315,6 +375,10 @@ int main() {
 			for(k = 0; k < N; k ++) {
 				c[i][j] += a[i][k] * b[k][j];
 			}
+			if(c[i][j] != ans[i][j])
+			{
+				printf("ans:%d,not:%d\n", ans[i][j], c[i][j]);
+			}
 			nemu_assert(c[i][j] == ans[i][j]);
 		}
 	}
@@ -322,5 +386,5 @@ int main() {
 	HIT_GOOD_TRAP;
 
 	return 0;
-
 }
+

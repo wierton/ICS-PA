@@ -20,16 +20,17 @@ make_helper(int3) {
 make_helper(int_i_b)
 {
 	GateDesc gd;
+	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 	uint8_t no = instr_fetch(eip + 1, 1);
 	
 	/* push EFLAGS, CS, eip into stack */
-	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.EFLAGS, R_SS);
-	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.CS.val, R_SS);
-	cpu.esp -= 4;
-	swaddr_write(cpu.esp, 4, cpu.eip, R_SS);
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.EFLAGS, R_SS);
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.CS.val, R_SS);
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.eip, R_SS);
 
 	*p = swaddr_read(cpu.IDTR.base + no * 8, 4, R_DS);
 	*(p+1) = swaddr_read(cpu.IDTR.base + no * 8 + 4, 4, R_DS);

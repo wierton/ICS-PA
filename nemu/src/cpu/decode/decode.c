@@ -72,6 +72,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	if(old_cr3 != cpu.CR3.val)
 	{
 		ExecLog();
+		printf("cr3:0x%x -> 0x%x\n", old_cr3, cpu.CR3.val);
 		old_cr3 = cpu.CR3.val;
 	}
 

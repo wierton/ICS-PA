@@ -40,7 +40,9 @@ void irq_handle(TrapFrame *tf) {
 */
 	int irq = tf->irq;
 
-	prints("irq:");
+	prints("tf addr:");
+	printx((uint32_t)tf);
+	prints("\tirq:");
 	printx(irq);
 	prints("\n");
 

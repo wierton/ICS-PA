@@ -321,7 +321,7 @@ int main() {
 				c[i][j] += a[i][k] * b[k][j];
 			}
 			
-			if(c[i][j] != ans[i][j]);
+			if(c[i][j] != ans[i][j])
 			{
 				printx(ans[i][j]);
 				prints("\t");

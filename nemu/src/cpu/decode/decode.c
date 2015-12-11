@@ -27,7 +27,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	uint32_t sel = cpu.gsreg[sreg].INDEX;
 	uint32_t *p = (uint32_t *)&TargetSegDesc;
 
-	if(!cpu.CR0.protect_enable || cpu.gsreg[sreg].val == 0x0)
+	if(!cpu.CR0.protect_enable)
 		return addr;
 
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));

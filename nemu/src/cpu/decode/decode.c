@@ -30,6 +30,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	if(!cpu.CR0.protect_enable || cpu.gsreg[sreg].val == 0x0)
 		return addr;
 
+	/* judge if exceed the limit */
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
 	*p = lnaddr_read(base + 8*sel, 4);
 	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
@@ -39,9 +40,9 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	uint32_t base_31_24 = TargetSegDesc.base_31_24;
 
 	/* judge if has been load in sreg*/
-	assert(TargetSegDesc.present);
-
-	/* judge if exceed the limit */	
+	if(!TargetSegDesc.present)
+		ExecLog();
+	assert(TargetSegDesc.present);	
 
 	/* Is the operation legal? */
 	assert(cpu.gsreg[sreg].RPL <= TargetSegDesc.privilege_level);

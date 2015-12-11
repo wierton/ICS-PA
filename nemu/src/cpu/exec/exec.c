@@ -252,5 +252,5 @@ void ExecLog()
 	printf("\33[1;31m");
 	printf("exec log:  eip:0x%x  ", cpu.eip);
 	printf("pre_eip:0x%x", pre_eip);
-	printf("\33[0m\n");
+	printf("\33[0m\n\n");
 }

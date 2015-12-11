@@ -16,6 +16,9 @@ static int handle_count = 0;
 
 void do_syscall(TrapFrame *);
 
+int prints(char[]);
+int printx(uint32_t);
+
 void
 add_irq_handle(int irq, void (*func)(void) ) {
 	assert(irq < NR_HARD_INTR);
@@ -36,6 +39,10 @@ void irq_handle(TrapFrame *tf) {
 /*	panic("Have you re-organized the ``TrapFrame'' structure?");
 */
 	int irq = tf->irq;
+
+	prints("irq:");
+	printx(irq);
+	prints("\n");
 
 	if (irq < 0) {
 		panic("Unhandled exception!");

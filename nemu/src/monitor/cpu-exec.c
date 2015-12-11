@@ -38,7 +38,13 @@ void do_int3() {
 
 void raise_intr(uint8_t no)
 {
-	return;
+	/* TODO: Trigger an interrupt/exception with ``NO''.
+	 * That is, use ``NO'' to index the IDT.
+	 */
+
+
+	/* Jump back to cpu_exec() */
+	longjmp(jbuf, 1);
 }
 
 /* Simulate how the CPU works. */

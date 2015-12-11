@@ -31,8 +31,8 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 		return addr;
 
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
-	*p = lnaddr_read(base + 8*sel, 4);
-	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
+	*p = hwaddr_read(base + 8*sel, 4);
+	*(p+1) = hwaddr_read(base + 4 + 8*sel, 4);
 
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;

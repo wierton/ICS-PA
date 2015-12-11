@@ -16,7 +16,7 @@ make_helper_v(push_i)
 
 make_helper(pusha)
 {
-	uint32_t temp = swaddr_read(cpu.esp, 4, R_SS);
+	uint32_t temp = cpu.esp;
 	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.eax, R_SS);
 	cpu.esp -= 4;

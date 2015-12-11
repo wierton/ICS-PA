@@ -94,8 +94,10 @@ uint32_t loader() {
 	printx(read_cr3());
 	prints("--");
 	printx(get_ucr3());
+	prints("\nnew cr3:");
+	printx(0xc0000000 | get_ucr3());
 	prints("\n");
-	write_cr3(0xc0000000 + get_ucr3());
+	write_cr3(0xc0000000 | get_ucr3());
 #endif
 
 	return entry;

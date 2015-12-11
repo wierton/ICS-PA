@@ -13,3 +13,28 @@
 make_helper_v(push_rm)
 make_helper_v(push_r)
 make_helper_v(push_i)
+
+make_helper(pusha)
+{
+	uint32_t temp = swaddr_read(cpu.esp, 4, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.eax, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.ecx, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.edx, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, temp, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.ebp, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.esi, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.edi, R_SS);
+
+	return 1;
+}
+
+
+
+

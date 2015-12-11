@@ -23,10 +23,9 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 {
 	assert(sreg >= 0 && sreg <6);
 	swaddr_t base = cpu.gsreg[sreg].TI?cpu.LDTR.base:cpu.GDTR.base;
-	SegDesc TargetSegDesc, TmpDesc;
+	SegDesc TargetSegDesc;
 	uint32_t sel = cpu.gsreg[sreg].INDEX;
 	uint32_t *p = (uint32_t *)&TargetSegDesc;
-	uint32_t *pt = (uint32_t *)&TmpDesc;
 
 	if(!cpu.CR0.protect_enable || cpu.gsreg[sreg].val == 0x0)
 		return addr;
@@ -35,16 +34,6 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
 	*p = lnaddr_read(base + 8*sel, 4);
 	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
-
-	*pt = hwaddr_read(base + 8*sel, 4);
-	*(pt+1) = hwaddr_read(base + 4 + 8*sel, 4);
-
-	if(*pt != *p || *(pt+1) != *(p+1))
-	{
-		printf("ln:0x%x %x\n", *p, *(p+1));
-		printf("hw:0x%x %x\n", *pt, *(pt+1));
-		ExecLog();
-	}
 
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;

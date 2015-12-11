@@ -1,65 +1,7 @@
-#include <stdio.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <sys/stat.h>
-
 #include "trap.h"
 
-int __attribute__((__noinline__))
-	syscall(int id, ...) {
-		int ret;
-		int *args = &id;
-		asm volatile("int $0x80": "=a"(ret) : "a"(args[0]), "b"(args[1]), "c"(args[2]), "d"(args[3]));
-		return ret;
-	}
-
-int read(int fd, char *buf, int len) {
-	nemu_assert(0);
-	return 0;
-}
-
-int write(int fd, char *buf, int len) {
-	return syscall(__NR_write, fd, buf, len); 
-}
-
-off_t lseek(int fd, off_t offset, int whence) {
-	nemu_assert(0);
-	return 0;
-}
-
-void *sbrk(int incr) {
-	extern char end;		/* Defined by the linker */
-	static char *heap_end;
-	char *prev_heap_end;
-
-	if (heap_end == 0) {
-		heap_end = &end;
-	}
-	prev_heap_end = heap_end;
-
-	if( syscall(SYS_brk, heap_end + incr) == 0) {
-		heap_end += incr;
-	}
-
-	return prev_heap_end;
-}
-
-int close(int fd) {
-	nemu_assert(0);
-	return 0;
-}
-
-int fstat(int fd, struct stat *buf) {
-//	buf->st_mode = S_IFCHR;
-	return 0;
-}
-
-int isatty(int fd) {
-	nemu_assert(0);
-	return 0;
-}
-
 #define N 100
+
 int a[N][N] = {{31, -73, -67, -28, 87, -17, -15, -35, -53, -54, 72, -33, -99, 12, -33, 32, 17, 80, 71, 21, -21, 47, 98, 44, -87, 78, -93, -56, 62, 3, -79, -72, 46, 93, -86, 80, -29, 61, -8, -82, -5, 94, 93, 66, -2, 38, 5, 62, -21, -74, -78, -10, -14, -34, 8, -64, 85, -91, 73, -62, 98, 43, -5, -41, 65, 72, -56, 84, -34, -39, -62, 30, -19, 6, -81, -70, -27, -27, 83, -6, 22, -13, -19, -100, -27, -27, 12, -61, -5, 51, -58, -16, 8, -65, 45, -60, 0, -11, 99, -20},
 {52, 36, 9, -91, -27, -78, 42, 82, 19, -6, -1, -64, -87, 32, 68, 89, -31, -12, -95, -14, -91, -2, -29, 6, -50, 60, -14, -48, -26, -84, 0, 14, -17, -48, -49, -29, 4, 17, 55, -30, 28, -41, 79, -82, -100, -52, 92, 26, 17, -32, -78, -15, -87, -95, 30, 26, -42, 76, -52, -57, 82, -95, -95, 54, -38, 47, -35, 14, 87, 99, 0, -21, -38, 48, -98, -37, -66, 11, -100, -34, 91, -49, 97, -13, 89, -95, -88, 52, -56, 38, -57, 83, 74, -32, -85, 40, -49, -86, -39, 37},
 {41, -56, 31, 32, -52, 74, 28, 20, 55, -72, -25, 28, 12, 27, 48, 27, 60, 47, 19, -81, -46, 62, 2, -16, -77, 31, 84, -76, 5, 73, 69, -53, -28, 24, -74, -85, -12, -86, -88, 3, -34, -15, 97, -49, -86, 9, 25, -84, 3, -54, -16, 13, 91, -33, -19, 91, 57, 49, 39, -91, 77, -60, 79, -96, 48, 15, -36, 9, -41, 63, -50, -61, 36, -34, -7, 32, -2, -24, 80, -37, -17, 13, 58, -41, 2, -39, -19, 12, 92, -56, -95, -41, 0, -16, 21, 61, -23, -92, -52, 56},
@@ -367,6 +309,9 @@ int ans[N][N] = {{27825, 6208, 14855, -76487, -23589, 13948, 60449, 9292, 5604, 
 int c[N][N];
 char volatile str[201];
 
+int prints(char ptr[]);
+int printx(int addr);
+
 int main() {
 	int i, j, k;
 	for(i = 0; i < N; i ++) {
@@ -376,11 +321,13 @@ int main() {
 				c[i][j] += a[i][k] * b[k][j];
 			}
 			
-			if(c[i][j] != ans[i][j]);/*
+			if(c[i][j] != ans[i][j]);
 			{
-				printf("ans:%d,not:%d\n", ans[i][j], c[i][j]);
-				printf("i:%d,j:%d\n", i, j);
-			}*/
+				printx(ans[i][j]);
+				prints("\t");
+				printx(c[i][j]);
+				prints("\n");
+			}
 			nemu_assert(c[i][j] == ans[i][j]);
 		}
 	}
@@ -390,3 +337,44 @@ int main() {
 	return 0;
 }
 
+int prints(char ptr[])
+{
+	int i;
+
+	for(i = 0;i < 200;i ++)
+	{
+		if(ptr[i] == 0)
+			break;
+		str[i] = ptr[i];
+	}
+	str[i] = 0;
+	asm volatile("movl %0, %%eax" : : "r"(str));
+	asm volatile("bsf %eax,%eax;");
+	return 0;
+}
+
+int printx(int addr)
+{
+	int i,pos = 2;
+	int IsPrefix = 1;
+
+	str[0] = '0';
+	str[1] = 'x';
+	for(i = 7; i >= 0; i--)
+	{
+		char tmp = (char)((addr >> (4 * i)) & 0xf);
+		if(tmp == 0 && IsPrefix)
+			continue;
+		IsPrefix = 0;
+		if(tmp < 0xa)
+			str[pos++] = '0' + tmp;
+		else
+			str[pos++] = 'a' + tmp - 0xa;
+	}
+	if(pos == 2)
+		str[pos++] = '0';
+	str[pos] = 0;
+	asm volatile("movl %0, %%eax" : : "r"(str));
+	asm volatile("bsf %eax,%eax;");
+	return 0;
+}

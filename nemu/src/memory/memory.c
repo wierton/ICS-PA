@@ -98,9 +98,9 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 		second.val = hwaddr_read(((hwaddr + 0xfff)& ~0xfff), 4);
 		switch(0x1000 - addr_0_11)
 		{
-			case 1:ret = first.data_0_7 | (second.data_0_23 >> 8);break;
-			case 2:ret = first.data_0_15 | (second.data_0_15 >> 16);break;
-			case 3:ret = first.data_0_23 | (second.data_0_7 >> 24);break;
+			case 1:ret = first.data_0_7 | (second.data_0_23 << 8);break;
+			case 2:ret = first.data_0_15 | (second.data_0_15 << 16);break;
+			case 3:ret = first.data_0_23 | (second.data_0_7 << 24);break;
 			default:
 				   printf("crossaddr:0x%x,%d\n", addr_0_11, len);
 				   assert(0);

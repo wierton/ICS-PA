@@ -314,6 +314,10 @@ int printx(int addr);
 
 int main() {
 	int i, j, k;
+	printx((int)c);
+	prints("\t");
+	printx((int)ans);
+	prints("\n");
 	for(i = 0; i < N; i ++) {
 		for(j = 0; j < N; j ++) {
 			c[i][j] = 0;
@@ -323,6 +327,8 @@ int main() {
 			
 			if(c[i][j] != ans[i][j])
 			{
+				printx((int)c);prints("\t");printx((int)ans);
+				prints("\n");
 				printx(ans[i][j]);
 				prints("\t");
 				printx(c[i][j]);

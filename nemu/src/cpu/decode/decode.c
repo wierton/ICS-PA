@@ -40,7 +40,11 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 	*(pt+1) = hwaddr_read(base + 4 + 8*sel, 4);
 
 	if(*pt != *p || *(pt+1) != *(p+1))
+	{
+		printf("ln:0x%x %x\n", *p, *(p+1));
+		printf("hw:0x%x %x\n", *pt, *(pt+1));
 		ExecLog();
+	}
 
 	uint32_t base_15_0 = TargetSegDesc.base_15_0;
 	uint32_t base_23_16 = TargetSegDesc.base_23_16;

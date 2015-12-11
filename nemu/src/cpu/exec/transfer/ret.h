@@ -4,4 +4,6 @@
 make_helper(ret);
 make_helper(ret_w);
 
+make_helper(iret);
+
 #endif

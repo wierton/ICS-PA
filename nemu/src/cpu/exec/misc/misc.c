@@ -26,7 +26,7 @@ make_helper(int_i_b)
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.EFLAGS, R_SS);
-	cpu.esp -= 2;
+	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.CS.val, R_SS);
 	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.eip, R_SS);

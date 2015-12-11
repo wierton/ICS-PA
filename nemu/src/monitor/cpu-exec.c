@@ -36,6 +36,11 @@ void do_int3() {
 	nemu_state = STOP;
 }
 
+void raise_intr(uint8_t no)
+{
+	return;
+}
+
 /* Simulate how the CPU works. */
 void cpu_exec(volatile uint32_t n) {
 	if(nemu_state == END) {

@@ -190,9 +190,18 @@ static int cmd_x(char *args)
 	len_args = strlen(args);
 
 	para = strtok(args, " ");
-	assert(para != NULL);
+	if(para == NULL)
+	{
+		printf("too few parameters!\n");
+		return 0;
+	}
+	
 	len_para = strlen(para);
-	assert(args + len_args > para + len_para);
+	if(!(args + len_args > para + len_para))
+	{
+		printf("too few parameters!\n");
+		return 0;
+	}
 
 	expression = strtok(NULL, " ");
 		
@@ -212,7 +221,10 @@ static int cmd_x(char *args)
 	}
 
 	len = eval(para, &para_success);
-	assert(para_success && addr_success);
+	if(!(para_success && addr_success))
+	{
+		return 0;
+	}
 
 	for(i=0;i<len;i++)
 	{

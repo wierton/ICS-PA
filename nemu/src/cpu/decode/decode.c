@@ -33,8 +33,8 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	/* judge if exceed the limit */
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
-	*p = hwaddr_read(base + 8*sel, 4);
-	*(p+1) = hwaddr_read(base + 4 + 8*sel, 4);
+	*p = lnaddr_read(base + 8*sel, 4);
+	*(p+1) = lnaddr_read(base + 4 + 8*sel, 4);
 
 	*pt = hwaddr_read(base + 8*sel, 4);
 	*(pt+1) = hwaddr_read(base + 4 + 8*sel, 4);

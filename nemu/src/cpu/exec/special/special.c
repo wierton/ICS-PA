@@ -19,7 +19,6 @@ make_helper(print)
 	return 2;
 }
 
-
 make_helper(inv) {
 	/* invalid opcode */
 
@@ -45,9 +44,15 @@ make_helper(inv) {
 
 make_helper(nemu_trap) {
 	print_asm("nemu trap (eax = %d)", cpu.eax);
+	int i;
 
 	switch(cpu.eax) {
 		case 2:
+			for(i = 0; i < cpu.edx; i++)
+			{
+				uint8_t tmp = swaddr_read(cpu.ecx + i, 1, R_DS);
+				printf("%c", (char)tmp);
+			}
 		   	break;
 
 		default:

@@ -12,7 +12,13 @@ static void sys_brk(TrapFrame *tf) {
 	tf->eax = 0;
 }
 
+int prints(char []);
+int printx(uint32_t);
+
 void do_syscall(TrapFrame *tf) {
+	prints("syscall:");
+	printx(tf->eax);
+	prints("\n");
 	switch(tf->eax) {
 		/* The ``add_irq_handle'' system call is artificial. We use it to 
 		 * let user program register its interrupt handlers. But this is 

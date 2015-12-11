@@ -32,6 +32,8 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	/* judge if exceed the limit */
 	assert(sel <= (cpu.gsreg[sreg].TI?cpu.LDTR.limit:cpu.GDTR.limit));
+	if(cpu.CR0.paging)
+		base |= 0xc0000000;
 	*p = hwaddr_read(base + 8*sel, 4);
 	*(p+1) = hwaddr_read(base + 4 + 8*sel, 4);
 
@@ -47,8 +49,6 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 	uint32_t sreg_base = ((base_15_0 | (base_23_16 << 16)) | (base_31_24 << 24));
 
-	if(sreg_base != 0)
-		ExecLog();
 	return addr + sreg_base;
 }
 

@@ -22,9 +22,6 @@ void init_page(void) {
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 
-	prints("fill PDEs\npdir:");
-	printx((uint32_t)pdir);
-	prints("\n");
 	/* fill PDEs */
 	for (pdir_idx = 0; pdir_idx < PHY_MEM / PT_SIZE; pdir_idx ++) {
 		pdir[pdir_idx].val = make_pde(ptable);
@@ -67,9 +64,7 @@ void init_page(void) {
 	/* make CR3 to be the entry of page directory */
 	cr3.val = 0;
 	cr3.page_directory_base = ((uint32_t)pdir) >> 12;
-	prints("cr3 dir base:");
-	printx(cr3.page_directory_base);
-	prints("\t");
+
 	write_cr3(cr3.val);
 
 	/* set PG bit in CR0 to enable paging */
@@ -104,15 +99,7 @@ set_segment(SegDesc *ptr, uint32_t pl, uint32_t type) {
 void
 init_segment(void) {
 	memset(gdt, 0, sizeof(gdt));
-	prints("\n\nsizeof(gdt):");
-	printx(sizeof(gdt));
-	prints("\ngdt:");
-	printx((uint32_t)gdt);
-	prints("\nSEG_KERNEL_CODE:");
-	printx(SEG_KERNEL_CODE);
-	prints("\nSEG_KERNEL_DATA:");
-	printx(SEG_KERNEL_DATA);
-	prints("\n");
+
 	set_segment(&gdt[SEG_KERNEL_CODE], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
 	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, SEG_WRITABLE );
 

@@ -49,30 +49,16 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			prints("load segment:\nvaddr:");
-			printx((uint32_t)ph->p_vaddr);
-			prints("\npaddr:");
-			printx((uint32_t)(va_to_pa(ph->p_vaddr)));
-			prints("\nfilesz:");
-			printx(ph->p_filesz);
-			prints("\n");
 
 			uint32_t p_vaddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
 			
 			ramdisk_read((uint8_t *)(p_vaddr), ph->p_offset, ph->p_filesz); 
-			printx(*(uint32_t *)(0x800000));
-			prints("\n");
-			printx(*(uint32_t *)(0x8000bc));
-			prints("\n");
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			prints("ZeroMemory\n");
-
+	
 			memset((uint8_t *)(p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
-			printx(i);
-			prints("th loop end\n");
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
 			extern uint32_t brk;
@@ -90,11 +76,7 @@ uint32_t loader() {
 #ifdef HAS_DEVICE
 	create_video_mapping();
 #endif
-/* can't read 0x8000bc after this */
-	printx(read_cr3());
-	prints("--");
-	printx(get_ucr3());
-	prints("\n");
+
 	write_cr3(get_ucr3());
 #endif
 

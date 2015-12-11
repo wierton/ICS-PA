@@ -375,10 +375,12 @@ int main() {
 			for(k = 0; k < N; k ++) {
 				c[i][j] += a[i][k] * b[k][j];
 			}
+			/*
 			if(c[i][j] != ans[i][j])
 			{
 				printf("ans:%d,not:%d\n", ans[i][j], c[i][j]);
-			}
+				printf("i:%d,j:%d\n", i, j);
+			}*/
 			nemu_assert(c[i][j] == ans[i][j]);
 		}
 	}

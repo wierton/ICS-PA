@@ -15,5 +15,7 @@ make_helper(iret)
 	cpu.esp += data_byte;
 	cpu.EFLAGS = swaddr_read(cpu.esp, data_byte, R_SS);
 	cpu.esp += data_byte;
+
+	cpu.eip -= 1;
 	return 1;
 }

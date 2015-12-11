@@ -314,7 +314,7 @@ int printx(int addr);
 
 int main() {
 	int i, j, k;
-	for(i = 52; i < N; i ++) {
+	for(i = 0; i < N; i ++) {
 		for(j = 0; j < N; j ++) {
 			c[i][j] = 0;
 			for(k = 0; k < N; k ++) {

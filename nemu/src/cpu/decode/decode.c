@@ -68,7 +68,13 @@ hwaddr_t page_translate(lnaddr_t addr)
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
-	ExecLog();
+	uint32_t old_cr3 = 0;
+	if(old_cr3 != cpu.CR3.val)
+	{
+		ExecLog();
+		old_cr3 = cpu.CR3.val;
+	}
+
 	/* read page dir */
 	PDE pdir;
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);

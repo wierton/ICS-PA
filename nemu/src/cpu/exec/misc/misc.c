@@ -2,6 +2,7 @@
 #include "cpu/decode/modrm.h"
 
 void raise_intr(uint8_t);
+lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
 
 make_helper(nop) {
 	print_asm("nop");
@@ -18,8 +19,31 @@ make_helper(int3) {
 
 make_helper(int_i_b)
 {
+	GateDesc gd;
+	uint32_t *p = (uint32_t *)&gd;
 	uint8_t no = instr_fetch(eip + 1, 1);
-	raise_intr(no);
+	
+	/* push EFLAGS, CS, eip into stack */
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.EFLAGS, R_SS);
+	cpu.esp -= 2;
+	swaddr_write(cpu.esp, 4, cpu.CS.val, R_SS);
+	cpu.esp -= 4;
+	swaddr_write(cpu.esp, 4, cpu.eip, R_SS);
+
+	*p = swaddr_read(cpu.IDTR.base + no * 8, 4, R_DS);
+	*(p+1) = swaddr_read(cpu.IDTR.base + no * 8 + 4, 4, R_DS);
+
+	/* fill CS */
+	cpu.CS.val = gd.segment;
+	
+	/* calc the base addr */
+	lnaddr_t base = seg_translate(0, 4, R_CS);
+
+	/* get the entry addr */
+	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
+
+	cpu.eip = EntryAddr - 2;
 	print_asm("int $0x%x", no);
 	return 2;
 }

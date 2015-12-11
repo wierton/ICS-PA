@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	cpu.esp -= DATA_BYTE;
-	MEM_W(cpu.esp, op_src->val, R_DS);
+	MEM_W(cpu.esp, op_src->val, R_SS);
 	print_asm_template1();
 }
 

@@ -32,6 +32,8 @@ make_helper(pusha)
 	cpu.esp -= 4;
 	swaddr_write(cpu.esp, 4, cpu.edi, R_SS);
 
+	print_asm("pusha");
+
 	return 1;
 }
 

@@ -250,7 +250,7 @@ void ExecLog()
 {
 	stop_nemu();
 	printf("\33[1;31m");
-	printf("exec log:\neip:0x%x\n", cpu.eip);
-	printf("pre_eip:0x%x\n", pre_eip);
+	printf("exec log:\teip:0x%x\t", cpu.eip);
+	printf("pre_eip:0x%x", pre_eip);
 	printf("\33[0m\n");
 }

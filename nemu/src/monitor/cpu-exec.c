@@ -51,7 +51,7 @@ void raise_intr(uint8_t no)
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 
-	printf("intr\n");
+	printf("intr:0x%x\n", no);
 
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= data_byte;
@@ -97,9 +97,6 @@ void cpu_exec(volatile uint32_t n) {
 
 	setjmp(jbuf);
 
-	if(nemu_state == STOP)
-		printf("eip2:0x%x\n", cpu.eip);
-
 	for(; n > 0; n --) {
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
@@ -108,8 +105,6 @@ void cpu_exec(volatile uint32_t n) {
 			fputc('.', stderr);
 		}
 #endif
-		if(nemu_state == STOP)
-			printf("eip3:0x%x\n", cpu.eip);
 
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
@@ -123,14 +118,8 @@ void cpu_exec(volatile uint32_t n) {
 #ifdef DEBUG
 		print_bin_instr(eip_temp, instr_len);
 		
-		if(nemu_state == STOP)
-			printf("eip4:0x%x\n", eip_temp);
-
 		strcat(asm_buf, assembly);
 		Log_write("%s\n", asm_buf);
-
-		if(nemu_state == STOP)
-			printf("eip5:0x%x\n", eip_temp);
 
 		if(n_temp < MAX_INSTR_TO_PRINT) {
 			printf("%s\n", asm_buf);

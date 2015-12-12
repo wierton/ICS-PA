@@ -4,6 +4,12 @@
 inline void stop_nemu();
 uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
+make_helper(sti)
+{
+	cpu.IF = 1;
+	return 1;
+}
+
 make_helper(print)
 {
 	int i;

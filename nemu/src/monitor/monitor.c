@@ -25,8 +25,15 @@ static void welcome() {
 			exec_file);
 }
 
+void init_device();
+void init_sdl();
+
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
+
+	/* init the device */
+	init_device();
+	init_sdl();
 
 	/* Open the log file. */
 	init_log();

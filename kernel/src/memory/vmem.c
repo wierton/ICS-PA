@@ -25,7 +25,7 @@ void create_video_mapping() {
 	Log("pdir1:0x%x", (uint32_t)pdir);
 
 	/* get ptable */
-	ptable = (PTE *)(pdir[0].page_frame << 12);
+	ptable = (PTE *)(pdir[0].page_frame << 12) + ((VMEM_ADDR & 0x3ff000) >> 12);
 	Log("ptable1:0x%x", (uint32_t)ptable);
 	
 	/* fill PTEs */

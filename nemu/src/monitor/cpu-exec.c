@@ -51,7 +51,7 @@ void raise_intr(uint8_t no)
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 
-	printf("intr\n");
+	printf("intr happen\n");
 
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= data_byte;

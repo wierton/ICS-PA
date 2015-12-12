@@ -17,7 +17,7 @@ void create_video_mapping() {
 /*	panic("please implement me");*/
 	PDE *pdir = get_updir();
 
-	PTE *ptable;
+	PTE *ptable, *ptable2;
 
 	/* set present */
 	pdir[0].present = 1;

@@ -22,6 +22,7 @@ char asm_buf[128];
 jmp_buf jbuf;
 
 /* some function declared */
+lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 uint8_t i8259_query_intr();
 void i8259_ack_intr();
 
@@ -46,6 +47,31 @@ void raise_intr(uint8_t no)
 	 * That is, use ``NO'' to index the IDT.
 	 */
 
+	GateDesc gd;
+	const uint32_t data_byte = 4;
+	uint32_t *p = (uint32_t *)&gd;
+
+	/* push EFLAGS, CS, eip into stack */
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.EFLAGS, R_SS);
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.CS.val, R_SS);
+	cpu.esp -= data_byte;
+	swaddr_write(cpu.esp, data_byte, cpu.eip, R_SS);
+
+	*p = swaddr_read(cpu.IDTR.base + no * 8, 4, R_DS);
+	*(p+1) = swaddr_read(cpu.IDTR.base + no * 8 + 4, 4, R_DS);
+
+	/* fill CS */
+	cpu.CS.val = gd.segment;
+
+	/* calc the base addr */
+	lnaddr_t base = seg_translate(0, 4, R_CS);
+
+	/* get the entry addr */
+	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
+
+	cpu.eip = EntryAddr;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

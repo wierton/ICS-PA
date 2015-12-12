@@ -20,6 +20,9 @@ void create_video_mapping() {
 	Log("pdir:0x%x\n", (uint32_t)pdir);
 	PTE *ptable;
 
+	/* set present */
+	pdir[0].present = 1;
+
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
 
@@ -30,8 +33,6 @@ void create_video_mapping() {
 		ptable->val = make_pte(pframe_addr);
 		ptable ++;
 	}
-
-	Log("get here!\n");
 }
 
 void video_mapping_write_test() {

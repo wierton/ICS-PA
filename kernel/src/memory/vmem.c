@@ -23,6 +23,7 @@ void create_video_mapping() {
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
 
+	Log("get here!\n");
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 

@@ -34,14 +34,14 @@ void init_monitor(int argc, char *argv[]) {
 	/* Open the log file. */
 	init_log();
 
+	/* Load the string table and symbol table from the ELF file for future use. */
+	load_elf_tables(argc, argv);
+
 	/* init the device */
 	init_device();
 
 	/* init the sdl */
 	init_sdl();
-
-	/* Load the string table and symbol table from the ELF file for future use. */
-	load_elf_tables(argc, argv);
 
 	/* Compile the regular expressions. */
 	init_regex();

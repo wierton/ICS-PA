@@ -77,6 +77,7 @@ uint32_t loader() {
 	create_video_mapping();
 #endif
 
+	nemu_assert(0);
 	write_cr3(get_ucr3());
 #endif
 	nemu_assert(0);

@@ -101,8 +101,8 @@ static int cmd_addr(char *args)
 	if(IsValid)
 	{
 		lnaddr_t lnaddr = seg_translate(addr, 4, R_DS);
-		hwaddr_t hwaddr = page_translate(lnaddr);
 		printf("sreg:0x%x --> 0x%x\n", addr, lnaddr);
+		hwaddr_t hwaddr = page_translate(lnaddr);
 		printf("page:0x%x --> 0x%x\n", lnaddr, hwaddr);
 	}
 

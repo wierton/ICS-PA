@@ -17,7 +17,7 @@ void create_video_mapping() {
 /*	panic("please implement me");*/
 	PDE *pdir = get_updir();
 
-	PTE *ptable, *ptable2;
+	PTE *ptable;
 
 	/* set present */
 	pdir[0].present = 1;
@@ -28,6 +28,7 @@ void create_video_mapping() {
 
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
+	Log("ptable1:0x%x", (uint32_t)ptable);
 	ptable2 = (PTE *)((pdir + KOFFSET / PT_SIZE)->page_frame << 12);
 
 	/* fill PTEs */

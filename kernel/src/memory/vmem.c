@@ -31,6 +31,7 @@ void create_video_mapping() {
 
 	for (; pframe_addr < VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {
 		ptable->val = make_pte(pframe_addr);
+		ptable->present = 1;
 		ptable ++;
 	}
 }

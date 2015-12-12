@@ -3,6 +3,6 @@
 
 make_helper(hlt)
 {
-	while(!cpu.INTR);
+	assert(0);
 	return 1;
 }

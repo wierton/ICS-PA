@@ -52,3 +52,4 @@
 
 #include "device-io/hlt.h"
 #include "device-io/in.h"
+#include "device-io/out.h"

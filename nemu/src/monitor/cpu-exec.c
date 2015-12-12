@@ -21,6 +21,10 @@ char asm_buf[128];
 /* Used with exception handling. */
 jmp_buf jbuf;
 
+/* some function declared */
+uint8_t i8259_query_intr();
+void i8259_ack_intr();
+
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);
@@ -90,6 +94,13 @@ void cpu_exec(volatile uint32_t n) {
 
 		/* TODO: check watchpoints here. */
 		if(!check_wp()) {nemu_state = STOP;}
+
+		/* TODO: check intr */
+		if(cpu.INTR & cpu.IF) {
+			uint32_t intr_no = i8259_query_intr();
+			i8259_ack_intr();
+			raise_intr(intr_no);
+		}
 
 		if(nemu_state != RUNNING) { return; }
 	}

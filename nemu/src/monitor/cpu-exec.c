@@ -46,13 +46,13 @@ void raise_intr(uint8_t no)
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-
+/*
 	GateDesc gd;
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
-
+*/
 	/* push EFLAGS, CS, eip into stack */
-	cpu.esp -= data_byte;
+/*	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.EFLAGS, R_SS);
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.CS.val, R_SS);
@@ -62,16 +62,16 @@ void raise_intr(uint8_t no)
 	*p = lnaddr_read(cpu.IDTR.base + no * 8, 4);
 	*(p+1) = lnaddr_read(cpu.IDTR.base + no * 8 + 4, 4);
 
-	/* fill CS */
-	cpu.CS.val = gd.segment;
+*/	/* fill CS */
+//	cpu.CS.val = gd.segment;
 
 	/* calc the base addr */
-	lnaddr_t base = seg_translate(0, 4, R_CS);
+//	lnaddr_t base = seg_translate(0, 4, R_CS);
 
 	/* get the entry addr */
-	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
+//	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
-	cpu.eip = EntryAddr;
+//	cpu.eip = EntryAddr;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

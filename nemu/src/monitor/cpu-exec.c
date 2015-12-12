@@ -51,7 +51,7 @@ void raise_intr(uint8_t no)
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 
-	printf("intr happen\n");
+	printf("intr\n");
 
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= data_byte;
@@ -78,7 +78,7 @@ void raise_intr(uint8_t no)
 	printf("eip0:0x%x\n", cpu.eip);
 
 	/* Jump back to cpu_exec() */
-//	longjmp(jbuf, 1);
+	longjmp(jbuf, 1);
 }
 
 /* Simulate how the CPU works. */

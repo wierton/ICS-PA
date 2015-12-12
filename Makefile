@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := $(game_BIN)
+USERPROG := obj/testcase/hello
 ### USERPROG := obj/testcase/matrix-mul
 
 # ENTRY := $(USERPROG)

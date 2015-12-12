@@ -1,4 +1,5 @@
 #include "common.h"
+#include "device/mmio.h"
 
 /* Define if necessary */
 /* #define DEBUG_CACHE_READ */
@@ -63,6 +64,11 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	if(cache2_data != dram_data)
 		printf("data read error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
 #endif
+	int no = is_mmio(addr);
+	if(no != -1)
+	{
+		return mmio_read(addr, len, no) & (~0u >> ((4 - len) << 3));
+	}
 	return cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
@@ -82,7 +88,15 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if(cache2_data != dram_data)
 		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
 #endif
-	cache_write(addr, len, data);
+	int no = is_mmio(addr);
+	if(no != -1)
+	{
+		mmio_write(addr, len, data, no);
+	}
+	else
+	{
+		cache_write(addr, len, data);
+	}
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {

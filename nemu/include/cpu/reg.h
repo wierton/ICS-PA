@@ -182,6 +182,7 @@ typedef struct {
 		uint32_t base;
 	} GDTR,LDTR,IDTR;
 
+	bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;

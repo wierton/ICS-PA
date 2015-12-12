@@ -16,6 +16,8 @@ void create_video_mapping() {
 	 */
 /*	panic("please implement me");*/
 	PDE *pdir = get_updir();
+
+	Log("pdir:0x%x\n", (uint32_t)pdir);
 	PTE *ptable;
 
 	/* get ptable */

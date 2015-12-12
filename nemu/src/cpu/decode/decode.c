@@ -72,6 +72,11 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	PTE ptable;
 	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
+	if(!ptable.present)
+	{
+		ExecLog();
+		printf("0x%x\n",addr);
+	}
 	assert(ptable.present);
 
 	/* calc physic address */

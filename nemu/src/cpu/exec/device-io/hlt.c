@@ -3,6 +3,8 @@
 
 make_helper(hlt)
 {
-	assert(0);
-	return 1;
+	if(!cpu.INTR)
+		return 0;
+	else
+		return 1;
 }

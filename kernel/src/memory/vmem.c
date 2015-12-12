@@ -29,8 +29,6 @@ void create_video_mapping() {
 	uint32_t pframe_addr = VMEM_ADDR;
 
 	for (; pframe_addr < VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {
-		if(pframe_addr == 0xa0000)
-			Log("pframe_addr:0x%x", pframe_addr);
 		ptable->val = make_pte(pframe_addr);
 		ptable->present = 1;
 		ptable ++;

@@ -75,6 +75,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	if(!ptable.present)
 	{
 		ExecLog();
+		printf("cr3 base:0x%x\n", cpu.CR3.page_directory_base << 12);
 		printf("page_frame:0x%x\n", pdir.page_frame);
 		printf("0x%x\n",addr);
 	}

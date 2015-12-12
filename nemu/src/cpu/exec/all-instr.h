@@ -49,3 +49,5 @@
 
 #include "special/ldt.h"
 #include "special/special.h"
+
+#include "device-io/hlt.h"

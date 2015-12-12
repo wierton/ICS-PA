@@ -71,7 +71,7 @@ void raise_intr(uint8_t no)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
-	cpu.eip = EntryAddr + 1;
+	cpu.eip = EntryAddr - 2;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

@@ -83,7 +83,6 @@ void init_cond() {
 
 	/* Load the program. */
 	uint32_t eip = loader();
-	nemu_assert(0);
 	prints("eip:");
 	printx(eip);
 	prints("\n");

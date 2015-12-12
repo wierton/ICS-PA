@@ -17,7 +17,6 @@ void create_video_mapping() {
 /*	panic("please implement me");*/
 	PDE *pdir = get_updir();
 
-	Log("pdir:0x%x\n", (uint32_t)pdir);
 	PTE *ptable;
 
 	/* set present */
@@ -29,7 +28,7 @@ void create_video_mapping() {
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
-	for (; pframe_addr < VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {
+	for (; pframe_addr <= VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {
 		ptable->val = make_pte(pframe_addr);
 		ptable->present = 1;
 		ptable ++;

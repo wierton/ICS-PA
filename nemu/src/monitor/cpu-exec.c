@@ -78,7 +78,7 @@ void raise_intr(uint8_t no)
 	printf("eip0:0x%x\n", cpu.eip);
 
 	/* Jump back to cpu_exec() */
-	longjmp(jbuf, 1);
+//	longjmp(jbuf, 1);
 }
 
 /* Simulate how the CPU works. */

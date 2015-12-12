@@ -24,11 +24,11 @@ void create_video_mapping() {
 	pdir[KOFFSET / PT_SIZE].present = 1;
 
 	Log("pdir1:0x%x", (uint32_t)pdir);
-	Log("pdir2:0x%x", (uint32_t)(pdir+KOFFSET / PT_SIZE));
+	Log("pdir2:0x%x", (uint32_t)(pdir-KOFFSET / PT_SIZE));
 
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
-	ptable2 = (PTE *)(pdir[KOFFSET / PT_SIZE].page_frame << 12);
+	ptable2 = (PTE *)((pdir - KOFFSET / PT_SIZE)->page_frame << 12);
 
 	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;

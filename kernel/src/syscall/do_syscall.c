@@ -12,6 +12,8 @@ static void sys_brk(TrapFrame *tf) {
 	tf->eax = 0;
 }
 
+void serial_printc(char ch);
+
 int prints(char []);
 int printx(uint32_t);
 

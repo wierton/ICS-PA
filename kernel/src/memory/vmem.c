@@ -26,8 +26,10 @@ void create_video_mapping() {
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
 	ptable2 = (PTE *)(pdir[KOFFSET / PT_SIZE].page_frame << 12);
-
-	/* fill PTEs */
+/*
+	Log("ptable:0x%x\n", (uint32_t)ptable);
+	Log("ptable2:0x%x\n", (uint32_t)ptable2);
+*/	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
 	for (; pframe_addr < VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {

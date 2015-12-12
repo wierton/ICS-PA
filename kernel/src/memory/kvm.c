@@ -27,7 +27,10 @@ void init_page(void) {
 		pdir[pdir_idx].val = make_pde(ptable);
 		pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 
-		Log("0x%x\t0x%x\n", (uint32_t)(pdir+pdir_idx), (uint32_t)(pdir+pdir_idx + KOFFSET / PT_SIZE));
+		printx((uint32_t)(pdir+pdir_idx));
+		prints("\t");
+		printx((uint32_t)(pdir+pdir_idx + KOFFSET / PT_SIZE));
+		prints("\n");
 
 		ptable += NR_PTE;
 	}

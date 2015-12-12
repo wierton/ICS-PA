@@ -75,7 +75,7 @@ void raise_intr(uint8_t no)
 
 	printf("eip0:0x%x\n", cpu.eip);
 	cpu.eip = EntryAddr;
-	printf("eip0:0x%x\n", cpu.eip);
+	printf("eip1:0x%x\n", cpu.eip);
 
 	nemu_state = STOP;
 
@@ -96,6 +96,9 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 	setjmp(jbuf);
+
+	if(nemu_state == STOP)
+		printf("eip2:0x%x\n", cpu.eip);
 
 	for(; n > 0; n --) {
 #ifdef DEBUG

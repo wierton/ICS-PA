@@ -66,7 +66,7 @@ void raise_intr(uint8_t no)
 	cpu.CS.val = gd.segment;
 
 	/* calc the base addr */
-	lnaddr_t base = seg_translate(0, 4, R_CS);
+	lnaddr_t base = seg_translate(0, 4, R_DS);
 
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);

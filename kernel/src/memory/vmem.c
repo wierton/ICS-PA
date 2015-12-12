@@ -17,30 +17,28 @@ void create_video_mapping() {
 /*	panic("please implement me");*/
 	PDE *pdir = get_updir();
 
-	PTE *ptable;// *ptable2;
+	PTE *ptable, *ptable2;
 
 	/* set present */
 	pdir[0].present = 1;
-//	pdir[KOFFSET / PT_SIZE].present = 1;
+	pdir[KOFFSET / PT_SIZE].present = 1;
 
 	/* get ptable */
 	ptable = (PTE *)(pdir[0].page_frame << 12);
-//	ptable2 = (PTE *)(pdir[KOFFSET / PT_SIZE].page_frame << 12);
-/*
-	Log("ptable:0x%x\n", (uint32_t)ptable);
-	Log("ptable2:0x%x\n", (uint32_t)ptable2);
-*/	/* fill PTEs */
+	ptable2 = (PTE *)(pdir[KOFFSET / PT_SIZE].page_frame << 12);
+
+	/* fill PTEs */
 	uint32_t pframe_addr = VMEM_ADDR;
 
 	for (; pframe_addr < VMEM_ADDR + SCR_SIZE; pframe_addr += PAGE_SIZE) {
 		ptable->val = make_pte(pframe_addr);
 		ptable->present = 1;
 		ptable ++;
-/*
+
 		ptable2->val = make_pte(pframe_addr);
 		ptable2->present = 1;
 		ptable2 ++;
-*/	}
+	}
 }
 
 void video_mapping_write_test() {

@@ -20,6 +20,7 @@ make_helper(int3) {
 make_helper(int_i_b)
 {
 	GateDesc gd;
+	int len = 2;
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 	uint8_t no = instr_fetch(eip + 1, 1);
@@ -30,7 +31,7 @@ make_helper(int_i_b)
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.CS.val, R_SS);
 	cpu.esp -= data_byte;
-	swaddr_write(cpu.esp, data_byte, cpu.eip, R_SS);
+	swaddr_write(cpu.esp, data_byte, cpu.eip + len, R_SS);
 
 	*p = swaddr_read(cpu.IDTR.base + no * 8, 4, R_DS);
 	*(p+1) = swaddr_read(cpu.IDTR.base + no * 8 + 4, 4, R_DS);
@@ -44,9 +45,9 @@ make_helper(int_i_b)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
-	cpu.eip = EntryAddr - 2;
+	cpu.eip = EntryAddr - len;
 	print_asm("int $0x%x", no);
-	return 2;
+	return len;
 }
 
 make_helper(lea) {

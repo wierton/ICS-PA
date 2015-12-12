@@ -26,7 +26,6 @@ make_helper(lgdt_l)
 	
 	cpu.GDTR.limit = swaddr_read(addr, 2, R_DS);
 	cpu.GDTR.base = swaddr_read(addr + 2, 4, R_DS);
-	printf("GDTR [base:0x%x limit:0x%x]\n", cpu.GDTR.base, cpu.GDTR.limit);
 	return ret;
 }
 

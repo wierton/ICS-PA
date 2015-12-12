@@ -60,9 +60,9 @@ void init_page(void) {
 	cr3.val = 0;
 	cr3.page_directory_base = ((uint32_t)pdir) >> 12;
 
-	nemu_assert(0);
+//	Log("old cr3:0x%x\n", read_cr3());
 	write_cr3(cr3.val);
-	nemu_assert(0);
+//	Log("new cr3:0x%x\n", read_cr3());
 
 	/* set PG bit in CR0 to enable paging */
 	cr0.val = read_cr0();

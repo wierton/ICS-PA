@@ -4,7 +4,7 @@
 make_helper(hlt)
 {
 	if(!cpu.INTR)
-		return 0;
+		return 1;
 	else
 		return 1;
 }

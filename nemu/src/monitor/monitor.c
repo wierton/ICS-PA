@@ -31,15 +31,15 @@ void init_sdl();
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
-	/* init the device */
-	init_device();
-	init_sdl();
-
 	/* Open the log file. */
 	init_log();
 
 	/* Load the string table and symbol table from the ELF file for future use. */
 	load_elf_tables(argc, argv);
+
+	/* init the device */
+	init_device();
+	init_sdl();
 
 	/* Compile the regular expressions. */
 	init_regex();

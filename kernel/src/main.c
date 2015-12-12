@@ -81,6 +81,8 @@ void init_cond() {
 	video_mapping_write_test();
 #endif
 
+	nemu_assert(0);
+
 	/* Load the program. */
 	uint32_t eip = loader();
 	prints("eip:");

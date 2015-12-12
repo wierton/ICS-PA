@@ -108,6 +108,8 @@ void cpu_exec(volatile uint32_t n) {
 			fputc('.', stderr);
 		}
 #endif
+		if(nemu_state == STOP)
+			printf("eip3:0x%x\n", cpu.eip);
 
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */

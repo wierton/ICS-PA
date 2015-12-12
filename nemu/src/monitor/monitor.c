@@ -31,11 +31,11 @@ void init_sdl();
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
-	/* init the device */
-	init_device();
-
 	/* Open the log file. */
 	init_log();
+
+	/* init the device */
+	init_device();
 
 	/* init the sdl */
 	init_sdl();

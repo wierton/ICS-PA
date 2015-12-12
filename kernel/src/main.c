@@ -81,15 +81,12 @@ void init_cond() {
 	video_mapping_write_test();
 #endif
 
-	nemu_assert(0);
-
 	/* Load the program. */
 	uint32_t eip = loader();
+	nemu_assert(0);
 	prints("eip:");
 	printx(eip);
 	prints("\n");
-
-	nemu_assert(0);
 	
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Read data in the video memory to check whether 

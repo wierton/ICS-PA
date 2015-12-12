@@ -51,3 +51,4 @@
 #include "special/special.h"
 
 #include "device-io/hlt.h"
+#include "device-io/in.h"

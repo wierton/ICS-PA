@@ -12,6 +12,9 @@ extern swaddr_t stop_eip;
 
 void cpu_exec(uint32_t);
 
+hwaddr_t page_translate(lnaddr_t addr);
+lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
+
 void print_cache_info_by_addr(swaddr_t addr);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
@@ -61,6 +64,10 @@ static int cmd_cache(char *args);
 
 static int cmd_b(char *args);
 
+static int cmd_addr(char *args);
+
+static int cmd_xp(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -79,10 +86,88 @@ static struct {
 	{ "d", "Delete a watchpoint",cmd_d},
 	{ "bt", "Print the stack frame chain",cmd_bt},
 	{ "cache", "printf cache info by address", cmd_cache},
-	{ "b", "break eip", cmd_b}
+	{ "b", "break eip", cmd_b},
+	{ "addr", "addr", cmd_addr},
+	{ "xp", "xp", cmd_xp}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+static int cmd_addr(char *args)
+{
+	bool IsValid;
+	if(args == NULL) return 0;
+	swaddr_t addr = eval(args, &IsValid);
+	if(IsValid)
+	{
+		lnaddr_t lnaddr = seg_translate(addr, 4, R_DS);
+		hwaddr_t hwaddr = page_translate(lnaddr);
+		printf("sreg:0x%x --> 0x%x\n", addr, lnaddr);
+		printf("page:0x%x --> 0x%x\n", lnaddr, hwaddr);
+	}
+
+	return 0;
+}
+
+static int cmd_xp(char *args)
+{
+	int i=0;
+	char ch,*para, *expression;
+	int len_para, len_args;
+	size_t len;
+	uint32_t read_addr = 0;
+	bool para_success = false, addr_success = false;
+
+	if(args == NULL)
+		return 0;
+
+	len_args = strlen(args);
+
+	para = strtok(args, " ");
+	if(para == NULL)
+	{
+		printf("too few parameters!\n");
+		return 0;
+	}
+
+	len_para = strlen(para);
+	if(!(args + len_args > para + len_para))
+	{
+		printf("too few parameters!\n");
+		return 0;
+	}
+
+	expression = strtok(NULL, " ");
+
+	read_addr = eval(expression, &addr_success);
+
+	if(strcmp(para, "s")==0)
+	{
+		printf("0x%x:",read_addr);
+		do
+		{
+			ch = hwaddr_read(read_addr+i, 1);
+			printf("%c",ch);
+			i++;
+		}while(ch != 0);
+		printf("\n");
+		return 0;
+	}
+
+	len = eval(para, &para_success);
+	if(!(para_success && addr_success))
+	{
+		return 0;
+	}
+
+	for(i=0;i<len;i++)
+	{
+		uint32_t value = hwaddr_read(read_addr+4*i, 4);
+		printf("$0x%0x:\t0x%0x\t%u\n",read_addr+4*i,value,value);
+	}
+
+	return 0;
+}
 
 static int cmd_help(char *args) {
 	/* extract the first argument */

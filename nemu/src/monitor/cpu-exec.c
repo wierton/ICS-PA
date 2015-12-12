@@ -59,14 +59,14 @@ void raise_intr(uint8_t no)
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.eip, R_SS);
 
-	*p = swaddr_read(cpu.IDTR.base + no * 8, 4, R_DS);
-	*(p+1) = swaddr_read(cpu.IDTR.base + no * 8 + 4, 4, R_DS);
+	*p = lnaddr_read(cpu.IDTR.base + no * 8, 4);
+	*(p+1) = lnaddr_read(cpu.IDTR.base + no * 8 + 4, 4);
 
 	/* fill CS */
 	cpu.CS.val = gd.segment;
 
 	/* calc the base addr */
-	lnaddr_t base = seg_translate(0, 4, R_DS);
+	lnaddr_t base = seg_translate(0, 4, R_CS);
 
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);

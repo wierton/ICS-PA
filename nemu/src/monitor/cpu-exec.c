@@ -71,6 +71,7 @@ void raise_intr(uint8_t no)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
+	printf("eip0:0x%x\n", cpu.eip);
 	cpu.eip = EntryAddr;
 	printf("eip0:0x%x\n", cpu.eip);
 

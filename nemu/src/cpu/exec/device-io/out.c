@@ -5,34 +5,30 @@
 make_helper(out_a2i_b)
 {
 	uint8_t no = instr_fetch(eip + 1, 1);
-	uint8_t data = pio_read(no, 1);
-	cpu.al = data;
-	print_asm("in 0x%x,%%al", no);
+	pio_write(no, 1, cpu.al);
+	print_asm("out %%al,0x%x", no);
 	return 2;
 }
 
 make_helper(out_a2i_l)
 {
 	uint8_t no = instr_fetch(eip + 1, 1);
-	uint32_t data = pio_read(no, 4);
-	cpu.eax = data;
-	print_asm("in 0x%x,%%eax", no);
+	pio_write(no, 4, cpu.eax);
+	print_asm("out %%eax,0x%x", no);
 	return 2;
 }
 
 make_helper(out_a2d_b)
 {
-	uint32_t data = pio_read((cpu.edx & 0xffff), 4);
-	cpu.al = data;
-	print_asm("in (%%dx),%%al");
+	pio_write(cpu.dx, 1, cpu.al);
+	print_asm("out %%al,(%%dx)");
 	return 1;
 }
 
 make_helper(out_a2d_l)
 {
-	uint32_t data = pio_read((cpu.edx & 0xffff), 4);
-	cpu.eax = data;
-	print_asm("in (%%dx),%%eax");
+	pio_write(cpu.dx, 4, cpu.eax);
+	print_asm("out %%eax,(%%dx)");
 	return 1;
 }
 

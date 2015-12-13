@@ -24,7 +24,7 @@ add_irq_handle(int irq, void (*func)(void) ) {
 	assert(irq < NR_HARD_INTR);
 	assert(handle_count <= NR_IRQ_HANDLE);
 
-	Log("irq:0x%x\n", irq);
+	Log("irq:0x%x,func:0x%x\n", irq, (uint32_t)func);
 
 	struct IRQ_t *ptr;
 	ptr = &handle_pool[handle_count ++]; /* get a free handler */

@@ -5,7 +5,7 @@
 static void do_execute() {
 	DATA_TYPE dst = op_dest->val;
 	DATA_TYPE src = op_src->val;
-	assert(src < DATA_BYTE);
+	assert(src < DATA_BYTE * 8);
 	cpu.CF = ((dst >> src) & 0x1);
 	print_asm_template2();
 }

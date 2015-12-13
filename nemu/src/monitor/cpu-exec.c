@@ -54,7 +54,7 @@ void raise_intr(uint8_t no)
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 
-	printf("intr:0x%x\n", no);
+//	printf("intr:0x%x\n", no);
 
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= data_byte;
@@ -76,9 +76,9 @@ void raise_intr(uint8_t no)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
-	printf("eip0:0x%x\n", cpu.eip);
+//	printf("eip0:0x%x\n", cpu.eip);
 	cpu.eip = EntryAddr;
-	printf("eip1:0x%x\n", cpu.eip);
+//	printf("eip1:0x%x\n", cpu.eip);
 
 //	nemu_state = STOP;
 

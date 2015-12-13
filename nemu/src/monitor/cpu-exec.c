@@ -83,7 +83,7 @@ void raise_intr(uint8_t no)
 	if(no != 0x20)
 	{
 		//nemu_state = STOP;
-		printf("keyevent\n");
+		printf("other code:0x%x\n", no);
 	}
 
 	/* Jump back to cpu_exec() */
@@ -137,10 +137,11 @@ void cpu_exec(volatile uint32_t n) {
 		if(!check_wp()) {nemu_state = STOP;}
 
 		/* TODO: check intr */
-		if(cpu.INTR & cpu.IF) {
+		if(cpu.IF) {
 			uint32_t intr_no = i8259_query_intr();
 			i8259_ack_intr();
-			raise_intr(intr_no);
+			if(cpu.INTR)
+				raise_intr(intr_no);
 		}
 
 		if(nemu_state != RUNNING) { return; }

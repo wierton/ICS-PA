@@ -80,7 +80,8 @@ void raise_intr(uint8_t no)
 	cpu.eip = EntryAddr;
 //	printf("eip1:0x%x\n", cpu.eip);
 
-//	nemu_state = STOP;
+	if(no == 0x21)
+		nemu_state = STOP;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

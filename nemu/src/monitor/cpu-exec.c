@@ -80,7 +80,7 @@ void raise_intr(uint8_t no)
 	cpu.eip = EntryAddr;
 //	printf("eip1:0x%x\n", cpu.eip);
 
-	if(no == 0x21)
+	if(no != 0x20)
 	{
 		//nemu_state = STOP;
 		printf("keyevent\n");

@@ -47,6 +47,9 @@ void raise_intr(uint8_t no)
 	 * That is, use ``NO'' to index the IDT.
 	 */
 
+	/* close intr */
+	cpu.IF = 0;
+
 	GateDesc gd;
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
@@ -77,7 +80,7 @@ void raise_intr(uint8_t no)
 	cpu.eip = EntryAddr;
 	printf("eip1:0x%x\n", cpu.eip);
 
-	nemu_state = STOP;
+//	nemu_state = STOP;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

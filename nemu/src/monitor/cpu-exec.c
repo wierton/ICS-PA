@@ -137,11 +137,10 @@ void cpu_exec(volatile uint32_t n) {
 		if(!check_wp()) {nemu_state = STOP;}
 
 		/* TODO: check intr */
-		if(cpu.IF) {
+		if(cpu.INTR & cpu.IF) {
 			uint32_t intr_no = i8259_query_intr();
 			i8259_ack_intr();
-			if(cpu.INTR)
-				raise_intr(intr_no);
+			raise_intr(intr_no);
 		}
 
 		if(nemu_state != RUNNING) { return; }

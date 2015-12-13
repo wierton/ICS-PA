@@ -17,8 +17,8 @@ static int key_state[NR_KEYS];
 void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
-	uint32_t scancode = pio_read(0x60, 1);
-	if(scancode !=0)
+//	uint32_t scancode = pio_read(0x60, 1);
+//	if(scancode !=0)
 	assert(0);
 }
 

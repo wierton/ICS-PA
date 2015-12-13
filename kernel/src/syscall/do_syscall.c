@@ -39,7 +39,7 @@ void do_syscall(TrapFrame *tf) {
 			{
 				serial_printc(*(char *)(tf->ecx + i));
 			}
-		//	asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));
+/*			asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
 			break;
 
 		default: panic("Unhandled system call: id = %d", tf->eax);

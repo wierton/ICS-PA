@@ -17,9 +17,20 @@ static int key_state[NR_KEYS];
 void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
-//	uint32_t scancode = pio_read(0x60, 1);
-//	if(scancode !=0)
-	assert(0);
+	int i,targetkey;
+	uint8_t scancode = pio_read(0x60, 1);
+	Log("scancode:0x%x\n", scancode);
+/*	uint8_t updown = ((scancode >> 0x7) & 0x1);
+	for(i=0;i<NR_KEYS;i++)
+	{
+		if(keycode_array[i] == KEY_STATE_PRESS)
+			keycode_array[i] == KEY_STATE_WAIT_RELEASE;
+	}
+	switch(scancode & 0x7f)
+	{
+		case 
+	}
+*/	assert(0);
 }
 
 static inline int

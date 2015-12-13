@@ -15,6 +15,7 @@
 #include "arith/sbb.h"
 #include "arith/cmp.h"
 #include "arith/test.h"
+#include "arith/btest.h"
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"

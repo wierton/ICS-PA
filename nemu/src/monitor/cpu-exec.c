@@ -54,8 +54,6 @@ void raise_intr(uint8_t no)
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
 
-//	printf("intr:0x%x\t", no);
-
 	/* push EFLAGS, CS, eip into stack */
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.EFLAGS, R_SS);

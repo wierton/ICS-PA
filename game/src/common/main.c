@@ -2,6 +2,7 @@
 #include "x86.h"
 
 void init_timer();
+void keyboard_event();
 int syscall(int id, ...);
 
 void add_irq_handle(int irq, void *handler) {

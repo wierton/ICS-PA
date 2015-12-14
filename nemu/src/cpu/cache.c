@@ -1,7 +1,9 @@
 #include "common.h"
 #include "misc.h"
-
 #include "memory/memory.h"
+
+#include <stdlib.h>
+#include <time.h>
 
 /* define if necessary */
 /* #define DEBUG_CACHE_READ */
@@ -88,6 +90,12 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
+	static bool IsSeed = false;
+	if(!IsSeed)
+	{
+		srand(time(NULL));
+		IsSeed = true;
+	}
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, valid_inset = -1, reading_i = -1;
@@ -114,7 +122,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 #endif
 		/* no empty block found in target set */
 		if(valid_inset == -1)
-			valid_inset = 0;
+			valid_inset = (rand()%NR_INSETNUM);/*need to be random*/
 		cachebufs[setnum][valid_inset].memmark = memmark;
 		reading_i = valid_inset;
 		for(i = 0; i < NR_BLOCKSIZE; i ++)

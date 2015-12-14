@@ -8,29 +8,6 @@
 /* #define DEBUG_CACHE2_WRITE */
 /* #define DEBUG_CACHE_TIME_CALC */
 
-/* CrossData definition */
-typedef union {
-	struct {
-		uint32_t data_0_7 :8;
-		uint32_t data_8_31:24;
-	};
-	struct {
-		uint32_t data_0_15 :16;
-		uint32_t data_16_31:16;
-	};
-	struct {
-		uint32_t data_0_23 :24;
-		uint32_t data_24_31:8;
-	};
-	struct {
-		uint32_t val_0_7   :8;
-		uint32_t val_8_15  :8;
-		uint32_t val_16_23 :8;
-		uint32_t val_24_31 :8;
-	};
-	uint32_t val;
-} CrossData;
-
 #ifdef DEBUG_CACHE_TIME_CALC
 extern long long memory_access_time;
 #endif

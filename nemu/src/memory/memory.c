@@ -74,7 +74,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	else
 	{
-		cache_write(addr, len, data);
+		/* to speed up */
+		/*cache_write(addr, len, data);*/
+		dram_write(addr, len, data);
 	}
 }
 

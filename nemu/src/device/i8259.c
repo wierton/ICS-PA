@@ -73,7 +73,6 @@ void i8259_raise_intr(int n) {
 		slave.highest_irq = ffo_table[slave.IRR & ~slave.IMR];
 	}
 
-	printf("%d",n);
 	master.highest_irq = ffo_table[master.IRR & ~master.IMR];
 
 	do_i8259();

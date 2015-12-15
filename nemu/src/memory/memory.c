@@ -46,9 +46,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	{
 		return mmio_read(addr, len, no) & (~0u >> ((4 - len) << 3));
 	}
-	/*to accelerated*/
-/*	return cache_read(addr, len) & (~0u >> ((4 - len) << 3));*/
-	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	return cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -74,9 +72,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	else
 	{
-		/* to speed up */
-		/*cache_write(addr, len, data);*/
-		dram_write(addr, len, data);
+		cache_write(addr, len, data);
 	}
 }
 

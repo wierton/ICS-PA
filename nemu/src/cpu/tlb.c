@@ -16,8 +16,8 @@ typedef struct {
 
 typedef union {
 	struct {
+		uint32_t offset     :12;
 		uint32_t tag		:20;
-		uint32_t offset		:12;
 	};
 	uint32_t val;
 } TLB_ADDR;

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "common.h"
 #include "misc.h"
 
@@ -114,7 +115,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 #endif
 		/* no empty block found in target set */
 		if(valid_inset == -1)
-			valid_inset = 0;
+			valid_inset = rand()%NR_INSETNUM;
 		cachebufs[setnum][valid_inset].memmark = memmark;
 		reading_i = valid_inset;
 		for(i = 0; i < NR_BLOCKSIZE; i ++)

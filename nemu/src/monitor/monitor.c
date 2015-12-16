@@ -12,6 +12,7 @@ void init_wp_list();
 void init_ddr3();
 void init_cache();
 void init_cache2();
+void init_tlb();
 
 FILE *log_fp = NULL;
 
@@ -97,6 +98,9 @@ void restart() {
 
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
+
+	/* init the tlb */
+	init_tlb();
 
 	/* Set the initial EFALGS*/
 	cpu.EFLAGS = 0x00000002;

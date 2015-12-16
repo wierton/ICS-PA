@@ -3,6 +3,8 @@
 
 #define instr mov
 
+void init_tlb();
+
 static void do_execute() {
 	OPERAND_W(op_dest, op_src->val, R_DS);
 	print_asm_template2();
@@ -52,7 +54,10 @@ make_helper(mov_r2cr_l)
 	switch(m.reg)
 	{
 		case 0:cpu.CR0.val = reg_l(m.R_M);break;
-		case 3:cpu.CR3.val = reg_l(m.R_M);break;
+		case 3:
+			   init_tlb();
+			   cpu.CR3.val = reg_l(m.R_M);
+			   break;
 	}
 	print_asm("mov %%%s,%%cr%d", regsl[m.R_M], m.reg);
 	return 2;

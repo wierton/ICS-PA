@@ -61,7 +61,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 
 	/* read page dir */
 	PDE pdir;
-	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) + pageaddr.pagedir * 4, 4);
+	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) | pageaddr.pagedir * 4, 4);
 
 	if(!pdir.present)
 	{
@@ -71,7 +71,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	assert(pdir.present);
 
 	PTE ptable;
-	ptable.val = hwaddr_read((pdir.page_frame << 12) + pageaddr.pagetab * 4, 4);
+	ptable.val = hwaddr_read((pdir.page_frame << 12) | pageaddr.pagetab * 4, 4);
 	if(!ptable.present)
 	{
 		ExecLog();
@@ -84,6 +84,6 @@ hwaddr_t page_translate(lnaddr_t addr)
 	assert(ptable.present);
 
 	/* calc physic address */
-	return (ptable.page_frame << 12) + pageaddr.off;
+	return (ptable.page_frame << 12) | pageaddr.off;
 }
 

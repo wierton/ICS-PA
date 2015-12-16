@@ -174,6 +174,7 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & CACHE_MASK;
+	len = 4;
 	uint8_t temp[4];
 	int diff = offset + len - NR_BLOCKSIZE;
 

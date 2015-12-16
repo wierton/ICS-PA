@@ -176,6 +176,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & CACHE_MASK;
 	len = 4;
 	uint8_t temp[4];
+	uint32_t temp_addr = (uint32_t)temp;
 	int diff = offset + len - NR_BLOCKSIZE;
 
 	if(diff > 0)
@@ -204,7 +205,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	}
 #endif
 
-	return unalign_rw(temp + offset, 4);
+	return unalign_rw(temp_addr, 4);
 }
 
 void cache_write(hwaddr_t addr, size_t len, uint32_t data) {

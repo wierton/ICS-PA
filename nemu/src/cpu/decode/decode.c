@@ -59,17 +59,17 @@ hwaddr_t page_translate(lnaddr_t addr)
 {
 	PDE pdir;
 	PTE ptable;
-	uint32_t page_frame;
+//	uint32_t page_frame;
 	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
 		return addr;
 	PageAddr pageaddr;
 	pageaddr.val = addr;
-
+/*
 	if(tlb_read(addr, &page_frame))
 	{
 		return (page_frame << 12) | pageaddr.off;
 	}
-
+*/
 	/* read page dir */
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) | pageaddr.pagedir * 4, 4);
 
@@ -92,7 +92,7 @@ hwaddr_t page_translate(lnaddr_t addr)
 	}
 	assert(ptable.present);
 
-	tlb_write(addr, ptable.page_frame);
+//	tlb_write(addr, ptable.page_frame);
 
 	/* calc physic address */
 	return (ptable.page_frame << 12) | pageaddr.off;

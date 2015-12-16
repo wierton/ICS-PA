@@ -5,8 +5,17 @@
 
 #include "memory/memory.h"
 
-#define NUM_WIDTH 6
+#define PA3
+
+#ifdef PA3
+	#define NUM_WIDTH 6
+#else
+	#define NUM_WIDTH 8
+#endif
 #define TLB_NUM (1 << NUM_WIDTH)
+
+#define INDEX_MASK (((1 << NUM_WIDTH) - 1) << 12)
+#define INDEX_BIT 12
 
 typedef struct {
 	bool valid;
@@ -16,8 +25,8 @@ typedef struct {
 
 typedef union {
 	struct {
-		uint32_t offset     :12;
-		uint32_t tag		:20;
+		uint32_t offset	:12;
+		uint32_t tag	:20;
 	};
 	uint32_t val;
 } TLB_ADDR;
@@ -33,6 +42,7 @@ void init_tlb() {
 
 bool tlb_read(uint32_t addr, uint32_t *page_frame)
 {
+#ifdef PA3
 	int i;
 	TLB_ADDR tlbaddr;
 	tlbaddr.val = addr;
@@ -43,10 +53,20 @@ bool tlb_read(uint32_t addr, uint32_t *page_frame)
 			return true;
 		}
 	return false;
+#else
+	uint32_t index = ((addr & INDEX_MASK) >> INDEX_BIT);
+	if(tlbbufs[index].valid && tlbbufs[index].tag == tlbaddr.tag)
+	{
+		*page_frame = tlbbufs[index].page_frame;
+		return true;
+	}
+	return false;
+#endif
 }
 
 void tlb_write(uint32_t addr, uint32_t page_frame)
 {
+#ifdef PA3
 	int i,tmp;
 	TLB_ADDR tlbaddr;
 	tlbaddr.val = addr;
@@ -64,4 +84,12 @@ void tlb_write(uint32_t addr, uint32_t page_frame)
 	tlbbufs[tmp].valid = true;
 	tlbbufs[tmp].tag = tlbaddr.tag;
 	tlbbufs[tmp].page_frame = page_frame;
+#else
+	TLB_ADDR tlbaddr;
+	uint32_t index = ((addr & INDEX_MASK) >> INDEX_BIT);
+	tlbaddr.val = addr;
+	tlbbufs[index].valid = true;
+	tlbbufs[index].tag = tlbaddr.tag;
+	tlbbufs[index].page_frame = page_frame;
+#endif
 }

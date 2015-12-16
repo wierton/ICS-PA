@@ -181,7 +181,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len) {
 	if(diff > 0)
 	{
 		/* data cross the burst boundary */
-		cpu_cache_read(addr, temp, diff);
+		cpu_cache_read(addr, temp, len - diff);
 		cpu_cache_read((addr + NR_BLOCKSIZE)&~CACHE_MASK, temp + len - diff, diff);
 	}
 	else

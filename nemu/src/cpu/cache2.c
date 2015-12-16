@@ -3,6 +3,8 @@
 
 #include "memory/memory.h"
 
+#include <stdlib.h>
+
 /* define if necessary */
 /* #define DEBUG_CACHE2_READ */
 /* #define DEBUG_CACHE2_WRITE */
@@ -76,7 +78,7 @@ static void cpu_cache2_read(hwaddr_t addr, void *data) {
 	{
 		/* no empty block found in target set */
 		if(valid_inset == -1)
-			valid_inset = 0;/* need to be random */
+			valid_inset = rand()%NR2_INSETNUM;/* need to be random */
 		/* if dirty , write back*/
 		if(cache2bufs[setnum][valid_inset].valid && cache2bufs[setnum][valid_inset].dirty)
 		{

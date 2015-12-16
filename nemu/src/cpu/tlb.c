@@ -5,7 +5,7 @@
 
 #include "memory/memory.h"
 
-//#define PA3
+#define PA3
 
 #ifdef PA3
 	#define NUM_WIDTH 6

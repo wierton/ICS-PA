@@ -18,8 +18,6 @@ make_helper(pusha)
 {
 	uint32_t temp = cpu.esp;
 	const uint32_t data_byte = 4;
-
-	printf("edx:%x\necx:%x\n",cpu.edx,cpu.ecx);
 	cpu.esp -= data_byte;
 	swaddr_write(cpu.esp, data_byte, cpu.eax, R_SS);
 	cpu.esp -= data_byte;

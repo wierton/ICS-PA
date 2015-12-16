@@ -5,7 +5,7 @@
 
 #include "memory/memory.h"
 
-#define PA3
+//#define PA3
 
 #ifdef PA3
 	#define NUM_WIDTH 6
@@ -54,7 +54,9 @@ bool tlb_read(uint32_t addr, uint32_t *page_frame)
 		}
 	return false;
 #else
+	TLB_ADDR tlbaddr;
 	uint32_t index = ((addr & INDEX_MASK) >> INDEX_BIT);
+	tlbaddr.val = addr;
 	if(tlbbufs[index].valid && tlbbufs[index].tag == tlbaddr.tag)
 	{
 		*page_frame = tlbbufs[index].page_frame;

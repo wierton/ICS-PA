@@ -14,8 +14,13 @@ typedef struct {
 
 typedef union {
 	struct {
-		uint32_t dont_care	:12;
-		uint32_t index		:8;
+		union {
+			struct {
+				uint32_t dont_care	:12;
+				uint32_t index		:8;
+			};
+			uint32_t tag		:20;
+		};
 		uint32_t offset		:12;
 	};
 	uint32_t val;
@@ -34,7 +39,7 @@ bool tlb_read(uint32_t addr, uint32_t *page_frame)
 {
 	TLB_ADDR tlbaddr;
 	tlbaddr.val = addr;
-	if(tlbbufs[tlbaddr.index].valid)
+	if(tlbbufs[tlbaddr.index].valid && tlbbufs[tlbaddr.index].tag == tlbaddr.tag)
 	{
 		*page_frame = tlbbufs[tlbaddr.index].page_frame;
 		return true;
@@ -47,5 +52,6 @@ inline void tlb_write(uint32_t addr, uint32_t page_frame)
 	TLB_ADDR tlbaddr;
 	tlbaddr.val = addr;
 	tlbbufs[tlbaddr.index].valid = true;
+	tlbbufs[tlbaddr.index].tag = tlbaddr.tag;
 	tlbbufs[tlbaddr.index].page_frame = page_frame;
 }

@@ -74,15 +74,7 @@ void raise_intr(uint8_t no)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
-//	printf("eip0:0x%x\n", cpu.eip);
 	cpu.eip = EntryAddr;
-//	printf("eip1:0x%x\n", cpu.eip);
-
-	if(no != 0x20 && no != 0x2e)
-	{
-		//nemu_state = STOP;
-		printf("other code:0x%x\n", no);
-	}
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);

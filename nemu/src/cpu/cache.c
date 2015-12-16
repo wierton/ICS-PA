@@ -84,11 +84,12 @@ void print_cache_info_by_addr(swaddr_t addr)
 	printf("not found in cache!\n");
 }
 
-static void cpu_cache_read(hwaddr_t addr, void *data) {
+static void cpu_cache_read(hwaddr_t addr, void *data, size_t len) {
 	cache_addr temp;
 	temp.addr = addr;
 	uint32_t memmark = temp.memmark;
 	uint32_t setnum = temp.setnum;
+	uint32_t offset = addr & CACHE_MASK;
 	/* uint32_t inaddr = temp.inaddr;*//* not used */
 
 	int i, valid_inset = -1, reading_i = -1;
@@ -127,7 +128,7 @@ static void cpu_cache_read(hwaddr_t addr, void *data) {
 	memory_access_time += 2;
 #endif
 	cachebufs[setnum][reading_i].valid = true;	
-	memcpy(data, cachebufs[setnum][reading_i].buf, NR_BLOCKSIZE);
+	memcpy(data, cachebufs[setnum][reading_i].buf + offset, len);
 }
 
 static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
@@ -173,14 +174,18 @@ static void cpu_cache_write(hwaddr_t addr, uint8_t *data, uint8_t *mask)
 
 uint32_t cache_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & CACHE_MASK;
-	uint8_t temp[2 * NR_BLOCKSIZE];
+	uint8_t temp[4];
+	int diff = offset + len - NR_BLOCKSIZE;
 
-	cpu_cache_read(addr, temp);
-
-	if(offset + len > NR_BLOCKSIZE)
+	if(diff > 0)
 	{
 		/* data cross the burst boundary */
-		cpu_cache_read(addr + NR_BLOCKSIZE, temp + NR_BLOCKSIZE);
+		cpu_cache_read(addr, temp, diff);
+		cpu_cache_read((addr + NR_BLOCKSIZE)&~CACHE_MASK, temp + len - diff, diff);
+	}
+	else
+	{
+		cpu_cache_read(addr, temp, len);
 	}
 
 #ifdef DEBUG_CACHE_READ

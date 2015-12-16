@@ -42,8 +42,10 @@ bool tlb_read(uint32_t addr, uint32_t *page_frame)
 	return false;
 }
 
-inline void write_tlb(uint32_t index, uint32_t page_frame)
+inline void tlb_write(uint32_t addr, uint32_t page_frame)
 {
-	tlbbufs[index].valid = true;
-	tlbbufs[index].page_frame = page_frame;
+	TLB_ADDR tlbaddr;
+	tlbaddr.val = addr;
+	tlbbufs[tlbaddr.index].valid = true;
+	tlbbufs[tlbaddr.index].page_frame = page_frame;
 }

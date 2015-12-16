@@ -18,6 +18,9 @@ Operands ops_decoded;
 
 void ExecLog();
 inline void stop_nemu();
+bool tlb_read(uint32_t addr, uint32_t *page_frame);
+inline void tlb_write(uint32_t addr, uint32_t page_frame);
+
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 {
@@ -54,13 +57,20 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg)
 
 hwaddr_t page_translate(lnaddr_t addr)
 {
+	PDE pdir;
+	PTE ptable;
+	uint32_t page_frame;
 	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
 		return addr;
 	PageAddr pageaddr;
 	pageaddr.val = addr;
 
+	if(tlb_read(addr, &page_frame))
+	{
+		return (page_frame << 12) | pageaddr.off;
+	}
+
 	/* read page dir */
-	PDE pdir;
 	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) | pageaddr.pagedir * 4, 4);
 
 	if(!pdir.present)
@@ -70,7 +80,6 @@ hwaddr_t page_translate(lnaddr_t addr)
 	}
 	assert(pdir.present);
 
-	PTE ptable;
 	ptable.val = hwaddr_read((pdir.page_frame << 12) | pageaddr.pagetab * 4, 4);
 	if(!ptable.present)
 	{
@@ -82,6 +91,8 @@ hwaddr_t page_translate(lnaddr_t addr)
 		printf("lnaddr:0x%x\n", (pdir.page_frame << 12) + pageaddr.pagetab * 4);
 	}
 	assert(ptable.present);
+
+	tlb_write(addr, ptable.page_frame);
 
 	/* calc physic address */
 	return (ptable.page_frame << 12) | pageaddr.off;

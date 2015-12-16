@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 void init_monitor(int, char *[]);
 void reg_test();
 void restart();
@@ -13,6 +17,8 @@ extern long long memory_access_time;
 
 
 int main(int argc, char *argv[]) {
+	/* generate seed */
+	srand(time(NULL));
 
 	/* Initialize the monitor. */
 	init_monitor(argc, argv);

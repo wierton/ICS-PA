@@ -22,6 +22,7 @@ void init_page(void) {
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 
+	printx(PHY_MEM / PT_SIZE);
 	/* fill PDEs */
 	for (pdir_idx = 0; pdir_idx < PHY_MEM / PT_SIZE; pdir_idx ++) {
 		pdir[pdir_idx].val = make_pde(ptable);

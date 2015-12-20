@@ -139,7 +139,7 @@ static int cmd_addr(char *args)
 		{
 			/* calc physic address */
 			uint32_t hwaddr = (ptable.page_frame << 12) | pageaddr.off;
-			printf("page:0x%x --> 0x%x\n", lnaddr, hwaddr);
+			printf("page:0x%x --> 0x%x\n\n", lnaddr, hwaddr);
 		
 		}
 	}

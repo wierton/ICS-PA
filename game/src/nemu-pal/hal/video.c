@@ -7,7 +7,7 @@
 
 int get_fps();
 
-void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect, 
+void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, 
 		SDL_Surface *dst, SDL_Rect *dstrect) {
 	assert(dst && src);
 
@@ -20,7 +20,42 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect,
 	 * (``srcrect'' is not modified).
 	 */
 
-	assert(0);
+	int i,j;
+	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
+	if(srcrect == NULL || dstrect == NULL)
+	{
+		SrcX = SrcY = DstX = DstY = 0;
+		CopyWidth = src->w < dst->w ? src->w : dst->w;
+		CopyHeight = src->h < dst->h ? src->h : dst->h;
+	}
+	else
+	{
+		int SrcCopyWidth = src->w - srcrect->x;
+		int SrcCopyHeight = src->h - srcrect->y;
+		int DstCopyWidth = dst->w - dstrect->x;
+		int DstCopyHeight = dst->h - dstrect->y;
+		int MinSDWidth = SrcCopyWidth < DstCopyWidth ? SrcCopyWidth : DstCopyWidth;
+		int MinSDHeight = SrcCopyHeight < DstCopyHeight ? SrcCopyHeight : DstCopyHeight;
+		SrcX = srcrect -> x;
+		SrcY = srcrect -> y;
+		DstX = dstrect -> x;
+		DstY = dstrect -> y;
+		CopyWidth = srcrect->w < MinSDWidth ? srcrect->w : MinSDWidth;
+		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
+	}
+
+	for(i = 0; i < CopyWidth; i++)
+	{
+		int SrcPos = i + SrcX + src->w * DstY;
+		int DstPos = i + DstX + dst->w * DstY;
+		for(j = 0; j < CopyHeight; j++)
+		{
+			dst->pixels[DstPos]
+				=src->pixels[SrcPos];
+			SrcPos += src->w;
+			DstPos += dst->w;
+		}
+	}
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -32,7 +67,21 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	 * NULL, fill the whole surface.
 	 */
 
-	assert(0);
+	int i, j;
+	int FillWidth , FillHeight;
+	FillWidth = dst->w - dstrect->x;
+	FillHeight = dst->h - dstrect->y;
+	FillWidth = dstrect -> w < FillWidth ? dstrect->w : FillWidth;
+	FillHeight = dstrect -> h < FillHeight ? dstrect->h : FillHeight;
+	for(i = 0; i < FillWidth; i++)
+	{
+		int DstPos = i + dstrect->x + dst->w *  dstrect->y;
+		for(j = 0; j < FillHeight; j++)
+		{
+			dst->pixels[DstPos] = color;
+			DstPos += dstrect->w;
+		}
+	}
 }
 
 void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
@@ -80,7 +129,7 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
 
 	if(s->flags & SDL_HWSURFACE) {
 		/* TODO: Set the VGA palette by calling write_palette(). */
-		assert(0);
+		write_palette(s->format->palette->colors, s->format->palette->ncolors);
 	}
 }
 

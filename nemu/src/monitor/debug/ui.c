@@ -12,6 +12,7 @@ extern swaddr_t stop_eip;
 
 void cpu_exec(uint32_t);
 
+uint32_t hwaddr_read(hwaddr_t, size_t);
 hwaddr_t page_translate(lnaddr_t addr);
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
 
@@ -98,12 +99,49 @@ static int cmd_addr(char *args)
 	bool IsValid;
 	if(args == NULL) return 0;
 	swaddr_t addr = eval(args, &IsValid);
-	if(IsValid)
+	if(!IsValid)
+		return 0;
+	
+	lnaddr_t lnaddr = seg_translate(addr, 4, R_DS);
+	printf("sreg:0x%x --> 0x%x\n", addr, lnaddr);
+	
+	/* page translate */
+	PDE pdir;
+	PTE ptable;
+	
+	if(!cpu.CR0.protect_enable || !cpu.CR0.paging)
+		return addr;
+	PageAddr pageaddr;
+	pageaddr.val = addr;
+
+	/* read page dir */
+	pdir.val = hwaddr_read((cpu.CR3.page_directory_base << 12) | pageaddr.pagedir * 4, 4);
+
+	if(!pdir.present)
 	{
-		lnaddr_t lnaddr = seg_translate(addr, 4, R_DS);
-		printf("sreg:0x%x --> 0x%x\n", addr, lnaddr);
-		hwaddr_t hwaddr = page_translate(lnaddr);
-		printf("page:0x%x --> 0x%x\n", lnaddr, hwaddr);
+		printf("pdir not present!\n");
+	}
+	else
+	{
+		ptable.val = hwaddr_read((pdir.page_frame << 12) | pageaddr.pagetab * 4, 4);
+	
+		printf("cr3 base:0x%x\n", cpu.CR3.page_directory_base << 12);
+		printf("page dir:0x%x\n", pageaddr.pagedir);
+		printf("page_frame:0x%x\n", pdir.page_frame);
+		printf("logic addr:0x%x\n",addr);
+		printf("lnaddr:0x%x\n", (pdir.page_frame << 12) + pageaddr.pagetab * 4);
+
+		if(!ptable.present)
+		{
+			printf("pdir not present!\n");
+		}
+		else
+		{
+			/* calc physic address */
+			uint32_t hwaddr = (ptable.page_frame << 12) | pageaddr.off;
+			printf("page:0x%x --> 0x%x\n", lnaddr, hwaddr);
+		
+		}
 	}
 
 	return 0;

@@ -32,3 +32,95 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 /* TODO: implement a simplified file system here. */
 
+int prints(char[]);
+int printx(uint32_t);
+
+typedef struct {
+	bool opened;
+	uint32_t offset;
+} Fstate;
+
+Fstate file_state[NR_FILES + 3];
+
+int fs_open(const char *pathname, int flags)
+{
+	int i,j;
+	for(i = 0; i < NR_FILES; i++)
+	{
+		j = 0;
+		while(pathname[j] != 0 && file_table[i].name[j] != 0)
+		{
+			if(pathname[j] != file_table[i].name[j])
+				break;
+			j++;
+		}
+		if(pathname[j] == file_table[i].name[j])
+		{
+			file_state[i + 3].opened = true;
+			file_state[i + 3].offset = 0;
+			return i + 3;
+		}
+	}
+	prints("error file:");
+	prints((void *)pathname);
+	prints("\n");
+	nemu_assert(0);
+	return -1;
+}
+
+int fs_read(int fd, void *buf, int len)
+{
+	if(fd < 0 || fd >= NR_FILES)
+		return -1;
+	if(file_state[fd + 3].opened == false)
+		return -1;
+	int end_pos = len + file_state[fd + 3].offset;
+	if(end_pos > file_table[fd].size)
+		len = file_table[fd].size - file_state[fd + 3].offset;
+	if(len < 0) len = 0;
+	ide_read(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
+
+	file_state[fd + 3].offset += len;
+	return len;
+}
+
+int fs_write(int fd, void *buf, int len)
+{
+	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+		return -1;
+	int end_pos = len + file_state[fd + 3].offset;
+	if(end_pos > file_table[fd].size)
+		len = file_table[fd].size - file_state[fd + 3].offset;
+	if(len < 0) len = 0;
+	ide_write(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
+	file_state[fd + 3].offset += len;
+	return len;
+}
+
+
+int fs_lseek(int fd, int offset, int whence)
+{
+	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+		return 0;
+	switch(whence)
+	{
+		case SEEK_SET:file_state[fd + 3].offset = offset;break;
+		case SEEK_CUR:file_state[fd + 3].offset += offset;break;
+		case SEEK_END:
+					  file_state[fd + 3].offset += offset;
+					  break; 
+	}
+	if(file_state[fd + 3].offset > file_table[fd].size)
+		file_state[fd + 3].offset = file_table[fd].size;
+
+	return file_state[fd + 3].offset;
+}
+
+
+int fs_close(int fd)
+{
+	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+		return -1;
+	file_state[fd + 3].opened = false;
+	return 0;
+}

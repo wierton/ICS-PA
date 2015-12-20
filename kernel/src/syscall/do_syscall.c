@@ -17,6 +17,12 @@ void serial_printc(char ch);
 int prints(char []);
 int printx(uint32_t);
 
+int fs_open(const char *pathname, int flags);
+int fs_read(int fd, void *buf, int len);
+int fs_write(int fd, void *buf, int len);
+int fs_lseek(int fd, int offset, int whence);
+int fs_close(int fd);
+
 void do_syscall(TrapFrame *tf) {
 	int i;
 	switch(tf->eax) {
@@ -35,12 +41,38 @@ void do_syscall(TrapFrame *tf) {
 
 		/* TODO: Add more system calls. */
 		case SYS_write:
-			for(i=0;i<tf->edx;i++)
+			if(tf->ebx == 0x1 || tf->ebx == 0x2)
+				for(i=0;i<tf->edx;i++)
+				{
+					serial_printc(*(char *)(tf->ecx + i));
+					if(*(char *)(tf->ecx + i) == '\n')
+						break;
+				}
+			else
 			{
-				serial_printc(*(char *)(tf->ecx + i));
+				tf->eax = fs_write(tf->ebx - 3, (void *)tf->ecx, tf->edx);
 			}
-/*			asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
+			/*asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
 			break;
+		case SYS_read:
+			if(tf->ebx >= 0x3)
+			{
+				tf->eax = fs_read(tf->ebx - 3, (void *)tf->ecx, tf->edx);
+			}
+			break;
+		case SYS_lseek:
+			tf->eax = fs_lseek(tf->ebx - 3, tf->ecx, tf->edx);
+			break;
+		case SYS_close:
+			tf->eax = fs_close(tf->ecx - 3);
+			break;
+		case SYS_open:
+			prints("open:");
+			prints((void*)tf->ebx);prints(",");
+			tf->eax = fs_open((void *)tf->ebx, 0);
+			printx(tf->eax);prints("\n");
+			break;
+
 
 		default: panic("Unhandled system call: id = %d", tf->eax);
 	}

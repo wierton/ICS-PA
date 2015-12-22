@@ -114,10 +114,6 @@ void cpu_exec(volatile uint32_t n) {
 		total_eips ++;
 		if(cpu.eip >= start_addr && cpu.eip <= end_addr)
 			local_eips ++;
-		if(nemu_state == END)
-		{
-			printf("local(%llu) in total(%llu)\n", local_eips, total_eips);
-		}
 
 		cpu.eip += instr_len;
 

@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "common.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -15,6 +15,7 @@ void ui_mainloop();
 extern long long memory_access_time;
 #endif
 
+extern uint64_t local_eips, total_eips;
 
 int main(int argc, char *argv[]) {
 	/* generate seed */
@@ -37,6 +38,8 @@ int main(int argc, char *argv[]) {
 #ifdef DEBUG_CACHE_TIME_CALC
 	printf("Total memory access time:%lld\n", memory_access_time);
 #endif
+
+	printf("local(%llu) in total (%llu)\n", local_eips, total_eips);
 
 	return 0;
 }

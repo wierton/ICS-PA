@@ -44,7 +44,6 @@ void do_syscall(TrapFrame *tf) {
 			if(tf->ebx == 0x1 || tf->ebx == 0x2)
 				for(i=0;i<tf->edx;i++)
 				{
-					prints((void *)(tf->ecx + i));
 					serial_printc(*(char *)(tf->ecx + i));
 					prints(" ");
 				}

@@ -45,7 +45,6 @@ void do_syscall(TrapFrame *tf) {
 				for(i=0;i<tf->edx;i++)
 				{
 					serial_printc(*(char *)(tf->ecx + i));
-					prints(" ");
 				}
 			else
 			{

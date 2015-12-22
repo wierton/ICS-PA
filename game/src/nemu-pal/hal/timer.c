@@ -25,7 +25,7 @@ timer_event(void) {
 
 uint32_t SDL_GetTicks() {
 	/* TODO: Return the time in millisecond. */
-	return jiffy/100;
+	return jiffy * 100;
 }
 
 void SDL_Delay(uint32_t ms) {

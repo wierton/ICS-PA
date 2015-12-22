@@ -11,7 +11,6 @@ void ui_mainloop();
 /* #define DEBUG_CACHE_TIME_CALC */
 
 #ifdef DEBUG_CACHE_TIME_CALC
-#include <stdio.h>
 extern long long memory_access_time;
 #endif
 

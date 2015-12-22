@@ -9,6 +9,8 @@
 #include <readline/history.h>
 
 extern swaddr_t stop_eip;
+extern uint32_t start_addr;
+extern uint32_t end_addr;
 
 void cpu_exec(uint32_t);
 
@@ -16,6 +18,7 @@ uint32_t hwaddr_read(hwaddr_t, size_t);
 hwaddr_t page_translate(lnaddr_t addr);
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
 
+int find_func_addr(char *, uint32_t *, uint32_t*);
 void print_cache_info_by_addr(swaddr_t addr);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
@@ -69,6 +72,8 @@ static int cmd_addr(char *args);
 
 static int cmd_xp(char *args);
 
+static int cmd_record(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -89,10 +94,26 @@ static struct {
 	{ "cache", "printf cache info by address", cmd_cache},
 	{ "b", "break eip", cmd_b},
 	{ "addr", "addr", cmd_addr},
-	{ "xp", "xp", cmd_xp}
+	{ "xp", "xp", cmd_xp},
+	{ "record", "record", cmd_record}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+static int cmd_record(char *args)
+{
+	if(args == NULL)
+		return 0;
+	find_func_addr(args, &start_addr, &end_addr);
+	if(!start_addr)
+	{
+		printf("function not found!\n");
+		return 0;
+	}
+	printf("record func:%s\n", args);
+	printf("from 0x%x to 0x%x\n", start_addr, end_addr);
+	return 0;
+}
 
 static int cmd_addr(char *args)
 {

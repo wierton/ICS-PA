@@ -13,6 +13,10 @@
 swaddr_t stop_eip = 0;
 int nemu_state = STOP;
 
+uint64_t total_eips = 0,local_eips = 0;
+uint32_t start_addr;
+uint32_t end_addr;
+
 int exec(swaddr_t);
 
 char assembly[80];
@@ -106,6 +110,14 @@ void cpu_exec(volatile uint32_t n) {
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
+
+		total_eips ++;
+		if(cpu.eip >= start_addr && cpu.eip <= end_addr)
+			local_eips ++;
+		if(nemu_state == END)
+		{
+			printf("local(%llu) in total(%llu)\n", local_eips, total_eips);
+		}
 
 		cpu.eip += instr_len;
 

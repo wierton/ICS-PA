@@ -150,6 +150,26 @@ swaddr_t find_var(char symbol[])
 	return 0;
 }
 
+int find_func_addr(char *func_name, uint32_t *start_addr, uint32_t *end_addr)
+{
+	int i;
+	for(i = 0;i < nr_symtab_entry;i++)
+	{
+		if(strcmp(func_name, strtab + symtab[i].st_name) == 0)
+		{
+			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
+			{
+				*start_addr = symtab[i].st_value;
+				*end_addr = symtab[i].st_value + symtab[i].st_size;
+				return 0;
+			}
+		}
+	}
+	*start_addr = 0;
+	*end_addr = 0;
+	return 0;
+}
+
 int find_func(swaddr_t func_addr, char *func_name)
 {
 	int i;

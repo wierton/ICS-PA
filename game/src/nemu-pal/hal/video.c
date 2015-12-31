@@ -47,18 +47,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	CopyHeight = srcrect->h;
 	}
 
-	for(i = 0; i < CopyWidth; i++)
+	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
+	int DstPos = 0 + DstX + dst->w * (0 + DstY);
+	for(j = 0; j < CopyHeight; j++)
 	{
-		int SrcPos = i + SrcX + src->w * DstY;
-		int DstPos = i + DstX + dst->w * DstY;
-		for(j = 0; j < CopyHeight; j++)
+		for(i = 0; i < CopyWidth; i++)
 		{
 			dst->pixels[DstPos]
 				=src->pixels[SrcPos];
-			SrcPos += src->w;
-			DstPos += dst->w;
+			SrcPos ++;
+			DstPos ++;
 		}
+		SrcPos = SrcPos - CopyWidth + src->w;
+		DstPos = DstPos - CopyWidth + dst->w;
 	}
+
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

@@ -8,6 +8,7 @@
 void stop_nemu();
 make_helper(iret)
 {
+	stop_nemu();
 	const uint32_t data_byte = 4;
 	cpu.eip = swaddr_read(cpu.esp, data_byte, R_SS);
 	cpu.esp += data_byte;
@@ -17,6 +18,7 @@ make_helper(iret)
 	cpu.esp += data_byte;
 
 	print_asm("iret 0x%x", cpu.eip);
+	printf("iret 0x%x", cpu.eip);
 	stop_nemu();
 	cpu.eip -= 1;
 	cpu.IF = 1;

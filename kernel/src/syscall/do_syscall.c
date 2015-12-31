@@ -41,6 +41,7 @@ void do_syscall(TrapFrame *tf) {
 
 		/* TODO: Add more system calls. */
 		case SYS_write:
+			printx(tf->eip);
 			prints("######\n");
 			nemu_assert(0);
 			if(tf->ebx == 0x1 || tf->ebx == 0x2)

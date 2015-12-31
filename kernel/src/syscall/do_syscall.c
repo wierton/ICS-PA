@@ -49,7 +49,7 @@ void do_syscall(TrapFrame *tf) {
 				{
 					serial_printc(*(char *)(tf->ecx + i));
 				}
-				nemu_assert(0);
+				tf->eax = tf->edx;
 			}
 			else
 			{

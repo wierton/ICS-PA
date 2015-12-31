@@ -10,7 +10,10 @@ make_helper(iret)
 {
 	stop_nemu();
 	const uint32_t data_byte = 4;
+
+	printf("iret 0x%x", cpu.eip);
 	cpu.eip = swaddr_read(cpu.esp, data_byte, R_SS);
+	printf("iret 0x%x", cpu.eip);
 	cpu.esp += data_byte;
 	cpu.CS.val = swaddr_read(cpu.esp, data_byte, R_SS);
 	cpu.esp += data_byte;

@@ -47,6 +47,7 @@ make_helper(int_i_b)
 	/* get the entry addr */
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
+	printf("int $0x%x\neip:0x%x\n", no, cpu.eip);
 	cpu.eip = EntryAddr - len;
 	printf("int $0x%x\neip:0x%x\n", no, cpu.eip);
 	print_asm("int $0x%x", no);

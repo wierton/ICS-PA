@@ -21,6 +21,21 @@ make_helper(ret_w)
 	print_asm("ret $0x%x",op_src->val);
 	return len + 1;
 }
+
+make_helper(iret)
+{
+	const uint32_t data_byte = 4;
+	cpu.eip = swaddr_read(cpu.esp, data_byte, R_SS);
+	cpu.esp += data_byte;
+	cpu.CS.val = swaddr_read(cpu.esp, data_byte, R_SS);
+	cpu.esp += data_byte;
+	cpu.EFLAGS = swaddr_read(cpu.esp, data_byte, R_SS);
+	cpu.esp += data_byte;
+
+	cpu.eip -= 1;
+	cpu.IF = 1;
+	return 1;
+}
 #endif
 
 #include "cpu/exec/template-end.h"

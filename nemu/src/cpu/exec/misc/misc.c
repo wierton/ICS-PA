@@ -19,7 +19,7 @@ make_helper(int3) {
 
 make_helper(int_i_b)
 {
-	cpu.IF = 0;
+//	cpu.IF = 0;
 
 	GateDesc gd;
 	int len = 2;

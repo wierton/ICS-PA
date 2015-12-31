@@ -5,7 +5,7 @@
 #undef DATA_BYTE
 
 /* for instruction encoding overloading */
-
+void stop_nemu();
 make_helper(iret)
 {
 	const uint32_t data_byte = 4;
@@ -17,6 +17,7 @@ make_helper(iret)
 	cpu.esp += data_byte;
 
 	print_asm("iret 0x%x", cpu.eip);
+	stop_nemu();
 	cpu.eip -= 1;
 	cpu.IF = 1;
 	return 1;

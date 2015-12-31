@@ -52,6 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
+### USERPROG := obj/testcase/printf
 USERPROG := $(game_BIN)
 ### USERPROG := obj/testcase/hello
 

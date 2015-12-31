@@ -5,11 +5,12 @@
 static void do_eflags_execute(bool flag,int diplacement,char jcc_flagstr[])
 {
 	DATA_TYPE_S eip_dis = op_src->val;
+	DATA_TYPE eip_tmp = cpu.eip + eip_dis;
 	if(flag)
 	{
 		cpu.eip = cpu.eip + eip_dis;
 	}
-	print_asm("%s $0x%x",jcc_flagstr,cpu.eip + diplacement);
+	print_asm("%s $0x%x",jcc_flagstr, eip_tmp + diplacement);
 }
 
 

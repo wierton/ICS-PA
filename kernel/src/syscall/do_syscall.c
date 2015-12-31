@@ -41,17 +41,12 @@ void do_syscall(TrapFrame *tf) {
 
 		/* TODO: Add more system calls. */
 		case SYS_write:
-			printx(tf->eip);
-			prints("######\n");
-			nemu_assert(0);
+			//prints("######\n");
 			if(tf->ebx == 0x1 || tf->ebx == 0x2)
-			{
 				for(i=0;i<tf->edx;i++)
 				{
 					serial_printc(*(char *)(tf->ecx + i));
 				}
-				nemu_assert(0);
-			}
 			else
 			{
 				tf->eax = fs_write(tf->ebx - 3, (void *)tf->ecx, tf->edx);

@@ -16,6 +16,7 @@ make_helper(iret)
 	cpu.EFLAGS = swaddr_read(cpu.esp, data_byte, R_SS);
 	cpu.esp += data_byte;
 
+	printf("iret,eip:0x%x\n", cpu.eip);
 	cpu.eip -= 1;
 	cpu.IF = 1;
 	return 1;

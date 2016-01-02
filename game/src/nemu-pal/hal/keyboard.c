@@ -42,7 +42,7 @@ keyboard_event(void) {
 	switch(scancode & 0x7f)
 	{
 		case 0x48:target_key = K_UP;break;
-		case 0xd0:target_key = K_DOWN;break;
+		case 0x50:target_key = K_DOWN;break;
 		case 0x4b:target_key = K_LEFT;break;
 		case 0x4d:target_key = K_RIGHT;break;
 		case 0x01:target_key = K_ESCAPE;break;

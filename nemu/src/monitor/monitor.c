@@ -116,7 +116,7 @@ void restart() {
 	cpu.GDTR.limit = cpu.LDTR.limit = cpu.IDTR.limit = 0xffff;
 
 	/* Initialize DRAM. */
-	init_ddr3();
+/*	init_ddr3();*/
 
 	/* Initialize Cache. */
 	init_cache();

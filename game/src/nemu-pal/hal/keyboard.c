@@ -30,7 +30,7 @@ keyboard_event(void) {
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
-	Log("scancode:0x%x\n", scancode);
+	Log("scancode:0x%x\n", scancode&0x7f);
 
 	for(i=0;i<NR_KEYS;i++)
 	{
@@ -55,7 +55,7 @@ keyboard_event(void) {
 		case 0x20:target_key = K_d;break;
 		case 0x12:target_key = K_e;break;
 		case 0x11:target_key = K_w;break;
-		case 0x90:target_key = K_q;break;
+		case 0x10:target_key = K_q;break;
 		case 0x1f:target_key = K_s;break;
 		case 0x21:target_key = K_f;break;
 		case 0x19:target_key = K_p;break;

@@ -36,7 +36,7 @@ uint8_t dram[HW_MEM_SIZE];
 uint8_t *hw_mem = (void *)dram;
 
 uint32_t dram_read(hwaddr_t addr, size_t len) {
-	Assert(addr + 4 < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	Assert(addr + 4 <= HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	uint8_t* temp = dram + addr;
 
@@ -44,7 +44,7 @@ uint32_t dram_read(hwaddr_t addr, size_t len) {
 }
 
 void dram_write(hwaddr_t addr, size_t len, uint32_t data) {
-	Assert(addr + 4 < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	Assert(addr + 4 <= HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	void* temp = dram + addr;
 	switch(len)

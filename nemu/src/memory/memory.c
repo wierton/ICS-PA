@@ -30,17 +30,6 @@ hwaddr_t page_translate(lnaddr_t addr);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-#if defined(DEBUG_CACHE_READ)
-	uint32_t cache_data = cache_read(addr, len) & (~0u >> ((4 - len) << 3));
-	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	if(cache_data != dram_data)
-		printf("data read error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache_data, dram_data);
-#elif defined(DEBUG_CACHE2_READ)
-	uint32_t cache2_data = cache2_read(addr, len) & (~0u >> ((4 - len) << 3));
-	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	if(cache2_data != dram_data)
-		printf("data read error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
-#endif
 	int no = is_mmio(addr);
 	if(no != -1)
 	{
@@ -50,21 +39,6 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-#if defined(DEBUG_CACHE_WRITE)
-	dram_write(addr, len, data);
-	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	cache_write(addr, len, data);
-	uint32_t cache_data = dram_read(addr, len) & (~0u >> ((4 - len)<< 3));
-	if(cache_data != dram_data)
-		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache_data, dram_data);
-#elif defined(DEBUG_CACHE2_WRITE)
-	dram_write(addr, len, data);
-	uint32_t dram_data = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	cache2_write(addr, len, data);
-	uint32_t cache2_data = dram_read(addr, len) & (~0u >> ((4 - len)<< 3));
-	if(cache2_data != dram_data)
-		printf("data write error at 0x%x: (cache)0x%x\t(dram)0x%x\n", addr, cache2_data, dram_data);
-#endif
 	int no = is_mmio(addr);
 	if(no != -1)
 	{

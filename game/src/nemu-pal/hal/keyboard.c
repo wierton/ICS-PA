@@ -43,6 +43,7 @@ keyboard_event(void) {
 			key_state[i] = KEY_STATE_EMPTY;
 		if(target_key == keycode_array[i])
 		{
+			Log("%d:0x%x\n", i, keycode_array[i]);
 			if(updown)
 				key_state[i] = KEY_STATE_RELEASE;
 			else
@@ -87,7 +88,6 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 */
 
 	int i;
-	Log("GetHere");
 	for(i=0;i<NR_KEYS;i++)
 	{
 		if(key_state[i] == KEY_STATE_PRESS)

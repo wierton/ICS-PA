@@ -44,9 +44,9 @@ keyboard_event(void) {
 		if(target_key == keycode_array[i])
 		{
 			if(updown)
-				key_state[target_key] = KEY_STATE_RELEASE;
+				key_state[i] = KEY_STATE_RELEASE;
 			else
-				key_state[target_key] = KEY_STATE_PRESS;
+				key_state[i] = KEY_STATE_PRESS;
 		}
 	}
 }

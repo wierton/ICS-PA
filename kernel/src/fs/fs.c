@@ -90,6 +90,9 @@ int fs_read(int fd, void *buf, int len)
 		printx(fd);
 		prints(" read exceed the boundary!\n");
 		printx(len);
+		prints(" ");
+		printx(file_state[fd + 3].offset);
+		prints("\n");
 	//	printx();
 		nemu_assert(0);
 	//	len = file_table[fd].size - file_state[fd + 3].offset;

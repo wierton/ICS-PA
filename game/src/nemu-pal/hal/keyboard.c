@@ -23,7 +23,7 @@ keyboard_event(void) {
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
 //	nemu_assert(0);
-	Log("scancode:0x%x\n", scancode);
+//	Log("scancode:0x%x\n", scancode);
 
 	target_key = scancode & 0x7f;
 

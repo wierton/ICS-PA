@@ -76,7 +76,12 @@ int fs_read(int fd, void *buf, int len)
 		return -1;
 	int end_pos = len + file_state[fd + 3].offset;
 	if(end_pos > file_table[fd].size)
+	{
+		printx(fd);
+		prints(" read exceed the boundary!\n");
+		nemu_assert(0);
 		len = file_table[fd].size - file_state[fd + 3].offset;
+	}
 	if(len < 0) len = 0;
 	ide_read(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
 
@@ -87,10 +92,20 @@ int fs_read(int fd, void *buf, int len)
 int fs_write(int fd, void *buf, int len)
 {
 	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+	{
+		printx(fd);
+		prints(" write exceed the boundary!\n");
+		nemu_assert(0);
 		return -1;
+	}
 	int end_pos = len + file_state[fd + 3].offset;
 	if(end_pos > file_table[fd].size)
+	{
+		printx(fd);
+		prints(" write exceed the boundary!\n");
+		nemu_assert(0);
 		len = file_table[fd].size - file_state[fd + 3].offset;
+	}
 	if(len < 0) len = 0;
 	ide_write(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
 	file_state[fd + 3].offset += len;
@@ -101,7 +116,12 @@ int fs_write(int fd, void *buf, int len)
 int fs_lseek(int fd, int offset, int whence)
 {
 	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+	{
+		printx(fd);
+		prints(" lseek exceed the boundary!\n");
+		nemu_assert(0);
 		return 0;
+	}
 	switch(whence)
 	{
 		case SEEK_SET:file_state[fd + 3].offset = offset;break;
@@ -111,8 +131,12 @@ int fs_lseek(int fd, int offset, int whence)
 					  break; 
 	}
 	if(file_state[fd + 3].offset > file_table[fd].size)
+	{
+		printx(fd);
+		prints(" lseek exceed the boundary!\n");
+		nemu_assert(0);
 		file_state[fd + 3].offset = file_table[fd].size;
-
+	}
 	return file_state[fd + 3].offset;
 }
 

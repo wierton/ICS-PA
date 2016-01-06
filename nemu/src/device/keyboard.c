@@ -22,7 +22,7 @@ void keyboard_intr(uint8_t scancode) {
 		i8042_data_port_base[0] = scancode;
 		i8259_raise_intr(KEYBOARD_IRQ);
 		calc_time = 0;
-/*		newkey = true;*/
+		newkey = true;
 	}
 
 	old_key = scancode;

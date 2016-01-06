@@ -12,15 +12,7 @@ static const int keycode_array[] = {
 	K_s, K_f, K_p
 };
 
-/* K_UP,     K_DOWN,   K_LEFT,   K_RIGHT,  K_ESCAPE */
-/* 0x48/0xc8 0xd0/0x50 0x4b/0xcb 0x4d/0xcd 0x1/0x81 */
-/* K_RETURN, K_SPACE,  K_PAGEUP, K_PAGEDOWN, K_r */
-/* 0x1c/0x9c 0x39/0xb9 0x49/0xc9 0x51/0xd1   0x13/0x93*/
-/* K_a,      K_d,      K_e,      K_w,      K_q */
-/* 0x1e/0x9e 0x20/0xa0 0x12/0x92 0x11/0x91 0x90/0x10*/
-/* K_s,      K_f,      K_p */
-/* 0x1f/0x9f 0x21/0xa1 0x19/0x99 */
-static int key_state[NR_KEYS];
+static int key_state[NR_KEYS] = {0};
 
 void
 keyboard_event(void) {
@@ -43,7 +35,6 @@ keyboard_event(void) {
 			key_state[i] = KEY_STATE_EMPTY;
 		if(target_key == keycode_array[i])
 		{
-			Log("%d:0x%x\n", i, keycode_array[i]);
 			if(updown)
 				key_state[i] = KEY_STATE_RELEASE;
 			else
@@ -90,7 +81,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	int i;
 	for(i=0;i<NR_KEYS;i++)
 	{
-		if(key_state[i] == KEY_STATE_PRESS)
+		if(key_state[i] == KEY_STATE_RELEASE)
 		{
 			Log("0x%x,0x%x\n", keycode_array[i], K_RETURN);
 			key_press_callback(keycode_array[i]);

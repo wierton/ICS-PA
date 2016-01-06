@@ -488,9 +488,9 @@ PAL_SplashScreen(
       //
       // Delay a while...
       //
-	  Log("Get here***");
-/*      PAL_ProcessEvent();
-      while (SDL_GetTicks() - dwBeginTime < dwTime + 85)
+
+      PAL_ProcessEvent();
+/*      while (SDL_GetTicks() - dwBeginTime < dwTime + 85)
       {
          SDL_Delay(1);
          PAL_ProcessEvent();

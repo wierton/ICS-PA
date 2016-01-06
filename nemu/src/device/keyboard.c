@@ -17,7 +17,7 @@ void keyboard_intr(uint8_t scancode) {
 	else
 		calc_time ++;
 
-	if(nemu_state == RUNNING && newkey == false &&calc_time == 20) 
+	if(nemu_state == RUNNING && newkey == false &&calc_time == 200) 
 	{
 		i8042_data_port_base[0] = scancode;
 		i8259_raise_intr(KEYBOARD_IRQ);

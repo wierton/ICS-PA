@@ -71,16 +71,28 @@ int fs_open(const char *pathname, int flags)
 int fs_read(int fd, void *buf, int len)
 {
 	if(fd < 0 || fd >= NR_FILES)
+	{
+		printx(fd);
+		prints(" read file not exist!\n");
+		nemu_assert(0);
 		return -1;
+	}
 	if(file_state[fd + 3].opened == false)
+	{
+		printx(fd);
+		prints(" read file not open!\n");
+		nemu_assert(0);
 		return -1;
+	}
 	int end_pos = len + file_state[fd + 3].offset;
 	if(end_pos > file_table[fd].size)
 	{
 		printx(fd);
 		prints(" read exceed the boundary!\n");
+		printx(len);
+	//	printx();
 		nemu_assert(0);
-		len = file_table[fd].size - file_state[fd + 3].offset;
+	//	len = file_table[fd].size - file_state[fd + 3].offset;
 	}
 	if(len < 0) len = 0;
 	ide_read(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
@@ -94,7 +106,7 @@ int fs_write(int fd, void *buf, int len)
 	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
 	{
 		printx(fd);
-		prints(" write exceed the boundary!\n");
+		prints(" write file not exist or not open!\n");
 		nemu_assert(0);
 		return -1;
 	}
@@ -118,7 +130,7 @@ int fs_lseek(int fd, int offset, int whence)
 	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
 	{
 		printx(fd);
-		prints(" lseek exceed the boundary!\n");
+		prints(" lseek file not exist or not open!\n");
 		nemu_assert(0);
 		return 0;
 	}

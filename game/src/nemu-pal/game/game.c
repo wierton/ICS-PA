@@ -129,6 +129,7 @@ PAL_GameMain(
       //
       // Run the main frame routine.
       //
+	  Log("here");
       PAL_StartFrame();
    }
 }

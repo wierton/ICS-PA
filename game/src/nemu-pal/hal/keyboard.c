@@ -91,6 +91,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	{
 		if(key_state[i] == KEY_STATE_PRESS)
 		{
+			Log("0x%x,0x%x\n", keycode_array[i], K_RETURN);
 			key_press_callback(keycode_array[i]);
 			return true;
 		}

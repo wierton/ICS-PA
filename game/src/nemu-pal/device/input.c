@@ -342,7 +342,6 @@ PAL_PollEvent(
 
 --*/
 {
-	Log("GetHere");
 	/* in qemupal, we only have keyboard event */
 	return process_keys(PAL_KeyPressHandler, PAL_KeyReleaseHandler);
 }

@@ -80,6 +80,7 @@ PAL_GameMain(
    //
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
 
+   Log("her");
    //
    // Initialize game data and set the flags to load the game resources.
    //

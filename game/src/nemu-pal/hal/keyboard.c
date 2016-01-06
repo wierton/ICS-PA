@@ -30,8 +30,10 @@ keyboard_event(void) {
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
-	nemu_assert(0);
+//	nemu_assert(0);
 	Log("scancode:0x%x\n", scancode);
+
+	target_key = scancode & 0x7f;
 
 	for(i=0;i<NR_KEYS;i++)
 	{
@@ -39,33 +41,14 @@ keyboard_event(void) {
 			key_state[i] = KEY_STATE_WAIT_RELEASE;
 		if(key_state[i] == KEY_STATE_RELEASE)
 			key_state[i] = KEY_STATE_EMPTY;
+		if(target_key == keycode_array[i])
+		{
+			if(updown)
+				key_state[target_key] = KEY_STATE_RELEASE;
+			else
+				key_state[target_key] = KEY_STATE_PRESS;
+		}
 	}
-	switch(scancode & 0x7f)
-	{
-		case 0x48:target_key = K_UP;break;
-		case 0x50:target_key = K_DOWN;break;
-		case 0x4b:target_key = K_LEFT;break;
-		case 0x4d:target_key = K_RIGHT;break;
-		case 0x01:target_key = K_ESCAPE;break;
-		case 0x1c:target_key = K_RETURN;break;
-		case 0x39:target_key = K_SPACE;break;
-		case 0x49:target_key = K_PAGEUP;break;
-		case 0x51:target_key = K_PAGEDOWN;break;
-		case 0x13:target_key = K_r;break;
-		case 0x1e:target_key = K_a;break;
-		case 0x20:target_key = K_d;break;
-		case 0x12:target_key = K_e;break;
-		case 0x11:target_key = K_w;break;
-		case 0x10:target_key = K_q;break;
-		case 0x1f:target_key = K_s;break;
-		case 0x21:target_key = K_f;break;
-		case 0x19:target_key = K_p;break;
-		default:return;
-	}
-	if(updown)
-		key_state[target_key] = KEY_STATE_RELEASE;
-	else
-		key_state[target_key] = KEY_STATE_PRESS;
 }
 
 static inline int
@@ -108,12 +91,12 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	{
 		if(key_state[i] == KEY_STATE_PRESS)
 		{
-			key_press_callback(i);
+			key_press_callback(keycode_array[i]);
 			return true;
 		}
 		if(key_state[i] == KEY_STATE_RELEASE)
 		{
-			key_release_callback(i);
+			key_release_callback(keycode_array[i]);
 			return true;
 		}
 	}

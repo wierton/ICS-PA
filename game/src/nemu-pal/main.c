@@ -488,13 +488,14 @@ PAL_SplashScreen(
       //
       // Delay a while...
       //
-      PAL_ProcessEvent();
+	  Log("Get here***");
+/*      PAL_ProcessEvent();
       while (SDL_GetTicks() - dwBeginTime < dwTime + 85)
       {
          SDL_Delay(1);
          PAL_ProcessEvent();
       }
-   }
+ */  }
 
    SDL_FreeSurface(lpBitmapDown);
    SDL_FreeSurface(lpBitmapUp);
@@ -576,9 +577,7 @@ main_loop() {
    //
    // Show the trademark screen and splash screen
    //
-   cli();
    PAL_TrademarkScreen();
-   sti();
    PAL_SplashScreen();
 
    //

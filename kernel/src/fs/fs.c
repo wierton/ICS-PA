@@ -142,16 +142,10 @@ int fs_lseek(int fd, int offset, int whence)
 		case SEEK_SET:file_state[fd + 3].offset = offset;break;
 		case SEEK_CUR:file_state[fd + 3].offset += offset;break;
 		case SEEK_END:
-					  file_state[fd + 3].offset += offset;
+					  file_state[fd + 3].offset = file_table[fd].size + offset;
 					  break; 
 	}
-	if(file_state[fd + 3].offset > file_table[fd].size)
-	{
-		printx(fd);
-		prints(" lseek exceed the boundary!\n");
-		nemu_assert(0);
-		file_state[fd + 3].offset = file_table[fd].size;
-	}
+	
 	return file_state[fd + 3].offset;
 }
 

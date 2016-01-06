@@ -79,22 +79,23 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 */
 
 	int i;
+	bool ret = false;
 	for(i=0;i<NR_KEYS;i++)
 	{
 		if(key_state[i] == KEY_STATE_PRESS)
 		{
 			//Log("0x%x,0x%x\n", keycode_array[i], K_RETURN);
 			key_press_callback(keycode_array[i]);
-			return true;
+			ret = true;
 		}
 		if(key_state[i] == KEY_STATE_RELEASE)
 		{
 			key_release_callback(keycode_array[i]);
-			return true;
+			ret = true;
 		}
 		clear_key(i);
 	}
 	
 	sti();
-	return false;
+	return ret;
 }

@@ -6,6 +6,7 @@ make_helper(int3);
 make_helper(int_i_b);
 make_helper(lea);
 make_helper(cdq);
+make_helper(cwt);
 
 make_helper(fldz);
 make_helper(fstpl);

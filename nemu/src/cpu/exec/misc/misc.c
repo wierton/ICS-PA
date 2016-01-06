@@ -9,6 +9,14 @@ make_helper(nop) {
 	return 1;
 }
 
+make_helper(cwt)
+{
+	int16_t val = cpu.ax;
+	int32_t val_32 = val;
+	cpu.eax = val_32;
+	return 1;
+}
+
 make_helper(int3) {
 	void do_int3();
 	do_int3();

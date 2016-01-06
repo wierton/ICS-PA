@@ -244,7 +244,7 @@ PAL_GetWord(
 
    if (wNumWord >= g_TextLib.nWords)
    {
-	   Log("asd");
+	   Log("0x%x\n", g_TextLib.nWords);
       return NULL;
    }
 

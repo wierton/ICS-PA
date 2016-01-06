@@ -30,7 +30,7 @@ keyboard_event(void) {
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
-//	Log("scancode:0x%x\n", scancode);
+	Log("scancode:0x%x\n", scancode);
 
 	for(i=0;i<NR_KEYS;i++)
 	{

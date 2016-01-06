@@ -90,7 +90,6 @@ PAL_KeyPressHandler(
 
 		case K_RETURN:
 		case K_SPACE:
-			Log("Get here");
 			g_InputState.dwKeyPress |= kKeySearch;
 			break;
 

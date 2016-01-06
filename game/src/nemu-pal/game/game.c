@@ -78,6 +78,7 @@ PAL_GameMain(
    //
    // Show the opening menu.
    //
+   Log("her");
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
 
    Log("her");

@@ -576,7 +576,9 @@ main_loop() {
    //
    // Show the trademark screen and splash screen
    //
+   cli();
    PAL_TrademarkScreen();
+   sti();
    PAL_SplashScreen();
 
    //

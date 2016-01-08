@@ -89,7 +89,7 @@ make_helper(nemu_acc)
 	uint32_t *p = (uint32_t *)(&ac);
 	for(i = 0; i < 10; i++)
 	{
-		*(p + i) = swaddr_read(cpu.eax, 4, R_DS);
+		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
 	printf("ac.sx:%d\n", ac.sx);
 

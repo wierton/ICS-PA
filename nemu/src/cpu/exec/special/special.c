@@ -91,6 +91,7 @@ make_helper(nemu_acc)
 	{
 		*(p + i) = swaddr_read(cpu.eax, 4, R_DS);
 	}
+	printf("ac.sx:%d\n", ac.sx);
 
 	return 1;
 }

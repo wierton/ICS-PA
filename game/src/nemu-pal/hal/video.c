@@ -57,6 +57,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
 	int DstPos = 0 + DstX + dst->w * (0 + DstY);
 	asm volatile (".byte 0xd7" : : "a"(&ac));
+	Log("%d\n\n", ac.sx);
 	for(j = 0; j < CopyHeight; j++)
 	{
 		for(i = 0; i < CopyWidth; i++)

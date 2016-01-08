@@ -7,6 +7,10 @@
 
 int get_fps();
 
+typedef struct {
+	uint32_t sw,dw,sp,dp,sx,sy,dx,dy,cw,ch;
+} ACC;
+
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, 
 		SDL_Surface *dst, SDL_Rect *dstrect) {
 	assert(dst && src);
@@ -44,10 +48,15 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
 	}
 
-	CopyHeight = 0;
-	CopyWidth = 0;
+	ACC ac;
+	ac.sx = SrcX; ac.sy = SrcY; ac.dx = DstX; ac.dy = DstY;
+	ac.sp = (uint32_t)(src->pixels);
+	ac.dp = (uint32_t)(dst->pixels);
+	ac.cw = CopyWidth; ac.ch = CopyHeight;
+	ac.sw = src->w; ac.dw = dst->w;
 	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
 	int DstPos = 0 + DstX + dst->w * (0 + DstY);
+	asm volatile (".byte 0xd7" : : "a"(&ac));
 	for(j = 0; j < CopyHeight; j++)
 	{
 		for(i = 0; i < CopyWidth; i++)

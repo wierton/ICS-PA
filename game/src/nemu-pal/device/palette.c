@@ -145,7 +145,6 @@ PAL_FadeOut(
    PAL_LARGE SDL_Color      palette[256];
    PAL_LARGE SDL_Color      newpalette[256];
 
-   Log("[");
    //
    // Get the original palette...
    //
@@ -184,7 +183,6 @@ PAL_FadeOut(
 
    memset(newpalette, 0, sizeof(newpalette));
    VIDEO_SetPalette(newpalette);
-   Log("]\n");
 }
 
 VOID

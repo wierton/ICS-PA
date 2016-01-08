@@ -21,6 +21,7 @@ extern void timer_intr();
 extern void keyboard_intr();
 extern void update_screen();
 static void device_update(int signum) {
+	printf(".");
 	jiffy ++;
 	timer_intr();
 	if(jiffy % (TIMER_HZ / VGA_HZ) == 0) {

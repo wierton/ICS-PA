@@ -130,6 +130,7 @@ PAL_GameMain(
       //
       // Run the main frame routine.
       //
+	  Log("-");
       PAL_StartFrame();
 	  Log("]\n");
    }

@@ -77,7 +77,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 * If no such key is found, the function return false.
 	 * Remember to enable interrupts before returning from the function.
 	 */
-Log("1");
+//Log("1");
 	int i;
 	bool ret = false;
 	for(i=0;i<NR_KEYS;i++)
@@ -94,7 +94,7 @@ Log("1");
 		}
 		clear_key(i);
 	}
-Log("2");
+//Log("2");
 	sti();
 	return ret;
 }

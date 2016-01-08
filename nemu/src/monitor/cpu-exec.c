@@ -46,7 +46,7 @@ void raise_intr(uint8_t no)
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-printf(".");
+
 	/* close intr */
 	cpu.IF = 0;
 
@@ -75,6 +75,8 @@ printf(".");
 	uint32_t EntryAddr = base + ((gd.offset_31_16 << 16) | gd.offset_15_0);
 
 	cpu.eip = EntryAddr;
+
+	cpu.IF = 1;
 
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
@@ -108,10 +110,10 @@ void cpu_exec(volatile uint32_t n) {
 		int instr_len = exec(cpu.eip);
 
 		cpu.eip += instr_len;
-/*
+
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;
-*/
+
 #ifdef DEBUG
 		print_bin_instr(eip_temp, instr_len);
 		
@@ -124,7 +126,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-//		if(!check_wp()) {nemu_state = STOP;}
+		if(!check_wp()) {nemu_state = STOP;}
 
 		/* TODO: check intr */
 		if(cpu.INTR & cpu.IF) {

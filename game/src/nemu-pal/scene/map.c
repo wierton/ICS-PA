@@ -397,7 +397,6 @@ PAL_MapBlitToSurface(
    yPos = sy * 16 - 8 - lpSrcRect->y;
    for (y = sy; y < dy; y++)
    {
-	   Log("inline circle");
       for (h = 0; h < 2; h++, yPos += 8)
       {
          xPos = sx * 32 + h * 16 - 16 - lpSrcRect->x;

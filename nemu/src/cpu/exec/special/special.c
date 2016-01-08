@@ -78,7 +78,19 @@ make_helper(nemu_trap) {
 	return 1;
 }
 
+typedef struct {
+	uint32_t sw,dw,sp,dp,sx,sy,dx,dy,cw,ch;
+} ACC;
+
 make_helper(nemu_acc)
 {
+	ACC ac;
+	int i;
+	uint32_t *p = (uint32_t *)(&ac);
+	for(i = 0; i < 10; i++)
+	{
+		*(p + i) = swaddr_read(cpu.eax, 4, R_DS);
+	}
+
 	return 1;
 }

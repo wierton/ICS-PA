@@ -38,6 +38,7 @@ static void device_update(int signum) {
 			keyboard_intr(sym2scancode[sym >> 8][sym & 0xff]);
 		}
 		else if( event.type == SDL_KEYUP ) {
+			printf("0x%x\n", sym);
 			keyboard_intr(sym2scancode[sym >> 8][sym & 0xff] | 0x80);
 		}
 

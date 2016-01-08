@@ -130,6 +130,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		/* TODO: check intr */
 		uint32_t intr_no = i8259_query_intr();
+		if(intr_no == 0x20)
 		printf("%d %d %d\n", intr_no, cpu.INTR, cpu.IF);
 		if(cpu.INTR & cpu.IF) {
 			uint32_t intr_no = i8259_query_intr();

@@ -47,7 +47,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
 	}
 
-	ACC ac;
+	volatile ACC ac;
 	ac.sx = SrcX; ac.sy = SrcY; ac.dx = DstX; ac.dy = DstY;
 	ac.sp = (uint32_t)(src->pixels);
 	ac.dp = (uint32_t)(dst->pixels);

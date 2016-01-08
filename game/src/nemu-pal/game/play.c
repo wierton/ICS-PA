@@ -510,12 +510,14 @@ PAL_StartFrame(
    //
    // Run the game logic of one frame
    //
+   Log("[");
    PAL_GameUpdate(TRUE);
    if (gpGlobals->fEnteringScene)
    {
       return;
    }
 
+   Log("]");
    //
    // Update the positions and gestures of party members
    //

@@ -16,6 +16,7 @@ get_fps() {
 
 void
 timer_event(void) {
+	Log(".");
 	jiffy ++;
 	if(jiffy % (HZ / 2) == 0) {
 		fps = nr_draw * 2 + 1;

@@ -91,7 +91,6 @@ PAL_GameMain(
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
-	   Log("[");
       //
       // Do some initialization at game start.
       //
@@ -130,8 +129,6 @@ PAL_GameMain(
       //
       // Run the main frame routine.
       //
-	  Log("-");
       PAL_StartFrame();
-	  Log("]\n");
    }
 }

@@ -485,6 +485,7 @@ PAL_MakeScene(
    //
    // Step 2: Apply screen waving effects.
    //
+   Log("1.5");
    PAL_ApplyWave(gpScreen);
 
    Log("2");

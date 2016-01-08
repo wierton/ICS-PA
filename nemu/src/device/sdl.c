@@ -23,7 +23,7 @@ extern void update_screen();
 static void device_update(int signum) {
 	jiffy ++;
 	timer_intr();
-	if(jiffy % 10 == 0) {
+	if(jiffy % 1 == 0) {
 		update_screen();
 	}
 

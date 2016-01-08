@@ -85,13 +85,27 @@ typedef struct {
 make_helper(nemu_acc)
 {
 	ACC ac;
-	int i;
+	int i, j;
 	uint32_t *p = (uint32_t *)(&ac);
 	for(i = 0; i < 10; i++)
 	{
 		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
-	printf("ac.sx:%d\n", ac.sx);
+	
+	int SrcPos = 0 + ac.sx + ac.sw * (0 + ac.sy);
+	int DstPos = 0 + ac.dx + ac.dw * (0 + ac.dy);
+	for(j = 0; j < ac.ch; j++)
+	{
+		for(i = 0; i < ac.cw; i++)
+		{
+			uint8_t data = swaddr_read(ac.sp + SrcPos, 1, R_DS);
+			swaddr_write(ac.dp + DstPos, 1, data, R_DS);
+			SrcPos ++;
+			DstPos ++;
+		}
+		SrcPos = SrcPos - ac.cw + ac.sw;
+		DstPos = DstPos - ac.cw + ac.dw;
+	}
 
 	return 1;
 }

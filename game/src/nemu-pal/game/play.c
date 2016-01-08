@@ -517,17 +517,18 @@ PAL_StartFrame(
       return;
    }
 
-   Log("]");
+   Log("1");
    //
    // Update the positions and gestures of party members
    //
    PAL_UpdateParty();
-
+   Log("2");
    //
    // Update the scene
    //
    PAL_MakeScene();
    VIDEO_UpdateScreen(NULL);
+   Log("3");
 
    if (g_InputState.dwKeyPress & kKeyMenu)
    {
@@ -584,11 +585,12 @@ PAL_StartFrame(
          exit(0);
       }
    }
-
+Log("4");
    if (--gpGlobals->wChasespeedChangeCycles == 0)
    {
       gpGlobals->wChaseRange = 1;
    }
+   Log("]\n");
 }
 
 VOID

@@ -72,8 +72,6 @@ static int cmd_addr(char *args);
 
 static int cmd_xp(char *args);
 
-static int cmd_record(char *args);
-
 static struct {
 	char *name;
 	char *description;
@@ -94,26 +92,10 @@ static struct {
 	{ "cache", "printf cache info by address", cmd_cache},
 	{ "b", "break eip", cmd_b},
 	{ "addr", "addr", cmd_addr},
-	{ "xp", "xp", cmd_xp},
-	{ "record", "record", cmd_record}
+	{ "xp", "xp", cmd_xp}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
-
-static int cmd_record(char *args)
-{
-	if(args == NULL)
-		return 0;
-	find_func_addr(args, &start_addr, &end_addr);
-	if(!start_addr)
-	{
-		printf("function not found!\n");
-		return 0;
-	}
-	printf("record func:%s\n", args);
-	printf("from 0x%x to 0x%x\n", start_addr, end_addr);
-	return 0;
-}
 
 static int cmd_addr(char *args)
 {

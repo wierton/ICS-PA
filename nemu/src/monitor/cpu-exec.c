@@ -13,10 +13,6 @@
 swaddr_t stop_eip = 0;
 int nemu_state = STOP;
 
-uint64_t total_eips = 0,local_eips = 0;
-uint32_t start_addr;
-uint32_t end_addr;
-
 int exec(swaddr_t);
 
 char assembly[80];
@@ -111,15 +107,11 @@ void cpu_exec(volatile uint32_t n) {
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
 
-		total_eips ++;
-		if(cpu.eip >= start_addr && cpu.eip <= end_addr)
-			local_eips ++;
-
 		cpu.eip += instr_len;
-
+/*
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;
-
+*/
 #ifdef DEBUG
 		print_bin_instr(eip_temp, instr_len);
 		
@@ -132,7 +124,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-		if(!check_wp()) {nemu_state = STOP;}
+//		if(!check_wp()) {nemu_state = STOP;}
 
 		/* TODO: check intr */
 		if(cpu.INTR & cpu.IF) {

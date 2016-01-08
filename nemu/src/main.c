@@ -12,7 +12,7 @@ extern uint64_t local_eips, total_eips;
 
 int main(int argc, char *argv[]) {
 	/* generate seed */
-//	srand(time(NULL));
+	srand(time(NULL));
 
 	/* Initialize the monitor. */
 	init_monitor(argc, argv);

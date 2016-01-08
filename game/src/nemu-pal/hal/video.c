@@ -23,13 +23,15 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	Log("[");
 	int i,j;
 	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
-/*	if(srcrect == NULL || dstrect == NULL)
+	SrcX = srcrect -> x;SrcY = srcrect -> y;
+	DstX = dstrect -> x;DstY = dstrect -> y;
+	if(srcrect == NULL || dstrect == NULL)
 	{
 		SrcX = SrcY = DstX = DstY = 0;
 		CopyWidth = src->w < dst->w ? src->w : dst->w;
 		CopyHeight = src->h < dst->h ? src->h : dst->h;
 	}
-	else
+/*	else
 	{
 		int SrcCopyWidth = src->w - srcrect->x;
 		int SrcCopyHeight = src->h - srcrect->y;
@@ -45,8 +47,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
 	}
 */
-	SrcX = srcrect -> x;SrcY = srcrect -> y;
-	DstX = dstrect -> x;DstY = dstrect -> y;
 	CopyWidth = srcrect->w;
 	CopyHeight = srcrect->h;
 	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);

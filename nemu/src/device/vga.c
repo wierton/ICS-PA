@@ -68,7 +68,6 @@ void do_update_screen_graphic_mode() {
 			SDL_BlitSurface(screen, &rect, real_screen, &rect);
 		}
 	}
-	printf(".");
 	SDL_Flip(real_screen);
 }
 

@@ -47,8 +47,8 @@ static void device_update(int signum) {
 		}
 	}
 
-	int ret = setitimer(ITIMER_VIRTUAL, &it, NULL);
-	Assert(ret == 0, "Can not set timer");
+//	int ret = setitimer(ITIMER_VIRTUAL, &it, NULL);
+//	Assert(ret == 0, "Can not set timer");
 }
 
 void sdl_clear_event_queue() {
@@ -83,6 +83,8 @@ void init_sdl() {
 
 	it.it_value.tv_sec = 0;
 	it.it_value.tv_usec = 1000000 / TIMER_HZ;
+	it.it_interval.tv_sec = 0;
+	it.it_interval.tv_usec = 1000000 / TIMER_HZ;
 	ret = setitimer(ITIMER_VIRTUAL, &it, NULL);
 	Assert(ret == 0, "Can not set timer");
 }

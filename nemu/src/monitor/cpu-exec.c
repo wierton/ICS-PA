@@ -46,7 +46,7 @@ void raise_intr(uint8_t no)
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-
+printf(".");
 	/* close intr */
 	cpu.IF = 0;
 

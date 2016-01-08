@@ -10,10 +10,11 @@ static bool newkey;
 
 void keyboard_intr(uint8_t scancode) {
 	if(nemu_state == RUNNING && newkey == false) {
+		printf("110\n");
 		i8042_data_port_base[0] = scancode;
 		i8259_raise_intr(KEYBOARD_IRQ);
-		newkey = true;
-	}
+/*		newkey = true;
+*/	}
 }
 
 void i8042_io_handler(ioaddr_t addr, size_t len, bool is_write) {

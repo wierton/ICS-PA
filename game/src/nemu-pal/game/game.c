@@ -40,7 +40,6 @@ PAL_GameStart(
 
 --*/
 {
-	Log("[");
    PAL_SetLoadFlags(kLoadScene | kLoadPlayerSprite);
 
    if (!gpGlobals->fEnteringScene)
@@ -50,7 +49,6 @@ PAL_GameStart(
       //
       PAL_PlayMUS(gpGlobals->wNumMusic, TRUE, 1);
    }
-   Log("]\n");
 
    gpGlobals->fNeedToFadeIn = TRUE;
    gpGlobals->dwFrameNum = 0;

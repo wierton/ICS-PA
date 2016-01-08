@@ -13,7 +13,7 @@ SDL_Surface *real_screen;
 SDL_Surface *screen;
 uint8_t (*pixel_buf) [SCREEN_COL];
 
-#define TIMER_HZ 10
+#define TIMER_HZ 100
 
 static uint64_t jiffy = 0;
 static struct itimerval it;
@@ -23,7 +23,7 @@ extern void update_screen();
 static void device_update(int signum) {
 	jiffy ++;
 	timer_intr();
-	if(jiffy % 1 == 0) {
+	if(jiffy % (TIMER_HZ / VGA_HZ) == 0) {
 		update_screen();
 	}
 

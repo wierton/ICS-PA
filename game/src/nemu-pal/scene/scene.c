@@ -469,6 +469,7 @@ PAL_MakeScene(
 
 --*/
 {
+	Log("[");
    static SDL_Rect         rect = {0, 0, 320, 200};
 
    //
@@ -477,6 +478,7 @@ PAL_MakeScene(
    rect.x = PAL_X(gpGlobals->viewport);
    rect.y = PAL_Y(gpGlobals->viewport);
 
+   Log("1");
    PAL_MapBlitToSurface(PAL_GetCurrentMap(), gpScreen, &rect, 0);
    PAL_MapBlitToSurface(PAL_GetCurrentMap(), gpScreen, &rect, 1);
 
@@ -485,6 +487,7 @@ PAL_MakeScene(
    //
    PAL_ApplyWave(gpScreen);
 
+   Log("2");
    //
    // Step 3: Draw all the sprites.
    //
@@ -493,12 +496,14 @@ PAL_MakeScene(
    //
    // Check if we need to fade in.
    //
+   Log("3");
    if (gpGlobals->fNeedToFadeIn)
    {
       VIDEO_UpdateScreen(NULL);
       PAL_FadeIn(gpGlobals->wNumPalette, gpGlobals->fNightPalette, 1);
       gpGlobals->fNeedToFadeIn = FALSE;
    }
+   Log("]\n");
 }
 
 BOOL

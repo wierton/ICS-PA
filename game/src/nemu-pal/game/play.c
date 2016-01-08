@@ -524,11 +524,8 @@ PAL_StartFrame(
    //
    // Update the scene
    //
-   Log("[");
    PAL_MakeScene();
-   Log("-");
    VIDEO_UpdateScreen(NULL);
-   Log("]\n");
 
    if (g_InputState.dwKeyPress & kKeyMenu)
    {

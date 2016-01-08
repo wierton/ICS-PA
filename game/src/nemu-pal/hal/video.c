@@ -19,12 +19,9 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * is saved in ``dstrect'' after all clipping is performed
 	 * (``srcrect'' is not modified).
 	 */
-	asm volatile (".byte 0xd6" : : "a"(src), "b"(srcrect), "c"(dst),"d"(dstrect));
-/*	Log("[");
+
 	int i,j;
 	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
-	SrcX = srcrect -> x;SrcY = srcrect -> y;
-	DstX = dstrect -> x;DstY = dstrect -> y;
 	if(srcrect == NULL || dstrect == NULL)
 	{
 		SrcX = SrcY = DstX = DstY = 0;
@@ -47,8 +44,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
 	}
 
-	CopyWidth = srcrect->w;
-	CopyHeight = srcrect->h;
+	CopyHeight = 0;
+	CopyWidth = 0;
 	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
 	int DstPos = 0 + DstX + dst->w * (0 + DstY);
 	for(j = 0; j < CopyHeight; j++)
@@ -63,8 +60,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		SrcPos = SrcPos - CopyWidth + src->w;
 		DstPos = DstPos - CopyWidth + dst->w;
 	}
-	Log("]\n");
-*/
+
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

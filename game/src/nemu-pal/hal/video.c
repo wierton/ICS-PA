@@ -20,6 +20,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * (``srcrect'' is not modified).
 	 */
 
+	Log("[");
 	int i,j;
 	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
 	if(srcrect == NULL || dstrect == NULL)
@@ -58,6 +59,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		SrcPos = SrcPos - CopyWidth + src->w;
 		DstPos = DstPos - CopyWidth + dst->w;
 	}
+	Log("]\n");
 
 }
 

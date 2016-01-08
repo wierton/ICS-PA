@@ -55,8 +55,6 @@ void do_update_screen_graphic_mode() {
 	rect.w = CTR_COL * 2;
 	rect.h = 2;
 
-	printf("game/src/nemu-pal/hal/timer.c,19,timer_event");
-
 	for(i = 0; i < CTR_ROW; i ++) {
 		if(line_dirty[i]) {
 			for(j = 0; j < CTR_COL; j ++) {

@@ -34,6 +34,7 @@ make_helper(iret)
 
 	print_asm("iret 0x%x", cpu.eip);
 	cpu.eip -= 1;
+	cpu.IF = 1;
 	return 1;
 }
 #endif

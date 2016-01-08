@@ -24,7 +24,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * (``srcrect'' is not modified).
 	 */
 	Log("[");
-	int i,j;
+//	int i,j;
 	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
 	if(srcrect == NULL || dstrect == NULL)
 	{
@@ -54,9 +54,9 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	ac.dp = (uint32_t)(dst->pixels);
 	ac.cw = CopyWidth; ac.ch = CopyHeight;
 	ac.sw = src->w; ac.dw = dst->w;
-	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
-	int DstPos = 0 + DstX + dst->w * (0 + DstY);
 	asm volatile (".byte 0xd7" : : "a"(&ac));
+/*	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
+	int DstPos = 0 + DstX + dst->w * (0 + DstY);
 	Log("%d\n\n", ac.sx);
 	for(j = 0; j < CopyHeight; j++)
 	{
@@ -70,7 +70,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		SrcPos = SrcPos - CopyWidth + src->w;
 		DstPos = DstPos - CopyWidth + dst->w;
 	}
-	Log("]\n");
+*/	Log("]\n");
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

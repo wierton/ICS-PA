@@ -90,6 +90,7 @@ PAL_RLEBlitToSurface(
    //
    // Start decoding and blitting the bitmap.
    //
+   Log("lay start");
    lpBitmapRLE += 4;
    for (i = 0; i < uiLen;)
    {
@@ -142,6 +143,7 @@ PAL_RLEBlitToSurface(
          i += T;
       }
    }
+   Log("lay end\n");
 
 end:
    //

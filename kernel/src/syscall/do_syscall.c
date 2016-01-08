@@ -58,7 +58,6 @@ void do_syscall(TrapFrame *tf) {
 		case SYS_read:
 			if(tf->ebx >= 0x3)
 			{
-				prints(".");
 				tf->eax = fs_read(tf->ebx - 3, (void *)tf->ecx, tf->edx);
 			}
 			break;

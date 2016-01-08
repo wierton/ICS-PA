@@ -23,7 +23,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * is saved in ``dstrect'' after all clipping is performed
 	 * (``srcrect'' is not modified).
 	 */
-	Log("[");
 	int SrcX, SrcY, CopyWidth, CopyHeight, DstX, DstY;
 	if(srcrect == NULL || dstrect == NULL)
 	{
@@ -69,7 +68,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		SrcPos = SrcPos - CopyWidth + src->w;
 		DstPos = DstPos - CopyWidth + dst->w;
 	}*/
-	Log("]\n");
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

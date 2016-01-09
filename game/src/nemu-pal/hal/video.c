@@ -110,16 +110,13 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	}
 
 	/* TODO: Copy the pixels in the rectangle area to the screen. */
-	int i,j;
-	for(i = x; i < x + w; i++)
-	{
-		for(j = y; j < y + h; j++)
-		{
-			int DstPos = i + j * screen->w;
-			uint8_t data = screen->pixels[DstPos];
-			screen->pixels[DstPos] = data;
-		}
-	}
+	volatile ACC ac;
+	ac.sx = x; ac.sy = y; ac.dx = x; ac.dy = y;
+	ac.sp = (uint32_t)(screen->pixels);
+	ac.dp = (uint32_t)(screen->pixels);
+	ac.cw = w; ac.ch = h;
+	ac.sw = screen->w; ac.dw = screen->w;
+	asm volatile (".byte 0xd7" : : "a"(&ac));
 }
 
 void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, 

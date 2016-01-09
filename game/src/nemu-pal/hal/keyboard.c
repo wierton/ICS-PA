@@ -77,7 +77,6 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 * If no such key is found, the function return false.
 	 * Remember to enable interrupts before returning from the function.
 	 */
-//Log("1");
 	int i;
 	bool ret = false;
 	for(i=0;i<NR_KEYS;i++)
@@ -85,16 +84,15 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 		if(key_state[i] == KEY_STATE_PRESS)
 		{
 			key_press_callback(keycode_array[i]);
-			ret = true;
+			return true;
 		}
 		if(key_state[i] == KEY_STATE_RELEASE)
 		{
 			key_release_callback(keycode_array[i]);
-			ret = true;
+			return true;
 		}
 		clear_key(i);
 	}
-//Log("2");
 	sti();
 	return ret;
 }

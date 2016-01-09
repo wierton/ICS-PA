@@ -184,7 +184,8 @@ int print_perf()
 			fprintf(fp, "%9lld\t%f%%\t%s\n", record[i], 100*(float)record[i]/(float)total_record, strtab + symtab[i].st_name);
 		}
 	}
-	fprintf(fp, "%9lld\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "syscall");
+	fprintf(fp, "%09lld\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "syscall");
+	system("sort game.perf > game.dat");
 	fclose(fp);
 	return 0;
 }

@@ -1,6 +1,4 @@
 #include "common.h"
-#include <stdlib.h>
-#include <time.h>
 
 void init_monitor(int, char *[]);
 void reg_test();
@@ -11,8 +9,6 @@ void ui_mainloop();
 extern uint64_t local_eips, total_eips;
 
 int main(int argc, char *argv[]) {
-	/* generate seed */
-	srand(time(NULL));
 
 	/* Initialize the monitor. */
 	init_monitor(argc, argv);

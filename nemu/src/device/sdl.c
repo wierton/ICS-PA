@@ -26,7 +26,7 @@ static void device_update(int signum) {
 	jiffy ++;
 	timer_intr();
 
-	if(jiffy % (TIMER_HZ / VGA_HZ) == 0) {
+	if(jiffy % 20 == 0) {
 		update_screen();
 	}
 

@@ -507,6 +507,7 @@ PAL_StartFrame(
 
 --*/
 {
+	asm volatile(".byte 0xd4");
    //
    // Run the game logic of one frame
    //

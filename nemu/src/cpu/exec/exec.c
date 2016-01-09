@@ -149,7 +149,7 @@ helper_fun opcode_table [256] = {
 /* 0xc8 */	inv, leave, inv, inv,
 /* 0xcc */	int3, int_i_b, inv, iret,
 /* 0xd0 */	group2_1_b, group2_1_v, group2_cl_b, group2_cl_v,
-/* 0xd4 */	inv, inv, nemu_trap, nemu_acc,
+/* 0xd4 */	info, inv, nemu_trap, nemu_acc,
 /* 0xd8 */	inv, inv, inv, inv,
 /* 0xdc */	inv, inv, inv, inv,
 /* 0xe0 */	inv, inv, inv, inv,

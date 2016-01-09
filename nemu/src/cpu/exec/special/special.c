@@ -17,6 +17,13 @@ make_helper(sti)
 	return 1;
 }
 
+make_helper(info)
+{
+	printf("+");
+	fflush(stdout);
+	return 1;
+}
+
 make_helper(print)
 {
 	int i;

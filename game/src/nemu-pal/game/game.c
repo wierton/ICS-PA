@@ -53,7 +53,7 @@ PAL_GameStart(
    gpGlobals->fNeedToFadeIn = TRUE;
    gpGlobals->dwFrameNum = 0;
 }
-char volatile szinfo[] = "+";
+
 VOID
 PAL_GameMain(
    VOID
@@ -130,6 +130,5 @@ PAL_GameMain(
       // Run the main frame routine.
       //
       PAL_StartFrame();
-	  asm volatile (".byte 0xbc"::"a"(szinfo));
    }
 }

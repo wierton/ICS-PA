@@ -113,7 +113,7 @@ void cpu_exec(volatile uint32_t n) {
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
 
-		printf(".");
+		if((n & 0xfff) == 0) {fputc('.', stderr);}
 		cpu.eip += instr_len;
 		record[pfunc] ++;
 		total_record ++;

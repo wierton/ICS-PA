@@ -181,10 +181,10 @@ int print_perf()
 	{
 		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 		{
-			fprintf(fp, "%lld\t\t\t%f%%\t%s\n", record[i], 100*(float)record[i]/(float)total_record, strtab + symtab[i].st_name);
+			fprintf(fp, "%9lld\t%f%%\t%s\n", record[i], 100*(float)record[i]/(float)total_record, strtab + symtab[i].st_name);
 		}
 	}
-	fprintf(fp, "%lld\t\t\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "syscall");
+	fprintf(fp, "%9lld\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "syscall");
 	fclose(fp);
 	return 0;
 }

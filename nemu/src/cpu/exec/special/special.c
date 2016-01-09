@@ -91,7 +91,8 @@ make_helper(nemu_acc)
 	{
 		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
-	
+	if(ac.sp == ac.dp)
+		fputc('|', stdout);
 	int SrcPos = 0 + ac.sx + ac.sw * (0 + ac.sy);
 	int DstPos = 0 + ac.dx + ac.dw * (0 + ac.dy);
 	for(j = 0; j < ac.ch; j++)

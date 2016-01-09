@@ -18,6 +18,7 @@ int exec(swaddr_t);
 char assembly[80];
 char asm_buf[128];
 
+extern uint64_t total_record;
 extern uint64_t record[100000];
 extern uint64_t pfunc;
 
@@ -114,6 +115,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		cpu.eip += instr_len;
 		record[pfunc] ++;
+		total_record ++;
 
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;

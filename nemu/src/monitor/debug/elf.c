@@ -5,8 +5,10 @@
 
 char *exec_file = NULL;
 
+#define INF_FUNC 99999
+uint64_t total_record = 0;
 uint64_t record[100000] = {0};
-uint64_t pfunc = 99999;
+uint64_t pfunc = INF_FUNC;
 
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
@@ -167,6 +169,7 @@ int find_func_addr(swaddr_t func_addr)
 			}
 		}
 	}
+	pfunc = INF_FUNC;
 	return 0;
 }
 
@@ -178,9 +181,10 @@ int print_perf()
 	{
 		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 		{
-			fprintf(fp, "%d:\t%lld\t%s\n", i, record[i], strtab + symtab[i].st_name);
+			fprintf(fp, "%d:\t%lld\t%f\t%s\n", i, record[i], (float)record[i]/(float)total_record, strtab + symtab[i].st_name);
 		}
 	}
+	fprintf(fp, "%d:\t%lld\t%f\t%s\n", INF_FUNC, record[INF_FUNC], (float)record[INF_FUNC]/(float)total_record, "syscall");
 	fclose(fp);
 	return 0;
 }

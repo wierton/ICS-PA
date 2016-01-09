@@ -54,8 +54,6 @@ void raise_intr(uint8_t no)
 	/* close intr */
 	cpu.IF = 0;
 
-	printf("0x%x\t", no);
-
 	GateDesc gd;
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;
@@ -115,6 +113,7 @@ void cpu_exec(volatile uint32_t n) {
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
 
+		printf(".");
 		cpu.eip += instr_len;
 		record[pfunc] ++;
 		total_record ++;

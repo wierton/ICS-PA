@@ -18,7 +18,6 @@ uint32_t hwaddr_read(hwaddr_t, size_t);
 hwaddr_t page_translate(lnaddr_t addr);
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg);
 
-int find_func_addr(char *, uint32_t *, uint32_t*);
 void print_cache_info_by_addr(swaddr_t addr);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */

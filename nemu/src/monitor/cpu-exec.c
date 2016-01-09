@@ -18,6 +18,9 @@ int exec(swaddr_t);
 char assembly[80];
 char asm_buf[128];
 
+extern uint64_t record[100000];
+extern uint64_t pfunc;
+
 /* Used with exception handling. */
 jmp_buf jbuf;
 

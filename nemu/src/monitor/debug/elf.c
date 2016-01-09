@@ -5,9 +5,9 @@
 
 char *exec_file = NULL;
 
-#define INF_FUNC 99999
+#define INF_FUNC 9999
 uint64_t total_record = 0;
-uint64_t record[100000] = {0};
+uint64_t record[10000] = {0};
 uint64_t pfunc = INF_FUNC;
 
 static char *strtab = NULL;

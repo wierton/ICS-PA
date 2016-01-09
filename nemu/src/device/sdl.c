@@ -13,6 +13,8 @@ SDL_Surface *real_screen;
 SDL_Surface *screen;
 uint8_t (*pixel_buf) [SCREEN_COL];
 
+int print_perf();
+
 #define TIMER_HZ 100
 
 static uint64_t jiffy = 0;
@@ -44,6 +46,7 @@ static void device_update(int signum) {
 		// If the user has Xed out the window
 		if( event.type == SDL_QUIT ) {
 			//Quit the program
+			print_perf();
 			exit(0);
 		}
 	}

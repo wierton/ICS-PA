@@ -173,13 +173,15 @@ int find_func_addr(swaddr_t func_addr)
 int print_perf()
 {
 	int i;
+	FILE *fp = fopen("game.perf", "w+");
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
 		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 		{
-			printf("%d:%lld\t%s\n", i, record[i], strtab + symtab[i].st_name);
+			fprintf(fp, "%d:\t%lld\t%s\n", i, record[i], strtab + symtab[i].st_name);
 		}
 	}
+	fclose(fp);
 	return 0;
 }
 

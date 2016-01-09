@@ -25,6 +25,7 @@ int fs_close(int fd);
 
 void do_syscall(TrapFrame *tf) {
 	int i;
+	prints("syscall happened:  ");
 	switch(tf->eax) {
 		/* The ``add_irq_handle'' system call is artificial. We use it to 
 		 * let user program register its interrupt handlers. But this is 
@@ -56,7 +57,6 @@ void do_syscall(TrapFrame *tf) {
 			/*asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
 			break;
 		case SYS_read:
-			prints(".");
 			if(tf->ebx >= 0x3)
 			{
 				tf->eax = fs_read(tf->ebx - 3, (void *)tf->ecx, tf->edx);

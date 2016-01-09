@@ -31,14 +31,13 @@ void do_syscall(TrapFrame *tf) {
 		 * very dangerous in a real operating system. Therefore such a 
 		 * system call never exists in GNU/Linux.
 		 */
-		case 0:
-		   prints("syscall happened  ");	
+		case 0: 
 			cli();
 			add_irq_handle(tf->ebx, (void*)tf->ecx);
 			sti();
 			break;
 
-		case SYS_brk: sys_brk(tf);prints("syscall happened 8  "); break;
+		case SYS_brk: sys_brk(tf); break;
 
 		/* TODO: Add more system calls. */
 		case SYS_write:

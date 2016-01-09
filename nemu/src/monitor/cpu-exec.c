@@ -54,6 +54,8 @@ void raise_intr(uint8_t no)
 	/* close intr */
 	cpu.IF = 0;
 
+	printf("0x%x\t", no);
+
 	GateDesc gd;
 	const uint32_t data_byte = 4;
 	uint32_t *p = (uint32_t *)&gd;

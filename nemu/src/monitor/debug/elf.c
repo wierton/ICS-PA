@@ -5,6 +5,9 @@
 
 char *exec_file = NULL;
 
+uint64_t record[100000] = {0};
+uint64_t pfunc = 99999;
+
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
@@ -150,23 +153,20 @@ swaddr_t find_var(char symbol[])
 	return 0;
 }
 
-int find_func_addr(char *func_name, uint32_t *start_addr, uint32_t *end_addr)
+int find_func_addr(swaddr_t func_addr)
 {
 	int i;
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
-		if(strcmp(func_name, strtab + symtab[i].st_name) == 0)
+		if(symtab[i].st_value <= func_addr && func_addr <= symtab[i].st_value + symtab[i].st_size)
 		{
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 			{
-				*start_addr = symtab[i].st_value;
-				*end_addr = symtab[i].st_value + symtab[i].st_size;
+				pfunc = i;
 				return 0;
 			}
 		}
 	}
-	*start_addr = 0;
-	*end_addr = 0;
 	return 0;
 }
 

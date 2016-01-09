@@ -113,6 +113,7 @@ void cpu_exec(volatile uint32_t n) {
 		int instr_len = exec(cpu.eip);
 
 		cpu.eip += instr_len;
+		record[pfunc] ++;
 
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;

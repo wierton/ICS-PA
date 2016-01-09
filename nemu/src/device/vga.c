@@ -72,11 +72,11 @@ void do_update_screen_graphic_mode() {
 }
 
 void update_screen() {
-	if(vmem_dirty) {
+//	if(vmem_dirty) {
 		do_update_screen_graphic_mode();
 		vmem_dirty = false;
 		memset(line_dirty, false, CTR_ROW);
-	}
+//	}
 }
 
 void vga_dac_io_handler(ioaddr_t addr, size_t len, bool is_write) {

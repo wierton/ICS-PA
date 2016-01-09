@@ -29,6 +29,7 @@ make_helper(print)
 	}
 	str[i] = 0;
 	printf("%s", str);
+	fflush(stdout);
 	return 2;
 }
 

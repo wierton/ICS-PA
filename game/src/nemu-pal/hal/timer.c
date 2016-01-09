@@ -4,9 +4,6 @@ static volatile uint32_t jiffy = 0;
 static int fps = 0;
 static int nr_draw = 0;
 
-extern SDL_Surface       *gpScreenReal;
-void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h);
-
 inline void
 incr_nr_draw(void) {
 	nr_draw ++;
@@ -20,7 +17,7 @@ get_fps() {
 void
 timer_event(void) {
 	jiffy ++;
-	if(jiffy % 10 == 0) {
+	if(jiffy % (HZ / 2) == 0) {
 		fps = nr_draw * 2 + 1;
 		nr_draw = 0;
 	}

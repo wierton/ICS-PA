@@ -38,7 +38,7 @@ void do_syscall(TrapFrame *tf) {
 			sti();
 			break;
 
-		case SYS_brk: sys_brk(tf); break;
+		case SYS_brk: sys_brk(tf);prints("syscall happened 8  "); break;
 
 		/* TODO: Add more system calls. */
 		case SYS_write:

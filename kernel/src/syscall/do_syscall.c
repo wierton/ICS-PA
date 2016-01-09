@@ -25,14 +25,14 @@ int fs_close(int fd);
 
 void do_syscall(TrapFrame *tf) {
 	int i;
-	prints("syscall happened:  ");
 	switch(tf->eax) {
 		/* The ``add_irq_handle'' system call is artificial. We use it to 
 		 * let user program register its interrupt handlers. But this is 
 		 * very dangerous in a real operating system. Therefore such a 
 		 * system call never exists in GNU/Linux.
 		 */
-		case 0: 
+		case 0:
+		   prints("syscall happened  ");	
 			cli();
 			add_irq_handle(tf->ebx, (void*)tf->ecx);
 			sti();

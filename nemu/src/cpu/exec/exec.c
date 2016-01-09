@@ -234,7 +234,7 @@ int find_func_addr(swaddr_t func_addr);
 make_helper(exec) {
 	swaddr_t tmp;
 	ops_decoded.opcode = instr_fetch(eip, 1);
-	if(ops_decoded.opcode == 0x55)
+	if(ops_decoded.opcode == 0x55 || ops_decoded.opcode == 0x6a)
 		find_func_addr(eip);
 	tmp = opcode_table[ ops_decoded.opcode ](eip);
 	pre_eip = eip;

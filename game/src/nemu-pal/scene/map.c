@@ -393,7 +393,7 @@ PAL_MapBlitToSurface(
 
    //
    // Do the drawing.
-   Log("[");
+//   Log("[");
    yPos = sy * 16 - 8 - lpSrcRect->y;
    for (y = sy; y < dy; y++)
    {
@@ -415,5 +415,5 @@ PAL_MapBlitToSurface(
          }
       }
    }
-   Log("]\n");
+//   Log("]\n");
 }

@@ -197,7 +197,7 @@ int print_perf()
 
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
-		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
+		if(ELF32_ST_TYPE(symtab[h[i]].st_info) == STT_FUNC)
 		{
 			fprintf(fp, "%9lld\t%f%%\t%s\n", record[h[i]], 100*(float)record[h[i]]/(float)total_record, strtab + symtab[h[i]].st_name);
 		}

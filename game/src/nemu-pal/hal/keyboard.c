@@ -28,7 +28,8 @@ keyboard_event(void) {
 
 	nemu_assert(pstack < NR_STACK - 1);
 	keystack[pstack] = (scancode & 0x7f);
-	statestack[pstack ++] = updown;
+	statestack[pstack] = updown;
+	pstack ++;
 }
 
 /*

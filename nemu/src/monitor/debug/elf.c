@@ -8,6 +8,7 @@ char *exec_file = NULL;
 #define INF_FUNC 9999
 uint64_t total_record = 0;
 uint64_t record[10000] = {0};
+static int h[10000] = {0};
 uint64_t pfunc = INF_FUNC;
 
 static char *strtab = NULL;
@@ -175,17 +176,33 @@ int find_func_addr(swaddr_t func_addr)
 
 int print_perf()
 {
-	int i;
+	int i, j;
 	FILE *fp = fopen("game.perf", "w+");
+	for(i = 0; i <= INF_FUNC; i++)
+		h[i] = i;
+/*bubble sort*/
+	for(j = nr_symtab_entry - 1; j >= 1; j++)
+	{
+		for(i = 0; i < j; i++)
+		{
+			if(record[h[i]] < record[h[i+1]])
+			{
+				int tmp = h[i];
+				h[i] = h[i + 1];
+				h[i + 1] = tmp;
+			}
+		}
+	}
+
+
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
 		if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 		{
-			fprintf(fp, "%9lld\t%f%%\t%s\n", record[i], 100*(float)record[i]/(float)total_record, strtab + symtab[i].st_name);
+			fprintf(fp, "%9lld\t%f%%\t%s\n", record[h[i]], 100*(float)record[h[i]]/(float)total_record, strtab + symtab[h[i]].st_name);
 		}
 	}
-	fprintf(fp, "%09lld\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "syscall");
-	system("sort game.perf > game.dat");
+	fprintf(fp, "%9lld\t%f%%\t%s\n", record[INF_FUNC], 100*(float)record[INF_FUNC]/(float)total_record, "kernel");
 	fclose(fp);
 	return 0;
 }

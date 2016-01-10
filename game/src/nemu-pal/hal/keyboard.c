@@ -14,6 +14,11 @@ static const int keycode_array[] = {
 
 static int key_state[NR_KEYS] = {0};
 
+#define NR_STACK 100
+static int keystack[NR_STACK] = {0};
+static int statestack[NR_STACK] = {0};
+static int pstack = 0;
+
 void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
@@ -22,27 +27,12 @@ keyboard_event(void) {
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
-//	nemu_assert(0);
-//	Log("scancode:0x%x\n", scancode);
-
-	target_key = scancode & 0x7f;
-
-	for(i=0;i<NR_KEYS;i++)
-	{
-		if(key_state[i] == KEY_STATE_PRESS)
-			key_state[i] = KEY_STATE_WAIT_RELEASE;
-		if(key_state[i] == KEY_STATE_RELEASE)
-			key_state[i] = KEY_STATE_EMPTY;
-		if(target_key == keycode_array[i])
-		{
-			if(updown)
-				key_state[i] = KEY_STATE_RELEASE;
-			else
-				key_state[i] = KEY_STATE_PRESS;
-		}
-	}
+	nemu_assert(pstack < NR_STACK - 1);
+	keystack[pstack] = scancode;
+	statestack[pstack ++] = updown;
 }
 
+/*
 static inline int
 get_keycode(int index) {
 	assert(index >= 0 && index < NR_KEYS);
@@ -66,7 +56,7 @@ clear_key(int index) {
 	assert(index >= 0 && index < NR_KEYS);
 	key_state[index] = KEY_STATE_EMPTY;
 }
-
+*/
 bool 
 process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int)) {
 	cli();
@@ -77,21 +67,19 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 * If no such key is found, the function return false.
 	 * Remember to enable interrupts before returning from the function.
 	 */
-	int i;
 	bool ret = false;
-	for(i=0;i<NR_KEYS;i++)
+	for(;pstack > 0; pstack --)
 	{
-		if(key_state[i] == KEY_STATE_PRESS)
+		if(statestack[pstack] == 0x1)
 		{
-			key_press_callback(keycode_array[i]);
+			key_press_callback(keystack[pstack]);
 			ret = true;
 		}
-		if(key_state[i] == KEY_STATE_RELEASE)
+		else
 		{
-			key_release_callback(keycode_array[i]);
+			key_release_callback(keystack[i]);
 			ret = true;
 		}
-		clear_key(i);
 	}
 	sti();
 	return ret;

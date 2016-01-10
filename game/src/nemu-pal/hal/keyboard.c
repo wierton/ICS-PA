@@ -69,7 +69,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	bool ret = false;
 	for(;pstack > 0; pstack --)
 	{
-		if(statestack[pstack] == 0x1)
+		if(statestack[pstack] == 0x0)
 		{
 			key_press_callback(keystack[pstack]);
 			ret = true;

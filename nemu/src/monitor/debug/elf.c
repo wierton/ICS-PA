@@ -181,7 +181,7 @@ int print_perf()
 	for(i = 0; i <= INF_FUNC; i++)
 		h[i] = i;
 /*bubble sort*/
-	for(j = nr_symtab_entry - 1; j >= 1; j++)
+	for(j = nr_symtab_entry - 1; j >= 1; j--)
 	{
 		for(i = 0; i < j; i++)
 		{

@@ -27,7 +27,7 @@ keyboard_event(void) {
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
 	nemu_assert(pstack < NR_STACK - 1);
-	keystack[pstack] = scancode;
+	keystack[pstack] = (scancode & 0x7f);
 	statestack[pstack ++] = updown;
 }
 

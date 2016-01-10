@@ -12,7 +12,7 @@ static const int keycode_array[] = {
 	K_s, K_f, K_p
 };
 
-static int key_state[NR_KEYS] = {0};
+//static int key_state[NR_KEYS] = {0};
 
 #define NR_STACK 100
 static int keystack[NR_STACK] = {0};
@@ -23,7 +23,6 @@ void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
 
-	int i,target_key;
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
@@ -77,7 +76,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 		}
 		else
 		{
-			key_release_callback(keystack[i]);
+			key_release_callback(keystack[pstack]);
 			ret = true;
 		}
 	}

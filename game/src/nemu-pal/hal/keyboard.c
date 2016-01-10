@@ -12,27 +12,37 @@ static const int keycode_array[] = {
 	K_s, K_f, K_p
 };
 
-//static int key_state[NR_KEYS] = {0};
-
-#define NR_STACK 100
-static int keystack[NR_STACK] = {0};
-static int statestack[NR_STACK] = {0};
-static int pstack = 0;
+static int key_state[NR_KEYS] = {0};
 
 void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
 
+	int i,target_key;
 	uint32_t scancode = in_byte(0x60);
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
-	nemu_assert(pstack < NR_STACK - 1);
-	keystack[pstack] = (scancode & 0x7f);
-	statestack[pstack] = updown;
-	pstack ++;
+//	nemu_assert(0);
+//	Log("scancode:0x%x\n", scancode);
+
+	target_key = scancode & 0x7f;
+
+	for(i=0;i<NR_KEYS;i++)
+	{
+		if(key_state[i] == KEY_STATE_PRESS)
+			key_state[i] = KEY_STATE_WAIT_RELEASE;
+		if(key_state[i] == KEY_STATE_RELEASE)
+			key_state[i] = KEY_STATE_EMPTY;
+		if(target_key == keycode_array[i])
+		{
+			if(updown)
+				key_state[i] = KEY_STATE_RELEASE;
+			else
+				key_state[i] = KEY_STATE_PRESS;
+		}
+	}
 }
 
-/*
 static inline int
 get_keycode(int index) {
 	assert(index >= 0 && index < NR_KEYS);
@@ -56,7 +66,7 @@ clear_key(int index) {
 	assert(index >= 0 && index < NR_KEYS);
 	key_state[index] = KEY_STATE_EMPTY;
 }
-*/
+
 bool 
 process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int)) {
 	cli();
@@ -67,19 +77,21 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 * If no such key is found, the function return false.
 	 * Remember to enable interrupts before returning from the function.
 	 */
+	int i;
 	bool ret = false;
-	for(;pstack > 0; pstack --)
+	for(i=0;i<NR_KEYS;i++)
 	{
-		if(statestack[pstack] == 0x0)
+		if(key_state[i] == KEY_STATE_PRESS)
 		{
-			key_press_callback(keystack[pstack]);
+			key_press_callback(keycode_array[i]);
 			ret = true;
 		}
-		else
+		if(key_state[i] == KEY_STATE_RELEASE)
 		{
-			key_release_callback(keystack[pstack]);
+			key_release_callback(keycode_array[i]);
 			ret = true;
 		}
+		clear_key(i);
 	}
 	sti();
 	return ret;

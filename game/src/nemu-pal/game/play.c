@@ -527,6 +527,7 @@ PAL_StartFrame(
    //
    PAL_MakeScene();
    VIDEO_UpdateScreen(NULL);
+   asm volatile(".byte 0xd4");
 
    if (g_InputState.dwKeyPress & kKeyMenu)
    {

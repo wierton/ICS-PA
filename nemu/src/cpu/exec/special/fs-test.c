@@ -6,6 +6,8 @@ inline void stop_nemu();
 uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
 static uint8_t data[4096];
+static const char path[] = "/home/nick/ics2015/game/src/nemu-pal/data";
+static char file_path[512];
 
 typedef struct {
 	char *name;
@@ -58,7 +60,9 @@ make_helper(fs_read_test)
 		Assert(len == ret, "return value not match!\n");
 	}
 
-	FILE * fp = fopen(file_table[fd].name, "rb");
+	strcpy(file_path, path);
+	strcat(file_path, file_table[fd].name);
+	FILE * fp = fopen(file_path, "rb");
 
 	assert(fp != NULL);
 	fseek(fp, file_state[fd].offset, SEEK_SET);

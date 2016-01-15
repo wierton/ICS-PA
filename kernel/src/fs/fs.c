@@ -84,7 +84,7 @@ int fs_read(int fd, void *buf, int len)
 		nemu_assert(0);
 		return -1;
 	}
-	if(file_state[fd + 3].offset > file_table[fd].size || len == 0)
+	if(file_state[fd + 3].offset > file_table[fd].size)
 		return 0;
 	int end_pos = len + file_state[fd + 3].offset;
 	if(end_pos > file_table[fd].size)
@@ -95,7 +95,6 @@ int fs_read(int fd, void *buf, int len)
 		prints(" ");
 		printx(file_state[fd + 3].offset);
 		prints("\n");
-		return 0;
 //		nemu_assert(0);
 		len = file_table[fd].size - file_state[fd + 3].offset;
 	}

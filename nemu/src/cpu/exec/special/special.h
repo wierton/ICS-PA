@@ -9,5 +9,6 @@ make_helper(print);
 make_helper(inv);
 make_helper(nemu_trap);
 make_helper(nemu_acc);
+make_helper(nemu_acc2);
 
 #endif

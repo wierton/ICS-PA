@@ -24,7 +24,7 @@ static void init_log() {
 static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
-	printf("\033[1,31mFunction cost count begin at game start, to fix this, typing fix.\033[0m\n");
+	printf("\33[1,31mFunction cost count begin at game start, to fix this, typing fix.\33[0m\n");
 }
 
 void init_device();

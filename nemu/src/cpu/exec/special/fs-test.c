@@ -57,7 +57,7 @@ make_helper(fs_read_test)
 	{
 		len = file_table[fd].size - file_state[fd + 3].offset;
 		if(len < 0) len = 0;
-		Assert(len == ret, "return value not match!\n");
+		Assert(len == ret, "return value %d != %d not match!\n", len, ret);
 	}
 
 	strcpy(file_path, path);

@@ -49,6 +49,7 @@ PAL_RLEBlitToSurface(
 
 --*/
 {
+	asm volatile(".byte 0xd4"::"a"('U'));
    UINT          i, j;
    INT           x, y;
    UINT          uiLen       = 0;
@@ -142,6 +143,7 @@ PAL_RLEBlitToSurface(
          i += T;
       }
    }
+   asm volatile(".byte 0xd4"::"a"('P'));
 
 end:
    //

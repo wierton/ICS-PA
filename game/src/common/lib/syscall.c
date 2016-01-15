@@ -20,7 +20,7 @@ int open(const char *pathname, int flags) {
 
 int read(int fd, char *buf, int len) {
 	int ret = syscall(SYS_read, fd, buf, len); 
-	asm volatile(".byte 0xf1"::"a"(ret),"b"(fd), "c"(buf), "d"(len));
+//	asm volatile(".byte 0xf1"::"a"(ret),"b"(fd), "c"(buf), "d"(len));
 	return ret;
 }
 
@@ -30,7 +30,7 @@ int write(int fd, char *buf, int len) {
 
 off_t lseek(int fd, off_t offset, int whence) {
 	int ret = syscall(SYS_lseek, fd, offset, whence); 
-	asm volatile(".byte 0x82"::"a"(ret),"b"(fd), "c"(offset), "d"(whence));
+//	asm volatile(".byte 0x82"::"a"(ret),"b"(fd), "c"(offset), "d"(whence));
 	return ret;
 }
 
@@ -51,7 +51,7 @@ void *sbrk(int incr) {
 
 int close(int fd) {
 	syscall(SYS_close, fd);
-	asm volatile(".byte 0xf0"::"b"(fd));
+//	asm volatile(".byte 0xf0"::"b"(fd));
 	return 0; 
 }
 

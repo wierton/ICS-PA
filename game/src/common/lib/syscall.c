@@ -15,8 +15,7 @@ void _exit(int status) {
 }
 
 int open(const char *pathname, int flags) {
-	syscall(SYS_open, pathname, flags);
-	return 0;
+	return syscall(SYS_open, pathname, flags);
 }
 
 int read(int fd, char *buf, int len) {

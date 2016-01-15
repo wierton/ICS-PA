@@ -78,6 +78,8 @@ make_helper(fs_read_test)
 		}
 	}
 	fclose(fp);
+
+	file_state[fd].offset += len;
 	return 1;
 }
 

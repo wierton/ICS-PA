@@ -9,10 +9,10 @@
 #include <readline/history.h>
 
 extern swaddr_t stop_eip;
-extern uint32_t start_addr;
-extern uint32_t end_addr;
 
 void cpu_exec(uint32_t);
+
+inline void fix_cost_start();
 
 uint32_t hwaddr_read(hwaddr_t, size_t);
 hwaddr_t page_translate(lnaddr_t addr);
@@ -71,6 +71,8 @@ static int cmd_addr(char *args);
 
 static int cmd_xp(char *args);
 
+static int cmd_fix(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -91,10 +93,17 @@ static struct {
 	{ "cache", "printf cache info by address", cmd_cache},
 	{ "b", "break eip", cmd_b},
 	{ "addr", "addr", cmd_addr},
-	{ "xp", "xp", cmd_xp}
+	{ "xp", "xp", cmd_xp},
+	{ "fix", "fix", cmd_fix}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+static int cmd_fix(char *args)
+{
+	fix_cost_start();
+	return 0;
+}
 
 static int cmd_addr(char *args)
 {

@@ -206,6 +206,9 @@ int print_perf()
 	return 0;
 }
 
+inline void fix_cost_start()
+{}
+
 inline void func_cost_calc()
 {
 	record[pfunc] ++;

@@ -69,6 +69,7 @@ make_helper(fs_read_test)
 		uint8_t tmp = swaddr_read(4, buf + i, R_DS);
 		assert(tmp == data[i]);
 	}
+	fclose(fp);
 	return 1;
 }
 

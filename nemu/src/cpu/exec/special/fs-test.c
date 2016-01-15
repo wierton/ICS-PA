@@ -88,7 +88,7 @@ make_helper(fs_lseek_record)
 	int fd = cpu.ebx;
 	int offset = cpu.ecx;
 	int whence = cpu.edx;
-	if(fd < 0 || fd >= NR_FILES || file_state[fd].opened == false)
+	if(fd < 0 || fd >= NR_FILES)
 	{
 		printf("%d", fd);
 		printf(" lseek file not exist or not open!\n");

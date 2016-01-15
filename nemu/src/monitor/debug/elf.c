@@ -4,7 +4,7 @@
 #include "monitor/readelf.h"
 
 /*
- * FCC --- function cost calc
+ * FCC --- function cost count
  */
 
 char *exec_file = NULL;
@@ -207,6 +207,9 @@ int print_perf()
 		}
 	}
 	fclose(fp);
+
+	printf("FCC data recorded in 'game.perf'\n");
+
 	return 0;
 }
 

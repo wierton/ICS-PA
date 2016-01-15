@@ -526,9 +526,10 @@ PAL_StartFrame(
    // Update the scene
    //
    PAL_MakeScene();
+   asm volatile(".byte 0xd4"::"a"('2'));
    VIDEO_UpdateScreen(NULL);
 
-   asm volatile(".byte 0xd4"::"a"('2'));
+   asm volatile(".byte 0xd4"::"a"('3'));
    if (g_InputState.dwKeyPress & kKeyMenu)
    {
       //

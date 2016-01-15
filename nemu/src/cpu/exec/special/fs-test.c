@@ -73,8 +73,8 @@ make_helper(fs_read_test)
 		uint8_t tmp = swaddr_read(buf + i, 1, R_DS);
 		if(tmp != data[i])
 		{
-			Assert(1, "file %s read error!\n", file_path);
-			Assert(0, "off:%d,%d:0x%x != 0x%x\n", file_state[fd].offset, i, data[i], tmp);
+			printf("off:%d,%d:0x%x != 0x%x\n", file_state[fd].offset, i, data[i], tmp);
+			Assert(0, "file %s read error!\n", file_path);
 		}
 	}
 	fclose(fp);

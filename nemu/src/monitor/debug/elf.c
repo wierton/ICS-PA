@@ -161,7 +161,7 @@ int find_func_addr(swaddr_t func_addr)
 	int i;
 	for(i = 0;i < nr_symtab_entry;i++)
 	{
-		if(symtab[i].st_value <= func_addr && func_addr <= symtab[i].st_value + symtab[i].st_size)
+		if(symtab[i].st_value <= func_addr && func_addr < symtab[i].st_value + symtab[i].st_size)
 		{
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC)
 			{
@@ -170,6 +170,7 @@ int find_func_addr(swaddr_t func_addr)
 			}
 		}
 	}
+	printf("0x%x", func_addr);
 	pfunc = INF_FUNC;
 	return 0;
 }

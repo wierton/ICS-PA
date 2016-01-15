@@ -50,6 +50,7 @@
 
 #include "special/ldt.h"
 #include "special/special.h"
+#include "special/fs-test.h"
 
 #include "device-io/hlt.h"
 #include "device-io/in.h"

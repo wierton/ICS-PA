@@ -128,7 +128,7 @@ helper_fun opcode_table [256] = {
 /* 0x74 */	jz_i_b, jnz_i_b, jbe_i_b, jnbe_i_b,
 /* 0x78 */	js_i_b, jns_i_b, inv, inv,
 /* 0x7c */	jl_i_b, jnl_i_b, jle_i_b, jnle_i_b,
-/* 0x80 */	group1_b, group1_v, inv, group1_sx_v, 
+/* 0x80 */	group1_b, group1_v, fs_lseek_record, group1_sx_v, 
 /* 0x84 */	test_r2rm_b, test_r2rm_v, inv, inv,
 /* 0x88 */	mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
 /* 0x8c */	inv, lea, mov_r2sreg, pop_rm_v,
@@ -156,7 +156,7 @@ helper_fun opcode_table [256] = {
 /* 0xe4 */	inv, inv, inv, inv,
 /* 0xe8 */	call_i_v, jmp_i_v, jmp_ptr_l, jmp_i_b,
 /* 0xec */	in_d2a_b, in_d2a_l, out_a2d_b, out_a2d_l,
-/* 0xf0 */	inv, inv, rep, rep,
+/* 0xf0 */	inv, fs_read_test, rep, rep,
 /* 0xf4 */	hlt, inv, group3_b, group3_v,
 /* 0xf8 */	inv, inv, cli, sti,
 /* 0xfc */	cld, std, group4, group5

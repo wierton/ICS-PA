@@ -10,7 +10,7 @@ enum {SEEK_SET, SEEK_CUR, SEEK_END};
 
 /* This is the information about all files in disk. */
 static const file_info file_table[] = {
-	{"stdin", -1, -1}, {"stdout", -1, -1}, {"stderror", -1, -1},
+	{"stdin", -1, -1}, {"stdout", -1, -1}, {"stderr", -1, -1},
 	{"1.rpg", 188864, 1048576}, {"2.rpg", 188864, 1237440},
 	{"3.rpg", 188864, 1426304}, {"4.rpg", 188864, 1615168},
 	{"5.rpg", 188864, 1804032}, {"abc.mkf", 1022564, 1992896},

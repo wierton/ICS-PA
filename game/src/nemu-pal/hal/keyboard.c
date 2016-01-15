@@ -33,7 +33,7 @@ keyboard_event(void) {
 			key_state[i] = KEY_STATE_EMPTY;
 		if(target_key == keycode_array[i])
 		{
-			Log("0x%x\n", key_state[i]);
+			Log("0x%x\n", keycode_array[i]);
 			if(updown)
 				key_state[i] = KEY_STATE_RELEASE;
 			else

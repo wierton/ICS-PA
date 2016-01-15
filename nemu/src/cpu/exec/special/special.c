@@ -17,9 +17,16 @@ make_helper(sti)
 	return 1;
 }
 
-make_helper(info)
+make_helper(info_c)
 {
 	printf("%c", cpu.eax);
+	fflush(stdout);
+	return 1;
+}
+
+make_helper(info_i)
+{
+	printf("0x%x", cpu.eax);
 	fflush(stdout);
 	return 1;
 }

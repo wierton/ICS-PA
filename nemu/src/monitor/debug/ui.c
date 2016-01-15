@@ -12,7 +12,7 @@ extern swaddr_t stop_eip;
 
 void cpu_exec(uint32_t);
 
-inline void fix_cost_start();
+inline void FCC_fix();
 
 uint32_t hwaddr_read(hwaddr_t, size_t);
 hwaddr_t page_translate(lnaddr_t addr);
@@ -101,7 +101,7 @@ static struct {
 
 static int cmd_fix(char *args)
 {
-	fix_cost_start();
+	FCC_fix();
 	return 0;
 }
 

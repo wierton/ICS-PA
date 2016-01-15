@@ -2,6 +2,7 @@
 #include "monitor/monitor.h"
 #include "SDL/SDL.h"
 
+inline void FCC_start();
 inline void stop_nemu();
 uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
@@ -82,7 +83,9 @@ make_helper(nemu_trap) {
 				printf("%c", (char)tmp);
 			}
 		   	break;
-
+		case 3:
+			FCC_start();
+			break;
 		default:
 			printf("\33[1;31mnemu: HIT %s TRAP\33[0m at eip = 0x%08x\n\n",
 					(cpu.eax == 0 ? "GOOD" : "BAD"), cpu.eip);

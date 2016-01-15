@@ -3,6 +3,10 @@
 
 #include "monitor/readelf.h"
 
+/*
+ * FCC --- function cost calc
+ */
+
 char *exec_file = NULL;
 
 #define INF_FUNC 9999
@@ -206,14 +210,17 @@ int print_perf()
 	return 0;
 }
 
-inline void fix_cost_start()
+inline void FCC_start()
 {}
 
-inline void func_cost_calc()
+inline void FCC_calc()
 {
 	record[pfunc] ++;
 	total_record ++;
 }
+
+inline void FCC_fix()
+{}
 
 int find_func(swaddr_t func_addr, char *func_name)
 {

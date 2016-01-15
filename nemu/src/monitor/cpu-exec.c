@@ -18,7 +18,7 @@ int exec(swaddr_t);
 char assembly[80];
 char asm_buf[128];
 
-inline void func_cost_calc();
+inline void FCC_calc();
 
 /* Used with exception handling. */
 jmp_buf jbuf;
@@ -113,7 +113,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		if((n & 0xfffff) == 0) {fputc('.', stderr);}
 		cpu.eip += instr_len;
-		func_cost_calc();
+		FCC_calc();
 
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;

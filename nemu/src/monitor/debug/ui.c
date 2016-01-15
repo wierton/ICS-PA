@@ -90,11 +90,11 @@ static struct {
 	{ "w", "Add a watchpoint",cmd_w},
 	{ "d", "Delete a watchpoint",cmd_d},
 	{ "bt", "Print the stack frame chain",cmd_bt},
-	{ "cache", "printf cache info by address", cmd_cache},
-	{ "b", "break eip", cmd_b},
-	{ "addr", "addr", cmd_addr},
-	{ "xp", "xp", cmd_xp},
-	{ "fix", "fix", cmd_fix}
+	{ "cache", "Printf cache info by address", cmd_cache},
+	{ "b", "Set break point at eip", cmd_b},
+	{ "addr", "Translate vitual addr into physic addr", cmd_addr},
+	{ "xp", "Read the memory by giving physic addr", cmd_xp},
+	{ "fix", "After fixing, the function cost count begin at kernel", cmd_fix}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

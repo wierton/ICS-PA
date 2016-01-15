@@ -135,7 +135,7 @@ int fs_lseek(int fd, int offset, int whence)
 	{
 		printx(fd);
 		prints(" lseek file not exist or not open!\n");
-		nemu_assert(0);
+//		nemu_assert(0);
 		return 0;
 	}
 	switch(whence)

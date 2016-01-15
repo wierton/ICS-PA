@@ -109,7 +109,7 @@ make_helper(nemu_acc)
 	ACC ac;
 	int i, j;
 	uint32_t *p = (uint32_t *)(&ac);
-	for(i = 0; i < sizeof(ACC); i++)
+	for(i = 0; i < sizeof(ac)/sizeof(uint32_t); i++)
 	{
 		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
@@ -140,13 +140,14 @@ make_helper(nemu_acc2)
 	ACC2 ac;
 	int i, j;
 	uint32_t *p = (uint32_t *)(&ac);
-	for(i = 0; i < sizeof(ACC2); i++)
+	for(i = 0; i < sizeof(ac)/sizeof(uint32_t); i++)
 	{
 		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
 
 	int dx = ac.dx, dy = ac.dy;
 	uint32_t uiWidth = ac.uiWidth;
+	assert(uiWidth != 0);
 	uint32_t lpBitmapRLE = ac.lpBitmapRLE;
 	lpBitmapRLE += 4;
 	for (i = 0; i < ac.uiLen;)

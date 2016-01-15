@@ -616,6 +616,7 @@ PAL_SpriteGetFrame(
 
 --*/
 {
+return NULL;	/*
    int imagecount, offset;
 
    if (lpSprite == NULL)
@@ -646,7 +647,7 @@ PAL_SpriteGetFrame(
 #else
    offset = (WORD)((lpSprite[iFrameNum] | (lpSprite[iFrameNum + 1] << 8)) << 1);
 #endif
-   return &lpSprite[offset];
+   return &lpSprite[offset];*/
 }
 
 INT

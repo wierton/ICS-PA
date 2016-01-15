@@ -226,7 +226,7 @@ PAL_MapGetTileBitmap(
 
 --*/
 {
-   DWORD d;
+//   DWORD d;
 
    //
    // Check for invalid parameters.
@@ -235,11 +235,11 @@ PAL_MapGetTileBitmap(
    {
       return NULL;
    }
-
+return NULL;
    //
    // Get the tile data of the specified location.
    //
-   d = lpMap->Tiles[y][x][h];
+/*   d = lpMap->Tiles[y][x][h];
 
    if (ucLayer == 0)
    {
@@ -255,7 +255,7 @@ PAL_MapGetTileBitmap(
       //
       d >>= 16;
       return PAL_SpriteGetFrame(lpMap->pTileSprite, ((d & 0xFF) | ((d >> 4) & 0x100)) - 1);
-   }
+   }*/
 }
 
 BOOL
@@ -403,14 +403,14 @@ PAL_MapBlitToSurface(
          xPos = sx * 32 + h * 16 - 16 - lpSrcRect->x;
          for (x = sx; x < dx; x++, xPos += 32)
          {
-//            lpBitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer, lpMap);
+            lpBitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer, lpMap);
             if (lpBitmap == NULL)
             {
                if (ucLayer)
                {
                   continue;
                }
- //              lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
+               lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
             }
             PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
          }

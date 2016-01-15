@@ -64,7 +64,7 @@ make_helper(fs_read_test)
 	strcat(file_path, file_table[fd].name);
 	FILE * fp = fopen(file_path, "rb");
 
-	assert(fp != NULL);
+	Assert(fp != NULL, "file %s read failed!\n", file_path);
 	fseek(fp, file_state[fd].offset, SEEK_SET);
 	fread(data, len, 1, fp);
 

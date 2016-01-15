@@ -22,7 +22,7 @@
 //
 
 typedef struct {
-	uint32_t lpBitmapRLE, uiWidth, uiLen, pitch, dx, dy, dw, dh, dp;
+	int lpBitmapRLE, uiWidth, uiLen, pitch, dx, dy, dw, dh, dp;
 } ACC2;
 
 #include "palcommon.h"
@@ -53,12 +53,12 @@ PAL_RLEBlitToSurface(
 
 --*/
 {
-   UINT volatile         i, j;
-   INT  volatile         x, y;
+//   UINT volatile         i, j;
+//   INT  volatile         x, y;
    UINT volatile         uiLen       = 0;
    UINT volatile         uiWidth     = 0;
    UINT volatile         uiHeight    = 0;
-   BYTE volatile         T;
+//   BYTE volatile         T;
    INT  volatile         dx          = PAL_X(pos);
    INT  volatile         dy          = PAL_Y(pos);
 
@@ -92,11 +92,12 @@ PAL_RLEBlitToSurface(
    //
    uiLen = uiWidth * uiHeight;
 
-   ac.lpBitmapRLE = (uint32_t)lpBitmapRLE;
+   ac.lpBitmapRLE = (UINT)lpBitmapRLE;
    ac.uiWidth = uiWidth; ac.uiLen = uiLen;
    ac.pitch = lpDstSurface->pitch;
-   ac.dx = dx; ac.dy = dy; ac.dw = dw; ac.dh = dh;
-   ac.dp = (uint32_t)lpDstSurface->pixels;
+   ac.dx = dx; ac.dy = dy;
+   ac.dw = lpDstSurface->w; ac.dh = lpDstSurface->h;
+   ac.dp = (UINT)lpDstSurface->pixels;
    asm volatile(".byte 0xd8"::"a"(&ac));
    //
    // Start decoding and blitting the bitmap.

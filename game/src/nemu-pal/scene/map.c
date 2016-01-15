@@ -410,9 +410,9 @@ PAL_MapBlitToSurface(
                {
                   continue;
                }
-               lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
+ //              lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
             }
-            PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
+   //         PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
          }
       }
    }

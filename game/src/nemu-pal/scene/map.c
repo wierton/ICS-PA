@@ -403,7 +403,7 @@ PAL_MapBlitToSurface(
          xPos = sx * 32 + h * 16 - 16 - lpSrcRect->x;
          for (x = sx; x < dx; x++, xPos += 32)
          {
-/*            lpBitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer, lpMap);
+            lpBitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer, lpMap);
             if (lpBitmap == NULL)
             {
                if (ucLayer)
@@ -411,8 +411,8 @@ PAL_MapBlitToSurface(
                   continue;
                }
                lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
-            }*/
-            PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
+            }
+//            PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
          }
       }
    }

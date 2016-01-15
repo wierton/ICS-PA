@@ -51,21 +51,21 @@ void do_syscall(TrapFrame *tf) {
 			}
 			else
 			{
-				tf->eax = fs_write(tf->ebx - 3, (void *)tf->ecx, tf->edx);
+				tf->eax = fs_write(tf->ebx, (void *)tf->ecx, tf->edx);
 			}
 			/*asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx));*/
 			break;
 		case SYS_read:
 			if(tf->ebx >= 0x3)
 			{
-				tf->eax = fs_read(tf->ebx - 3, (void *)tf->ecx, tf->edx);
+				tf->eax = fs_read(tf->ebx, (void *)tf->ecx, tf->edx);
 			}
 			break;
 		case SYS_lseek:
-			tf->eax = fs_lseek(tf->ebx - 3, tf->ecx, tf->edx);
+			tf->eax = fs_lseek(tf->ebx, tf->ecx, tf->edx);
 			break;
 		case SYS_close:
-			tf->eax = fs_close(tf->ecx - 3);
+			tf->eax = fs_close(tf->ecx);
 			break;
 		case SYS_open:
 			prints("open:");

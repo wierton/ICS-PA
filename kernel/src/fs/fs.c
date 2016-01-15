@@ -10,6 +10,7 @@ enum {SEEK_SET, SEEK_CUR, SEEK_END};
 
 /* This is the information about all files in disk. */
 static const file_info file_table[] = {
+	{"stdin", -1, -1}, {"stdout", -1, -1}, {"stderror", -1, -1},
 	{"1.rpg", 188864, 1048576}, {"2.rpg", 188864, 1237440},
 	{"3.rpg", 188864, 1426304}, {"4.rpg", 188864, 1615168},
 	{"5.rpg", 188864, 1804032}, {"abc.mkf", 1022564, 1992896},
@@ -40,7 +41,7 @@ typedef struct {
 	uint32_t offset;
 } Fstate;
 
-Fstate file_state[NR_FILES + 3];
+Fstate file_state[NR_FILES];
 
 int fs_open(const char *pathname, int flags)
 {
@@ -56,9 +57,10 @@ int fs_open(const char *pathname, int flags)
 		}
 		if(pathname[j] == file_table[i].name[j])
 		{
-			file_state[i + 3].opened = true;
-			file_state[i + 3].offset = 0;
-			return i + 3;
+			file_state[i].opened = true;
+			file_state[i].offset = 0;
+			nemu_assert(i >= 3);
+			return i;
 		}
 	}
 	prints("error file:");
@@ -77,84 +79,84 @@ int fs_read(int fd, void *buf, int len)
 		nemu_assert(0);
 		return -1;
 	}
-	if(file_state[fd + 3].opened == false)
+	if(file_state[fd].opened == false)
 	{
 		printx(fd);
 		prints(" read file not open!\n");
 		nemu_assert(0);
 		return -1;
 	}
-	if(file_state[fd + 3].offset > file_table[fd].size)
+	if(file_state[fd].offset > file_table[fd].size)
 		return 0;
-	int end_pos = len + file_state[fd + 3].offset;
+	int end_pos = len + file_state[fd].offset;
 	if(end_pos > file_table[fd].size)
 	{
 		printx(fd);
 		prints(" read exceed the boundary!\n");
 		printx(len);
 		prints(" ");
-		printx(file_state[fd + 3].offset);
+		printx(file_state[fd].offset);
 		prints("\n");
 //		nemu_assert(0);
-		len = file_table[fd].size - file_state[fd + 3].offset;
+		len = file_table[fd].size - file_state[fd].offset;
 	}
 	if(len < 0) len = 0;
-	ide_read(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
+	ide_read(buf, file_table[fd].disk_offset + file_state[fd].offset, len);
 
-	file_state[fd + 3].offset += len;
+	file_state[fd].offset += len;
 	return len;
 }
 
 int fs_write(int fd, void *buf, int len)
 {
-	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+	if(fd < 0 || fd >= NR_FILES || file_state[fd].opened == false)
 	{
 		printx(fd);
 		prints(" write file not exist or not open!\n");
 		nemu_assert(0);
 		return -1;
 	}
-	int end_pos = len + file_state[fd + 3].offset;
+	int end_pos = len + file_state[fd].offset;
 	if(end_pos > file_table[fd].size)
 	{
 		printx(fd);
 		prints(" write exceed the boundary!\n");
 		nemu_assert(0);
-		len = file_table[fd].size - file_state[fd + 3].offset;
+		len = file_table[fd].size - file_state[fd].offset;
 	}
 	if(len < 0) len = 0;
-	ide_write(buf, file_table[fd].disk_offset + file_state[fd + 3].offset, len);
-	file_state[fd + 3].offset += len;
+	ide_write(buf, file_table[fd].disk_offset + file_state[fd].offset, len);
+	file_state[fd].offset += len;
 	return len;
 }
 
 
 int fs_lseek(int fd, int offset, int whence)
 {
-	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+	if(fd < 0 || fd >= NR_FILES || file_state[fd].opened == false)
 	{
 		printx(fd);
 		prints(" lseek file not exist or not open!\n");
-//		nemu_assert(0);
+		nemu_assert(0);
 		return 0;
 	}
 	switch(whence)
 	{
-		case SEEK_SET:file_state[fd + 3].offset = offset;break;
-		case SEEK_CUR:file_state[fd + 3].offset += offset;break;
+		case SEEK_SET:file_state[fd].offset = offset;break;
+		case SEEK_CUR:file_state[fd].offset += offset;break;
 		case SEEK_END:
-					  file_state[fd + 3].offset = file_table[fd].size + offset;
+					  file_state[fd].offset = file_table[fd].size + offset;
 					  break; 
 	}
 	
-	return file_state[fd + 3].offset;
+	return file_state[fd].offset;
 }
 
 
 int fs_close(int fd)
 {
-	if(fd < 0 || fd >= NR_FILES || file_state[fd + 3].opened == false)
+	if(fd < 0 || fd >= NR_FILES || file_state[fd].opened == false)
 		return -1;
-	file_state[fd + 3].opened = false;
+	file_state[fd].opened = false;
 	return 0;
 }

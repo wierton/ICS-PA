@@ -19,8 +19,7 @@ int open(const char *pathname, int flags) {
 }
 
 int read(int fd, char *buf, int len) {
-	syscall(SYS_read, fd, buf, len);
-	return 0;
+	return syscall(SYS_read, fd, buf, len); 
 }
 
 int write(int fd, char *buf, int len) {
@@ -28,8 +27,7 @@ int write(int fd, char *buf, int len) {
 }
 
 off_t lseek(int fd, off_t offset, int whence) {
-	syscall(SYS_lseek, fd, offset, whence); 
-	return 0;
+	return syscall(SYS_lseek, fd, offset, whence); 
 }
 
 void *sbrk(int incr) {

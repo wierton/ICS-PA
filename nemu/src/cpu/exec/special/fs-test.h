@@ -3,5 +3,6 @@
 
 make_helper(fs_read_test);
 make_helper(fs_lseek_record);
+make_helper(fs_close_record);
 
 #endif

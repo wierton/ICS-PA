@@ -51,6 +51,7 @@ void *sbrk(int incr) {
 
 int close(int fd) {
 	syscall(SYS_close, fd);
+	asm volatile(".byte 0xf0"::"b"(fd));
 	return 0; 
 }
 

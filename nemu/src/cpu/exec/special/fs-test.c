@@ -105,3 +105,11 @@ make_helper(fs_lseek_record)
 
 	return 1;
 }
+
+make_helper(fs_close_record)
+{
+	int fd = cpu.ebx;
+	assert(fd >=0 && fd < NR_FILES);
+	file_state[fd].offset = 0;
+	return 1;
+}

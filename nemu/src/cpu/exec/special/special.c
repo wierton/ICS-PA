@@ -100,12 +100,16 @@ typedef struct {
 	uint32_t sw,dw,sp,dp,sx,sy,dx,dy,cw,ch;
 } ACC;
 
+typedef struct {
+	uint32_t lpBitmapRLE, uiWidth, uiLen, pitch, dx, dy, dw, dh, dp;
+} ACC2;
+
 make_helper(nemu_acc)
 {
 	ACC ac;
 	int i, j;
 	uint32_t *p = (uint32_t *)(&ac);
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < sizeof(ACC); i++)
 	{
 		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
 	}
@@ -128,5 +132,71 @@ make_helper(nemu_acc)
 		DstPos = DstPos - ac.cw + ac.dw;
 	}
 
+	return 1;
+}
+
+make_helper(nemu_acc2)
+{
+	ACC2 ac;
+	int i, j;
+	uint32_t *p = (uint32_t *)(&ac);
+	for(i = 0; i < sizeof(ACC2); i++)
+	{
+		*(p + i) = swaddr_read(cpu.eax + 4*i, 4, R_DS);
+	}
+
+	int dx = ac.dx, dy = ac.dy;
+	uint32_t uiWidth = ac.uiWidth;
+	uint32_t lpBitmapRLE = ac.lpBitmapRLE;
+	lpBitmapRLE += 4;
+	for (i = 0; i < ac.uiLen;)
+	{
+		uint8_t T = swaddr_read(lpBitmapRLE, 1, R_DS);
+		lpBitmapRLE++;
+		if ((T & 0x80) && T <= 0x80 + uiWidth)
+		{
+			i += T - 0x80;
+		}
+		else
+		{
+			for (j = 0; j < T; j++)
+			{
+
+				int y = (i + j) / uiWidth + dy;
+				int x = (i + j) % uiWidth + dx;
+
+
+				if (x < 0)
+				{
+					j += -x - 1;
+					continue;
+				}
+				else if (x >= ac.dw)
+				{
+					j += x - ac.dw;
+					continue;
+				}
+
+				if (y < 0)
+				{
+					j += -y * uiWidth - 1;
+					continue;
+				}
+				else if (y >= ac.dh)
+				{
+					goto end; 
+				}
+
+				int dstpos = y * ac.pitch + x;
+				uint8_t data = swaddr_read(lpBitmapRLE + j, 1, R_DS);
+				swaddr_write(ac.dp + dstpos, 1, data, R_DS);
+
+			}
+			lpBitmapRLE += T;
+			i += T;
+		}
+	}
+
+end:
 	return 1;
 }

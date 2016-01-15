@@ -404,14 +404,14 @@ PAL_MapBlitToSurface(
          for (x = sx; x < dx; x++, xPos += 32)
          {
             lpBitmap = PAL_MapGetTileBitmap((BYTE)x, (BYTE)y, (BYTE)h, ucLayer, lpMap);
-            if (lpBitmap == NULL)
+/*            if (lpBitmap == NULL)
             {
                if (ucLayer)
                {
                   continue;
                }
                lpBitmap = PAL_MapGetTileBitmap(0, 0, 0, ucLayer, lpMap);
-            }
+            }*/
             PAL_RLEBlitToSurface(lpBitmap, lpSurface, PAL_XY(xPos, yPos));
          }
       }

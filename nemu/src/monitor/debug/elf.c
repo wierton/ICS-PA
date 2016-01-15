@@ -206,6 +206,12 @@ int print_perf()
 	return 0;
 }
 
+inline void func_cost_calc()
+{
+	record[pfunc] ++;
+	total_record ++;
+}
+
 int find_func(swaddr_t func_addr, char *func_name)
 {
 	int i;

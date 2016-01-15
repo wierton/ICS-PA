@@ -18,9 +18,7 @@ int exec(swaddr_t);
 char assembly[80];
 char asm_buf[128];
 
-extern uint64_t total_record;
-extern uint64_t record[100000];
-extern uint64_t pfunc;
+inline void func_cost_calc();
 
 /* Used with exception handling. */
 jmp_buf jbuf;
@@ -115,8 +113,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		if((n & 0xfffff) == 0) {fputc('.', stderr);}
 		cpu.eip += instr_len;
-		record[pfunc] ++;
-		total_record ++;
+		func_cost_calc();
 
 		if(cpu.eip == stop_eip)
 			nemu_state = STOP;

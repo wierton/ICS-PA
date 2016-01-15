@@ -110,6 +110,7 @@ void init_cond() {
 	/* Here we go! */
 	prints("Here we go!\n");
 
+	asm volatile(".byte 0xd6" : :"a"(3));
 	((void(*)(void))eip)();
 
 	panic("should not reach here");

@@ -391,15 +391,6 @@ PAL_MapBlitToSurface(
    sx = lpSrcRect->x / 32 - 1;
    dx = (lpSrcRect->x + lpSrcRect->w) / 32 + 2;
 
-   asm volatile(".byte 0xd4"::"a"('['));
-   asm volatile(".byte 0xd5"::"a"(sx));
-   asm volatile(".byte 0xd4"::"a"('-'));
-   asm volatile(".byte 0xd5"::"a"(dx));
-   asm volatile(".byte 0xd4"::"a"('-'));
-   asm volatile(".byte 0xd5"::"a"(sy));
-   asm volatile(".byte 0xd4"::"a"('-'));
-   asm volatile(".byte 0xd5"::"a"(dy));
-
    //
    // Do the drawing.
    //
@@ -424,5 +415,4 @@ PAL_MapBlitToSurface(
          }
       }
    }
-   asm volatile(".byte 0xd4"::"a"(']'));
 }

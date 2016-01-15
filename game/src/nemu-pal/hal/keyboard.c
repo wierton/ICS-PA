@@ -80,14 +80,14 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	bool ret = false;
 	for(i=0;i<NR_KEYS;i++)
 	{
-		if(key_state[i] == KEY_STATE_PRESS && !ret)
-		{
-			key_press_callback(keycode_array[i]);
-			ret = true;
-		}
 		if(key_state[i] == KEY_STATE_RELEASE && !ret)
 		{
 			key_release_callback(keycode_array[i]);
+			ret = true;
+		}
+		if(key_state[i] == KEY_STATE_PRESS && !ret)
+		{
+			key_press_callback(keycode_array[i]);
 			ret = true;
 		}
 		clear_key(i);

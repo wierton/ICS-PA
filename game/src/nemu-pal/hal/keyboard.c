@@ -90,7 +90,7 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 			key_press_callback(keycode_array[i]);
 			ret = true;
 		}
-		clear_key(i);
+	//	clear_key(i);
 	}
 	sti();
 	return ret;

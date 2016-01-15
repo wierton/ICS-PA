@@ -170,7 +170,6 @@ int find_func_addr(swaddr_t func_addr)
 			}
 		}
 	}
-	printf("0x%x", func_addr);
 	pfunc = INF_FUNC;
 	return 0;
 }

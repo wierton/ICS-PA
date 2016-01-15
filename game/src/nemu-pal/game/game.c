@@ -117,7 +117,6 @@ PAL_GameMain(
       PAL_ProcessEvent();
       while (SDL_GetTicks() <= dwTime)
       {
-		 asm volatile(".byte 0xd4"::"a"('['));
          PAL_ProcessEvent();
          SDL_Delay(1);
 		 break;

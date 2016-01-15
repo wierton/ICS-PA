@@ -156,7 +156,7 @@ PAL_FadeOut(
    //
    // Start fading out...
    //
-   time = SDL_GetTicks() + iDelay * 10 * 60;
+   time = SDL_GetTicks() + iDelay * 10 * 10;
 
    while (TRUE)
    {
@@ -223,7 +223,7 @@ PAL_FadeIn(
    //
    // Start fading in...
    //
-   time = SDL_GetTicks() + iDelay * 10 * 60;
+   time = SDL_GetTicks() + iDelay * 10 * 10;
    while (TRUE)
    {
       //

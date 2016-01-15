@@ -6,7 +6,7 @@ inline void stop_nemu();
 uint32_t swaddr_read(swaddr_t, size_t, uint8_t);
 
 static uint8_t data[4096];
-static const char path[] = "/home/nick/ics2015/game/src/nemu-pal/data";
+static const char path[] = "/home/nick/ics2015/game/src/nemu-pal/data/";
 static char file_path[512];
 
 typedef struct {

@@ -70,7 +70,7 @@ make_helper(fs_read_test)
 
 	for(i = 0; i < len; i++)
 	{
-		uint8_t tmp = swaddr_read(4, buf + i, R_DS);
+		uint8_t tmp = swaddr_read(buf + i, 1, R_DS);
 		assert(tmp == data[i]);
 	}
 	fclose(fp);

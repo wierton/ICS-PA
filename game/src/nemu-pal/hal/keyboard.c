@@ -24,7 +24,6 @@ keyboard_event(void) {
 
 	target_key = scancode & 0x7f;
 
-	Log("0x%x\n", scancode);
 	for(i=0;i<NR_KEYS;i++)
 	{
 		if(key_state[i] == KEY_STATE_PRESS)
@@ -82,14 +81,14 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 		if(key_state[i] == KEY_STATE_PRESS)
 		{
 			key_press_callback(keycode_array[i]);
-			key_state[i] = KEY_STATE_WAIT_RELEASE;
 			ret = true;
+			return ret;
 		}
 		if(key_state[i] == KEY_STATE_RELEASE)
 		{
 			key_release_callback(keycode_array[i]);
-			key_state[i] = KEY_STATE_EMPTY;
 			ret = true;
+			return ret;
 		}
 		clear_key(i);
 	}

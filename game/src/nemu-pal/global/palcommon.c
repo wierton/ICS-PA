@@ -629,6 +629,8 @@ PAL_SpriteGetFrame(
 //   imagecount = (lpSprite[0] | (lpSprite[1] << 8)) - 1;
    imagecount = (lpSprite[0] | (lpSprite[1] << 8));
 
+   asm volatile(".byte 0xd5"::"a"(imagecount));
+   asm volatile(".byte 0xd5"::"a"(iFrameNum));
    if (iFrameNum < 0 || iFrameNum >= imagecount)
    {
       //

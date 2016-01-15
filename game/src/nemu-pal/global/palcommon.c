@@ -616,7 +616,6 @@ PAL_SpriteGetFrame(
 
 --*/
 {
-return NULL;	/*
    int imagecount, offset;
 
    if (lpSprite == NULL)
@@ -628,7 +627,7 @@ return NULL;	/*
    // Hack for broken sprites like the Bloody-Mouth Bug
    //
 //   imagecount = (lpSprite[0] | (lpSprite[1] << 8)) - 1;
-   imagecount = (lpSprite[0] | (lpSprite[1] << 8));
+   imagecount = 0;//(lpSprite[0] | (lpSprite[1] << 8));
 
    if (iFrameNum < 0 || iFrameNum >= imagecount)
    {
@@ -647,7 +646,7 @@ return NULL;	/*
 #else
    offset = (WORD)((lpSprite[iFrameNum] | (lpSprite[iFrameNum + 1] << 8)) << 1);
 #endif
-   return &lpSprite[offset];*/
+   return &lpSprite[offset];
 }
 
 INT

@@ -27,10 +27,6 @@ keyboard_event(void) {
 	Log("0x%x\n", target_key);
 	for(i=0;i<NR_KEYS;i++)
 	{
-		if(key_state[i] == KEY_STATE_PRESS)
-			key_state[i] = KEY_STATE_WAIT_RELEASE;
-		if(key_state[i] == KEY_STATE_RELEASE)
-			key_state[i] = KEY_STATE_EMPTY;
 		if(target_key == keycode_array[i])
 		{
 			Log("0x%x\n", keycode_array[i]);
@@ -83,11 +79,13 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 		if(key_state[i] == KEY_STATE_RELEASE)
 		{
 			key_release_callback(keycode_array[i]);
+			key_state[i] = KEY_STATE_EMPTY;
 			ret = true;
 		}
-		if(key_state[i] == KEY_STATE_PRESS)
+		else if(key_state[i] == KEY_STATE_PRESS)
 		{
 			key_press_callback(keycode_array[i]);
+			key_state[i] = KEY_STATE_WAIT_RELEASE;
 			ret = true;
 		}
 	//	clear_key(i);

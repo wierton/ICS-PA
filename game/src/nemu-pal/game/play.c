@@ -516,17 +516,19 @@ PAL_StartFrame(
       return;
    }
 
+   asm volatile(".byte 0xd4"::"a"('0'));
    //
    // Update the positions and gestures of party members
    //
    PAL_UpdateParty();
-
+   asm volatile(".byte 0xd4"::"a"('1'));
    //
    // Update the scene
    //
    PAL_MakeScene();
    VIDEO_UpdateScreen(NULL);
 
+   asm volatile(".byte 0xd4"::"a"('2'));
    if (g_InputState.dwKeyPress & kKeyMenu)
    {
       //

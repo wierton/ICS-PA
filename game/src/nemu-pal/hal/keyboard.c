@@ -24,16 +24,15 @@ keyboard_event(void) {
 
 	target_key = scancode & 0x7f;
 
-	Log("0x%x\n", target_key);
 	for(i=0;i<NR_KEYS;i++)
 	{
 		if(target_key == keycode_array[i])
 		{
-			Log("0x%x\n", keycode_array[i]);
-			if(updown)
+			if(updown && key_state[i] == KEY_STATE_WAIT_RELEASE)
 				key_state[i] = KEY_STATE_RELEASE;
-			else
+			else if(!updown && key_state[i] == KEY_STATE_EMPTY)
 				key_state[i] = KEY_STATE_PRESS;
+			break;
 		}
 	}
 }

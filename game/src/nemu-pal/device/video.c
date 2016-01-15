@@ -327,30 +327,26 @@ VIDEO_Shutdown(
 
 --*/
 {
-	asm volatile(".byte 0xd5"::"a"(0));
    if (gpScreen != NULL)
    {
       SDL_FreeSurface(gpScreen);
    }
-   asm volatile(".byte 0xd5"::"a"(1));
    gpScreen = NULL;
 
    if (gpScreenBak != NULL)
    {
       SDL_FreeSurface(gpScreenBak);
    }
-   asm volatile(".byte 0xd5"::"a"(2));
    gpScreenBak = NULL;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-asm volatile(".byte 0xd5"::"a"(4));
+
    if (gpTouchOverlay)
    {
       SDL_DestroyTexture(gpTouchOverlay);
    }
    gpTouchOverlay = NULL;
 
-   asm volatile(".byte 0xd5"::"a"(5));
 #ifdef __WINPHONE__
    if (gpBackKeyMessage)
    {
@@ -359,13 +355,12 @@ asm volatile(".byte 0xd5"::"a"(4));
    gpBackKeyMessage = NULL;
 #endif
 
-   asm volatile(".byte 0xd5"::"a"(6));
    if (gpTexture)
    {
 	  SDL_DestroyTexture(gpTexture);
    }
    gpTexture = NULL;
-asm volatile(".byte 0xd5"::"a"(7));
+
    if (gpRenderer)
    {
       SDL_DestroyRenderer(gpRenderer);

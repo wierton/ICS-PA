@@ -15,11 +15,13 @@ void _exit(int status) {
 }
 
 int open(const char *pathname, int flags) {
-	return syscall(SYS_open, pathname, flags);
+	syscall(SYS_open, pathname, flags);
+	return 0;
 }
 
 int read(int fd, char *buf, int len) {
-	return syscall(SYS_read, fd, buf, len); 
+	syscall(SYS_read, fd, buf, len);
+	return 0;
 }
 
 int write(int fd, char *buf, int len) {
@@ -27,7 +29,8 @@ int write(int fd, char *buf, int len) {
 }
 
 off_t lseek(int fd, off_t offset, int whence) {
-	return syscall(SYS_lseek, fd, offset, whence); 
+	syscall(SYS_lseek, fd, offset, whence); 
+	return 0;
 }
 
 void *sbrk(int incr) {

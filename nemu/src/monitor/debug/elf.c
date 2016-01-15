@@ -210,17 +210,26 @@ int print_perf()
 	return 0;
 }
 
+static bool FCCV_start = false;
+
 inline void FCC_start()
-{}
+{
+	FCCV_start = true;
+}
 
 inline void FCC_calc()
 {
-	record[pfunc] ++;
-	total_record ++;
+	if(FCCV_start)
+	{
+		record[pfunc] ++;
+		total_record ++;
+	}
 }
 
 inline void FCC_fix()
-{}
+{
+	FCCV_start = true;
+}
 
 int find_func(swaddr_t func_addr, char *func_name)
 {

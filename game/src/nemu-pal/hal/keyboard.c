@@ -24,6 +24,7 @@ keyboard_event(void) {
 
 	target_key = scancode & 0x7f;
 
+	Log("0x%x\n", scancode);
 	for(i=0;i<NR_KEYS;i++)
 	{
 		if(key_state[i] == KEY_STATE_PRESS)

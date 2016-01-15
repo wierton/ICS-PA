@@ -226,7 +226,7 @@ PAL_MapGetTileBitmap(
 
 --*/
 {
-//   DWORD d;
+   DWORD d;
 
    //
    // Check for invalid parameters.
@@ -235,11 +235,11 @@ PAL_MapGetTileBitmap(
    {
       return NULL;
    }
-return NULL;
+
    //
    // Get the tile data of the specified location.
    //
-/*   d = lpMap->Tiles[y][x][h];
+   d = lpMap->Tiles[y][x][h];
 
    if (ucLayer == 0)
    {
@@ -255,7 +255,7 @@ return NULL;
       //
       d >>= 16;
       return PAL_SpriteGetFrame(lpMap->pTileSprite, ((d & 0xFF) | ((d >> 4) & 0x100)) - 1);
-   }*/
+   }
 }
 
 BOOL

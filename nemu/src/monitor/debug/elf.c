@@ -10,10 +10,10 @@
 char *exec_file = NULL;
 
 #define INF_FUNC 9999
-uint64_t total_record = 0;
-uint64_t record[10000] = {0};
+static uint64_t total_record = 0;
+static uint64_t record[10000] = {0};
 static int h[10000] = {0};
-uint64_t pfunc = INF_FUNC;
+static uint64_t pfunc = INF_FUNC;
 
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;

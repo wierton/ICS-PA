@@ -71,7 +71,11 @@ make_helper(fs_read_test)
 	for(i = 0; i < len; i++)
 	{
 		uint8_t tmp = swaddr_read(buf + i, 1, R_DS);
-		assert(tmp == data[i]);
+		if(tmp != data[i])
+		{
+			printf("%d:%d != %d\n", i, data[i], tmp);
+			assert(0);
+		}
 	}
 	fclose(fp);
 	return 1;

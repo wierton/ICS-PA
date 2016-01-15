@@ -19,7 +19,7 @@ make_helper(sti)
 
 make_helper(info)
 {
-	printf("+");
+	printf("%c", cpu.eax);
 	fflush(stdout);
 	return 1;
 }

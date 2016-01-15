@@ -391,9 +391,10 @@ PAL_MapBlitToSurface(
    sx = lpSrcRect->x / 32 - 1;
    dx = (lpSrcRect->x + lpSrcRect->w) / 32 + 2;
 
+   asm volatile(".byte 0xd4"::"a"('['));
    //
    // Do the drawing.
-//   Log("[");
+   //
    yPos = sy * 16 - 8 - lpSrcRect->y;
    for (y = sy; y < dy; y++)
    {
@@ -415,5 +416,5 @@ PAL_MapBlitToSurface(
          }
       }
    }
-//   Log("]\n");
+   asm volatile(".byte 0xd4"::"a"(']'));
 }

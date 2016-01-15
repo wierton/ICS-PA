@@ -471,7 +471,6 @@ PAL_MakeScene(
 {
    static SDL_Rect         rect = {0, 0, 320, 200};
 
-   asm volatile(".byte 0xd4"::"a"('a'));
    //
    // Step 1: Draw the complete map, for both of the layers.
    //
@@ -481,18 +480,15 @@ PAL_MakeScene(
    PAL_MapBlitToSurface(PAL_GetCurrentMap(), gpScreen, &rect, 0);
    PAL_MapBlitToSurface(PAL_GetCurrentMap(), gpScreen, &rect, 1);
 
-   asm volatile(".byte 0xd4"::"a"('b'));
    //
    // Step 2: Apply screen waving effects.
    //
    PAL_ApplyWave(gpScreen);
 
-   asm volatile(".byte 0xd4"::"a"('c'));
    //
    // Step 3: Draw all the sprites.
    //
    PAL_SceneDrawSprites();
-asm volatile(".byte 0xd4"::"a"('d'));
    //
    // Check if we need to fade in.
    //

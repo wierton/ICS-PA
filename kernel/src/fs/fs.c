@@ -109,6 +109,7 @@ int fs_read(int fd, void *buf, int len)
 
 int fs_write(int fd, void *buf, int len)
 {
+	nemu_assert(0);
 	if(fd < 0 || fd >= NR_FILES || file_state[fd].opened == false)
 	{
 		printx(fd);

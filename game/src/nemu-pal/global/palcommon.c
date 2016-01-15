@@ -90,7 +90,7 @@ PAL_RLEBlitToSurface(
    //
    // Start decoding and blitting the bitmap.
    //
-   //int bits = lpDstSurface->pitch;
+   int bits = lpDstSurface->pitch;
    LPBYTE lpDIBits = lpDstSurface->pixels;
    lpBitmapRLE += 4;
    for (i = 0; i < uiLen;)
@@ -138,7 +138,7 @@ PAL_RLEBlitToSurface(
             //
             // Put the pixel onto the surface (FIXME: inefficient).
             //
-            lpDIBits[(y << 3) + x] = lpBitmapRLE[j];
+            lpDIBits[y * bits + x] = lpBitmapRLE[j];
          }
          lpBitmapRLE += T;
          i += T;

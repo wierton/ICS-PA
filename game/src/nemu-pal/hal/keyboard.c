@@ -12,7 +12,13 @@ static const int keycode_array[] = {
 	K_s, K_f, K_p
 };
 
+#define K_UP_POS	0
+#define K_DOWN_POS	1
+#define K_LEFT_POS	2
+#define K_RIGHT_POS	3
+
 static int key_state[NR_KEYS] = {0};
+static inline void clear_key(int index);
 
 void
 keyboard_event(void) {
@@ -23,6 +29,15 @@ keyboard_event(void) {
 	uint32_t updown = ((scancode >> 0x7) & 0x1);
 
 	target_key = scancode & 0x7f;
+
+	switch(target_key)
+	{
+		case K_UP	:clear_key(K_DOWN_POS);	break;
+		case K_DOWN	:clear_key(K_UP_POS);	break;
+		case K_LEFT	:clear_key(K_LEFT_POS);	break;
+		case K_RIGHT:clear_key(K_RIGHT_POS);break;
+		default:break;
+	}
 
 	for(i=0;i<NR_KEYS;i++)
 	{

@@ -118,7 +118,7 @@ PAL_GameMain(
       while (SDL_GetTicks() <= dwTime)
       {
          PAL_ProcessEvent();
-         SDL_Delay(1);
+   //    SDL_Delay(1);
 		 break;
       }
 

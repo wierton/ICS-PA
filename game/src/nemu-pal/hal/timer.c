@@ -1,6 +1,6 @@
 #include "hal.h"
 
-//#define PA4
+#define PA4
 
 static volatile uint32_t jiffy = 0;
 static int fps = 0;

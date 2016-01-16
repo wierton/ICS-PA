@@ -526,8 +526,10 @@ PAL_StartFrame(
    PAL_MakeScene();
    VIDEO_UpdateScreen(NULL);
 
+   asm volatile(".byte 0xd5"::"a"('?'));
    if (g_InputState.dwKeyPress & kKeyMenu)
    {
+	   asm volatile(".byte 0xd5"::"a"('a'));
       //
       // Show the in-game menu
       //
@@ -535,6 +537,7 @@ PAL_StartFrame(
    }
    else if (g_InputState.dwKeyPress & kKeyUseItem)
    {
+	   asm volatile(".byte 0xd5"::"a"('b'));
       //
       // Show the use item menu
       //
@@ -542,6 +545,7 @@ PAL_StartFrame(
    }
    else if (g_InputState.dwKeyPress & kKeyThrowItem)
    {
+	   asm volatile(".byte 0xd5"::"a"('c'));
       //
       // Show the equipment menu
       //
@@ -549,6 +553,7 @@ PAL_StartFrame(
    }
    else if (g_InputState.dwKeyPress & kKeyForce)
    {
+	   asm volatile(".byte 0xd5"::"a"('d'));
       //
       // Show the magic menu
       //
@@ -556,6 +561,7 @@ PAL_StartFrame(
    }
    else if (g_InputState.dwKeyPress & kKeyStatus)
    {
+	   asm volatile(".byte 0xd5"::"a"('e'));
       //
       // Show the player status
       //

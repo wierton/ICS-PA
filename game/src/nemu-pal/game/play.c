@@ -563,6 +563,7 @@ PAL_StartFrame(
    }
    else if (g_InputState.dwKeyPress & kKeySearch)
    {
+	   asm volatile(".byte 0xd5"::"a"('+'));
       //
       // Process search events
       //

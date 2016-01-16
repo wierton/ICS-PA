@@ -136,7 +136,7 @@ PAL_OpeningMenu(
    PAL_PlayMUS(0, FALSE, 1);
    PAL_FadeOut(1);
 
-   return 0;//(INT)wItemSelected;
+   return (INT)wItemSelected;
 }
 
 INT

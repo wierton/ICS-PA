@@ -570,6 +570,7 @@ PAL_ReadMenu(
          //
          if (rgMenuItem[wCurrentItem].fEnabled)
          {
+			 asm volatile(".byte 0xd4"::"a"(wCurrentItem));
             PAL_DrawText(PAL_GetWord(rgMenuItem[wCurrentItem].wNumWord),
                rgMenuItem[wCurrentItem].pos, MENUITEM_COLOR_CONFIRMED, FALSE, TRUE);
 

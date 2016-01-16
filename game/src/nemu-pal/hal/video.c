@@ -4,7 +4,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-
+#define PA4
 int get_fps();
 
 typedef struct {

@@ -78,6 +78,7 @@ PAL_GameMain(
    //
    // Show the opening menu.
    //
+   asm volatile(".byte 0xd5"::"a"('%'));
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
 asm volatile(".byte 0xd5"::"a"('%'));
    //

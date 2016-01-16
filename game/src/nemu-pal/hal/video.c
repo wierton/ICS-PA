@@ -62,7 +62,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		DstPos = DstPos - CopyWidth + dst->w;
 	}
 #else
-	volatile ACC ac;
+	ACC volatile ac;
 	ac.sx = SrcX; ac.sy = SrcY; ac.dx = DstX; ac.dy = DstY;
 	ac.sp = (uint32_t)(src->pixels);
 	ac.dp = (uint32_t)(dst->pixels);

@@ -246,8 +246,10 @@ PAL_FadeIn(
 
       VIDEO_SetPalette(newpalette);
 
-      UTIL_Delay(10);
+      //UTIL_Delay(10);
    }
+   nemu_assert(0);
+   asm volatile (".byte 0xd5"::"a"(j));
 
    VIDEO_SetPalette(palette);
 }

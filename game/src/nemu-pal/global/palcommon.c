@@ -53,16 +53,21 @@ PAL_RLEBlitToSurface(
 
 --*/
 {
-//   UINT volatile         i, j;
-//   INT  volatile         x, y;
+#ifdef PA4
+   UINT volatile         i, j;
+   INT  volatile         x, y;
+#endif
    UINT volatile         uiLen       = 0;
    UINT volatile         uiWidth     = 0;
    UINT volatile         uiHeight    = 0;
-//   BYTE volatile         T;
+#ifdef PA4
+   BYTE volatile         T;
+#endif
    INT  volatile         dx          = PAL_X(pos);
    INT  volatile         dy          = PAL_Y(pos);
-
+#if !defined(PA4)
    ACC2 volatile ac;
+#endif
    //
    // Check for NULL pointer.
    //
@@ -92,17 +97,10 @@ PAL_RLEBlitToSurface(
    //
    uiLen = uiWidth * uiHeight;
 
-   ac.lpBitmapRLE = (UINT)lpBitmapRLE;
-   ac.uiWidth = uiWidth; ac.uiLen = uiLen;
-   ac.pitch = lpDstSurface->pitch;
-   ac.dx = dx; ac.dy = dy;
-   ac.dw = lpDstSurface->w; ac.dh = lpDstSurface->h;
-   ac.dp = (UINT)lpDstSurface->pixels;
-   asm volatile(".byte 0xd8"::"a"(&ac));
    //
    // Start decoding and blitting the bitmap.
    //
-/*  
+#ifdef PA4  
    lpBitmapRLE += 4;
    for (i = 0; i < uiLen;)
    {
@@ -156,7 +154,16 @@ PAL_RLEBlitToSurface(
       }
    }
 
-end:*/
+end:
+#else
+	ac.lpBitmapRLE = (UINT)lpBitmapRLE;
+	ac.uiWidth = uiWidth; ac.uiLen = uiLen;
+	ac.pitch = lpDstSurface->pitch;
+	ac.dx = dx; ac.dy = dy;
+	ac.dw = lpDstSurface->w; ac.dh = lpDstSurface->h;
+	ac.dp = (UINT)lpDstSurface->pixels;
+	asm volatile(".byte 0xd8"::"a"(&ac));
+#endif
    //
    // Success
    //

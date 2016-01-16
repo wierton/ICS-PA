@@ -35,5 +35,7 @@ void SDL_Delay(uint32_t ms) {
 #ifdef PA4
 	uint32_t target = ms + jiffy;
 	while(jiffy < target);
+#else
+	jiffy += ms;
 #endif
 }

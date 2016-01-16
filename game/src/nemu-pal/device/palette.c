@@ -229,7 +229,7 @@ PAL_FadeIn(
       //
       // Set the current palette...
       //
-      j = (int)(time - SDL_GetTicks()) / iDelay;
+      j = (int)(time - SDL_GetTicks()) / iDelay / 10;
       if (j < 0)
       {
          break;
@@ -246,10 +246,8 @@ PAL_FadeIn(
 
       VIDEO_SetPalette(newpalette);
 
-      //UTIL_Delay(10);
+      UTIL_Delay(10);
    }
-   nemu_assert(0);
-   asm volatile (".byte 0xd5"::"a"(j));
 
    VIDEO_SetPalette(palette);
 }

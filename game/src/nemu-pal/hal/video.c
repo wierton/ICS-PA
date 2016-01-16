@@ -45,18 +45,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		CopyWidth = srcrect->w < MinSDWidth ? srcrect->w : MinSDWidth;
 		CopyHeight = srcrect->h < MinSDHeight ? srcrect->h : MinSDHeight;
 	}
-/*
-	volatile ACC ac;
-	ac.sx = SrcX; ac.sy = SrcY; ac.dx = DstX; ac.dy = DstY;
-	ac.sp = (uint32_t)(src->pixels);
-	ac.dp = (uint32_t)(dst->pixels);
-	ac.cw = CopyWidth; ac.ch = CopyHeight;
-	ac.sw = src->w; ac.dw = dst->w;
-	asm volatile (".byte 0xd7" : : "a"(&ac));
-*/	int i,j;
+#ifdef PA4
+	int i,j;
 	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
 	int DstPos = 0 + DstX + dst->w * (0 + DstY);
-	//Log("%d\n\n", ac.sx);
 	for(j = 0; j < CopyHeight; j++)
 	{
 		for(i = 0; i < CopyWidth; i++)
@@ -69,6 +61,15 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		SrcPos = SrcPos - CopyWidth + src->w;
 		DstPos = DstPos - CopyWidth + dst->w;
 	}
+#else
+	volatile ACC ac;
+	ac.sx = SrcX; ac.sy = SrcY; ac.dx = DstX; ac.dy = DstY;
+	ac.sp = (uint32_t)(src->pixels);
+	ac.dp = (uint32_t)(dst->pixels);
+	ac.cw = CopyWidth; ac.ch = CopyHeight;
+	ac.sw = src->w; ac.dw = dst->w;
+	asm volatile (".byte 0xd7" : : "a"(&ac));
+#endif
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {

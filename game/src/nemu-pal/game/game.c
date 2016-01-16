@@ -119,7 +119,7 @@ PAL_GameMain(
       {
          PAL_ProcessEvent();
          SDL_Delay(1);
-//		 break;
+		 break;
       }
 
       //

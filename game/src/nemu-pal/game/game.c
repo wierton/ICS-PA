@@ -79,7 +79,7 @@ PAL_GameMain(
    // Show the opening menu.
    //
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
-
+asm volatile(".byte 0xd5"::"a"('%'));
    //
    // Initialize game data and set the flags to load the game resources.
    //

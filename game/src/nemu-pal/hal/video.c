@@ -47,8 +47,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	}
 #ifdef PA4
 	int i,j;
-	int SrcPos = 0 + SrcX + src->w * (0 + SrcY);
-	int DstPos = 0 + DstX + dst->w * (0 + DstY);
+	int volatile SrcPos = 0 + SrcX + src->w * (0 + SrcY);
+	int volatile DstPos = 0 + DstX + dst->w * (0 + DstY);
 	for(j = 0; j < CopyHeight; j++)
 	{
 		for(i = 0; i < CopyWidth; i++)
@@ -116,7 +116,7 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	volatile ACC ac;
 	ac.sx = x; ac.sy = y; ac.dx = x; ac.dy = y;
 	ac.sp = (uint32_t)(screen->pixels);
-	ac.dp = (uint32_t)(screen->pixels);
+	ac.dp = (uint32_t)(VMEM_ADDR);
 	ac.cw = w; ac.ch = h;
 	ac.sw = screen->w; ac.dw = screen->w;
 	asm volatile (".byte 0xd7" : : "a"(&ac));

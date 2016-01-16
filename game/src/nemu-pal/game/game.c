@@ -91,6 +91,7 @@ PAL_GameMain(
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
+	   asm volatile(".byte 0xd5"::"a"('%'));
       //
       // Do some initialization at game start.
       //

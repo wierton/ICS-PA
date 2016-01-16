@@ -111,6 +111,7 @@ PAL_OpeningMenu(
 	asm volatile(".byte 0xd4"::"a"(wItemSelected == 0));
       if (wItemSelected == 0 || wItemSelected == MENUITEM_VALUE_CANCELLED)
       {
+		  asm volatile(".byte 0xd4"::"a"(wItemSelected == 0));
          //
          // Start a new game
          //

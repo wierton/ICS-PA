@@ -229,7 +229,7 @@ PAL_FadeIn(
       //
       // Set the current palette...
       //
-      j = (int)(time - SDL_GetTicks()) / iDelay / 10;
+      j = (int)(time - SDL_GetTicks()) / iDelay;
       if (j < 0)
       {
          break;

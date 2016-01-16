@@ -108,6 +108,7 @@ PAL_OpeningMenu(
       //
       wItemSelected = PAL_ReadMenu(NULL, rgMainMenuItem, 2, wDefaultItem, MENUITEM_COLOR);
 	asm volatile(".byte 0xd4"::"a"(wItemSelected));
+	asm volatile(".byte 0xd4"::"a"(wItemSelected == 0));
       if (wItemSelected == 0 || wItemSelected == MENUITEM_VALUE_CANCELLED)
       {
          //

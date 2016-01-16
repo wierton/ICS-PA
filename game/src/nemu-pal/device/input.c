@@ -88,7 +88,7 @@ PAL_KeyPressHandler(
 			g_InputState.dwKeyPress |= kKeyMenu;
 			break;
 
-		case K_RETURN:asm volatile(".byte 0xd5"::"a"('+'));
+		case K_RETURN:
 		case K_SPACE:
 			g_InputState.dwKeyPress |= kKeySearch;
 			break;

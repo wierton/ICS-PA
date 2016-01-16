@@ -35,8 +35,8 @@ keyboard_event(void) {
 	{
 		case K_UP:		clear_key(K_DOWN_POS);	break;
 		case K_DOWN:	clear_key(K_UP_POS);	break;
-		case K_LEFT:	clear_key(K_LEFT_POS);	break;
-		case K_RIGHT:	clear_key(K_RIGHT_POS);	break;
+		case K_LEFT:	clear_key(K_RIGHT_POS);	break;
+		case K_RIGHT:	clear_key(K_LEFT_POS);	break;
 		default:break;
 	}
 

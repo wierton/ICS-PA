@@ -220,10 +220,8 @@ void SDL_FreeSurface(SDL_Surface *s) {
 			free(s->format);
 		}
 		
-		if(s->pixels != NULL) {
-			asm volatile(".byte 0xd4"::"a"(VMEM_ADDR));
-			asm volatile(".byte 0xd4"::"a"(s->pixels));
-		//	free(s->pixels);
+		if(s->pixels != NULL && !(s->flags & SDL_HWSURFACE)) {
+			free(s->pixels);
 		}
 
 		free(s);

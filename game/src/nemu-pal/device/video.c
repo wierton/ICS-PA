@@ -333,10 +333,12 @@ VIDEO_Shutdown(
    }
    gpScreen = NULL;
 
+   if (gpScreen != NULL)
    if (gpScreenBak != NULL)
    {
       SDL_FreeSurface(gpScreenBak);
    }
+   if (gpScreen != NULL)
    gpScreenBak = NULL;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
@@ -375,6 +377,7 @@ VIDEO_Shutdown(
 
 #endif
 
+   if (gpScreen != NULL)
    if (gpScreenReal != NULL)
    {
       SDL_FreeSurface(gpScreenReal);

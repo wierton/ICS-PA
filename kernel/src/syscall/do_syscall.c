@@ -68,10 +68,7 @@ void do_syscall(TrapFrame *tf) {
 			tf->eax = fs_close(tf->ecx);
 			break;
 		case SYS_open:
-			prints("open:");
-			prints((void*)tf->ebx);prints(",");
 			tf->eax = fs_open((void *)tf->ebx, 0);
-			printx(tf->eax);prints("\n");
 			break;
 
 

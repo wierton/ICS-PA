@@ -344,7 +344,6 @@ VIDEO_Shutdown(
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 
-	asm volatile(".byte 0xd5"::"a"('d'));
    if (gpScreen != NULL)
    if (gpTouchOverlay)
    {
@@ -352,7 +351,6 @@ VIDEO_Shutdown(
    }
    gpTouchOverlay = NULL;
 
-	asm volatile(".byte 0xd5"::"a"('e'));
    if (gpScreen != NULL)
 #ifdef __WINPHONE__
    if (gpBackKeyMessage)
@@ -362,7 +360,6 @@ VIDEO_Shutdown(
    gpBackKeyMessage = NULL;
 #endif
 
-	asm volatile(".byte 0xd5"::"a"('f'));
    if (gpScreen != NULL)
    if (gpTexture)
    {
@@ -370,7 +367,6 @@ VIDEO_Shutdown(
    }
    gpTexture = NULL;
 
-	asm volatile(".byte 0xd5"::"a"('g'));
    if (gpScreen != NULL)
    if (gpRenderer)
    {
@@ -378,7 +374,6 @@ VIDEO_Shutdown(
    }
    gpRenderer = NULL;
 
-	asm volatile(".byte 0xd5"::"a"('h'));
    if (gpScreen != NULL)
    if (gpWindow)
    {

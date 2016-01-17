@@ -333,24 +333,20 @@ VIDEO_Shutdown(
    }
    gpScreen = NULL;
 
-   if (gpScreen != NULL)
    if (gpScreenBak != NULL)
    {
       SDL_FreeSurface(gpScreenBak);
    }
-   if (gpScreen != NULL)
    gpScreenBak = NULL;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 
-   if (gpScreen != NULL)
    if (gpTouchOverlay)
    {
       SDL_DestroyTexture(gpTouchOverlay);
    }
    gpTouchOverlay = NULL;
 
-   if (gpScreen != NULL)
 #ifdef __WINPHONE__
    if (gpBackKeyMessage)
    {
@@ -359,21 +355,18 @@ VIDEO_Shutdown(
    gpBackKeyMessage = NULL;
 #endif
 
-   if (gpScreen != NULL)
    if (gpTexture)
    {
 	  SDL_DestroyTexture(gpTexture);
    }
    gpTexture = NULL;
 
-   if (gpScreen != NULL)
    if (gpRenderer)
    {
       SDL_DestroyRenderer(gpRenderer);
    }
    gpRenderer = NULL;
 
-   if (gpScreen != NULL)
    if (gpWindow)
    {
       SDL_DestroyWindow(gpWindow);
@@ -382,7 +375,6 @@ VIDEO_Shutdown(
 
 #endif
 
-   if (gpScreen != NULL)
    if (gpScreenReal != NULL)
    {
       SDL_FreeSurface(gpScreenReal);

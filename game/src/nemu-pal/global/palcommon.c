@@ -26,7 +26,7 @@ typedef struct {
 } ACC2;
 
 #include "palcommon.h"
-#define PA4
+
 INT
 PAL_RLEBlitToSurface(
    LPCBITMAPRLE      lpBitmapRLE,

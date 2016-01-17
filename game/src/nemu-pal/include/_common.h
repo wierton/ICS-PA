@@ -45,6 +45,7 @@ extern "C"
 #include "FLOAT.h"
 
 //#define PA4
+/* uncommenting the above line is not suggested*/
 
 #ifdef _SDL_stdinc_h
 #	define malloc       SDL_malloc

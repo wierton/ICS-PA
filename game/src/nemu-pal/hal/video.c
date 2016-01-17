@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int get_fps();
-#define PA4
+
 typedef struct {
 	uint32_t sw,dw,sp,dp,sx,sy,dx,dy,cw,ch;
 } ACC;

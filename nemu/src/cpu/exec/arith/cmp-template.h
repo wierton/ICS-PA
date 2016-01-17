@@ -4,8 +4,8 @@
 #define instr cmp
 
 static void do_execute() {
-	DATA_TYPE_S dst = op_dest->val;
-	DATA_TYPE_S src = op_src->val;
+	DATA_TYPE dst = op_dest->val;
+	DATA_TYPE src = op_src->val;
 	DATA_TYPE result = dst - src;
 	cpu.OF = !subOK(dst, src);
 	cpu.SF = MSB(result);

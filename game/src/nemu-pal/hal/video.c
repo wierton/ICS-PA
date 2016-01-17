@@ -224,7 +224,7 @@ void SDL_FreeSurface(SDL_Surface *s) {
 		//	free(s->pixels);
 		}
 
-		//free(s);
+		free(s);
 	}
 }
 

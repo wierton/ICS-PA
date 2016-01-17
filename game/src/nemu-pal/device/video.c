@@ -333,7 +333,6 @@ VIDEO_Shutdown(
    }
    gpScreen = NULL;
 
-	asm volatile(".byte 0xd5"::"a"('b'));
    if (gpScreen != NULL)
    if (gpScreenBak != NULL)
    {

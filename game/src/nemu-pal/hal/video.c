@@ -221,6 +221,7 @@ void SDL_FreeSurface(SDL_Surface *s) {
 		}
 		
 		if(s->pixels != NULL) {
+			asm volatile(".byte 0xd4"::"a"(s->pixels));
 		//	free(s->pixels);
 		}
 

@@ -217,14 +217,14 @@ void SDL_FreeSurface(SDL_Surface *s) {
 				free(s->format->palette);
 			}
 
-			//free(s->format);
+			free(s->format);
 		}
 		
 		if(s->pixels != NULL) {
 			free(s->pixels);
 		}
 
-		free(s);
+		//free(s);
 	}
 }
 

@@ -96,7 +96,7 @@ int fs_read(int fd, void *buf, int len)
 		printx(len);
 		prints(", off:");
 		printx(file_state[fd].offset);
-		prints(", off:");
+		prints(", size:");
 		printx(file_table[fd].size);
 		prints("\n");
 //		nemu_assert(0);

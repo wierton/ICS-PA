@@ -92,9 +92,9 @@ int fs_read(int fd, void *buf, int len)
 	if(end_pos > file_table[fd].size)
 	{
 		printx(fd);
-		prints(" read exceed the boundary!\n");
+		prints(" read exceed the boundary, len:");
 		printx(len);
-		prints(" ");
+		prints(", off:");
 		printx(file_state[fd].offset);
 		prints("\n");
 //		nemu_assert(0);

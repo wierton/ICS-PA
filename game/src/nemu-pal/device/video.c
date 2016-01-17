@@ -382,7 +382,6 @@ VIDEO_Shutdown(
 
 #endif
 
-	asm volatile(".byte 0xd5"::"a"('i'));
    if (gpScreen != NULL)
    if (gpScreenReal != NULL)
    {

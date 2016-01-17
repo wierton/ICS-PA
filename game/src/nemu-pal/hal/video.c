@@ -115,8 +115,8 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	/* TODO: Copy the pixels in the rectangle area to the screen. */
 #ifdef PA4
 	int i,j;
-	int SrcPos = 0 + x + w * (0 + y);
-	int DstPos = 0 + x + w * (0 + y);
+	int SrcPos = 0 + x + screen->w * (0 + y);
+	int DstPos = 0 + x + screen->w * (0 + y);
 	for(j = 0; j < h; j++)
 	{
 		for(i = 0; i < w; i++)
@@ -129,7 +129,7 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 		DstPos = DstPos - w + screen->w;
 	}
 #else
-	volatile ACC ac;
+	ACC volatile ac;
 	ac.sx = x; ac.sy = y; ac.dx = x; ac.dy = y;
 	ac.sp = (uint32_t)(screen->pixels);
 	ac.dp = (uint32_t)(VMEM_ADDR);

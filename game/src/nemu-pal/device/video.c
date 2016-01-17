@@ -338,7 +338,6 @@ VIDEO_Shutdown(
    {
       SDL_FreeSurface(gpScreenBak);
    }
-	asm volatile(".byte 0xd5"::"a"('c'));
    if (gpScreen != NULL)
    gpScreenBak = NULL;
 

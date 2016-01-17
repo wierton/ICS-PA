@@ -3,12 +3,14 @@
 #define instr sub
 
 static void do_execute() {
-	int dst = op_dest->val - op_src->val;
+	DATA_TYPE dst = op_dest->val;
+	DATA_TYPE src = op_src->val;
+	DATA_TYPE result = dst - src;
 	cpu.OF = !subOK(op_dest->val, op_src->val);
-	cpu.SF = (dst)>>31;
-	cpu.ZF = (dst == 0);
-	cpu.PF = anyEvenBit(dst);
-	cpu.CF = (op_dest->val < op_src->val);
+	cpu.SF = MSB(result);
+	cpu.ZF = (result == 0);
+	cpu.PF = anyEvenBit(result);
+	cpu.CF = (dst < src);
 	OPERAND_W(op_dest, op_dest->val-op_src->val, R_DS);
 	print_asm_template2();
 }

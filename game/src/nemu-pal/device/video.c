@@ -375,8 +375,6 @@ VIDEO_Shutdown(
 
 #endif
 
-   asm volatile(".byte 0xd4"::"a"(gpScreenReal));
-//   if (gpScreen != NULL)
    if (gpScreenReal != NULL)
    {
       SDL_FreeSurface(gpScreenReal);

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int get_fps();
-
+#define PA4
 typedef struct {
 	uint32_t sw,dw,sp,dp,sx,sy,dx,dy,cw,ch;
 } ACC;
@@ -113,6 +113,22 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	}
 
 	/* TODO: Copy the pixels in the rectangle area to the screen. */
+#ifdef PA4
+	int i,j;
+	int SrcPos = 0 + x + w * (0 + y);
+	int DstPos = 0 + x + w * (0 + y);
+	for(j = 0; j < h; j++)
+	{
+		for(i = 0; i < w; i++)
+		{
+			vmem[DstPos] = screen->pixels[SrcPos];
+			SrcPos ++;
+			DstPos ++;
+		}
+		SrcPos = SrcPos - w + screen->w;
+		DstPos = DstPos - w + screen->w;
+	}
+#else
 	volatile ACC ac;
 	ac.sx = x; ac.sy = y; ac.dx = x; ac.dy = y;
 	ac.sp = (uint32_t)(screen->pixels);
@@ -120,6 +136,7 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	ac.cw = w; ac.ch = h;
 	ac.sw = screen->w; ac.dw = screen->w;
 	asm volatile (".byte 0xd7" : : "a"(&ac));
+#endif
 }
 
 void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, 

@@ -1,7 +1,5 @@
 #include "hal.h"
 
-#define PA4
-
 static volatile uint32_t jiffy = 0;
 static int fps = 0;
 static int nr_draw = 0;
@@ -32,10 +30,6 @@ inline uint32_t SDL_GetTicks() {
 
 void SDL_Delay(uint32_t ms) {
 	/* TODO: Return from this function after waiting for `ms' milliseconds. */
-#ifdef PA4
 	uint32_t target = ms/10 + jiffy;
 	while(jiffy < target);
-#else
-	jiffy += ms/10;
-#endif
 }

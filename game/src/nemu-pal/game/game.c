@@ -78,9 +78,7 @@ PAL_GameMain(
    //
    // Show the opening menu.
    //
-   asm volatile(".byte 0xd5"::"a"('%'));
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
-asm volatile(".byte 0xd5"::"a"('%'));
    //
    // Initialize game data and set the flags to load the game resources.
    //
@@ -92,7 +90,6 @@ asm volatile(".byte 0xd5"::"a"('%'));
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
-	   asm volatile(".byte 0xd5"::"a"('%'));
       //
       // Do some initialization at game start.
       //

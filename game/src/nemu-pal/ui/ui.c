@@ -573,8 +573,6 @@ PAL_ReadMenu(
             PAL_DrawText(PAL_GetWord(rgMenuItem[wCurrentItem].wNumWord),
                rgMenuItem[wCurrentItem].pos, MENUITEM_COLOR_CONFIRMED, FALSE, TRUE);
 			
-			 asm volatile(".byte 0xd4"::"a"(wCurrentItem));
-			 asm volatile(".byte 0xd4"::"a"(rgMenuItem[wCurrentItem].wValue));
             return rgMenuItem[wCurrentItem].wValue;
          }
       }

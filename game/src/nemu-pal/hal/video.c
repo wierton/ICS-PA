@@ -212,9 +212,9 @@ void SDL_FreeSurface(SDL_Surface *s) {
 		if(s->format != NULL) {
 			if(s->format->palette != NULL) {
 				if(s->format->palette->colors != NULL) {
-//					free(s->format->palette->colors);
+					free(s->format->palette->colors);
 				}
-				free(s->format->palette);
+//				free(s->format->palette);
 			}
 
 			free(s->format);

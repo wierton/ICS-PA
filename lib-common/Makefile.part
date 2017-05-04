@@ -9,4 +9,4 @@ $(FLOAT): $(FLOAT_OBJ)
 
 $(FLOAT_OBJ):%.o:$(LIB_COMMON_DIR)/FLOAT.c $(LIB_COMMON_DIR)/FLOAT.h
 	mkdir -p obj/lib-common
-	$(CC) -m32 -fno-builtin -c $< -o $@
+	$(CC) -m32 -fno-stack-protector -fno-builtin -c $< -o $@

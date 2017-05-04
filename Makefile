@@ -2,9 +2,9 @@
 
 .PHONY: nemu entry all_testcase kernel run gdb test submit clean count
 
-CC := gcc
+CC := gcc-4.9
 LD := ld
-CFLAGS := -MMD -c # -Wall -Werror
+CFLAGS := -MMD -c -I./exinc # -Wall -Werror
 
 LIB_COMMON_DIR := lib-common
 NEWLIBC_DIR := $(LIB_COMMON_DIR)/newlib
